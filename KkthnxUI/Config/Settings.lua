@@ -61,6 +61,7 @@ C["Blizzard"] = {
 	["Durability"] = true,
 	["MoveAchievements"] = true,
 	["Reputations"] = true,
+	["FadeQuest"] = false,
 }
 -- BUFFS & DEBUFFS OPTIONS
 C["Aura"] = {

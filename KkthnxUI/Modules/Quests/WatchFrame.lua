@@ -27,7 +27,20 @@ BONUS_OBJECTIVE_TRACKER_MODULE.Header.Background:Hide()
 ObjectiveTrackerFrame.HeaderMenu.Title:SetAlpha(0)
 OBJECTIVE_TRACKER_DOUBLE_LINE_HEIGHT = 30
 
--- Difficulty color for WatchFrame lines
+-- FADE IN/OUT OBJECTIVE TRACKER ON MOUSEOVER
+if C.Blizzard.FadeQuest then
+	UIFrameFadeOut(ObjectiveTrackerFrame, 0.8, ObjectiveTrackerFrame:GetAlpha(), 0.3)
+
+	ObjectiveTrackerFrame:SetScript("OnEnter", function()
+		ObjectiveTrackerFrame:FadeIn()
+	end)
+
+	ObjectiveTrackerFrame:SetScript("OnLeave", function()
+		UIFrameFadeOut(ObjectiveTrackerFrame, 0.8, ObjectiveTrackerFrame:GetAlpha(), 0.3)
+	end)
+end
+
+-- DIFFICULTY COLOR FOR WATCHFRAME LINES
 hooksecurefunc(QUEST_TRACKER_MODULE, "Update", function()
 	for i = 1, GetNumQuestWatches() do
 		local questID, _, questIndex = GetQuestWatchInfo(i)

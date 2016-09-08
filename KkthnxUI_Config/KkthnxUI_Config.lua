@@ -104,6 +104,7 @@ local function Local(o)
 	if o == "UIConfigBlizzardDurability" then o = L_GUI_BLIZZARD_DURABILITY end
 	if o == "UIConfigBlizzardMoveAchievements" then o = L_GUI_BLIZZARD_ACHIEVEMENTS end
 	if o == "UIConfigBlizzardReputations" then o = L_GUI_BLIZZARD_REPUTATIONS end
+	if o == "UIConfigBlizzardFadeQuest" then o = L_GUI_BLIZZARD_FADE_QUEST end
 	-- ExpRep Settings
 	if o == "UIConfigExperience" then o = L_GUI_EXPERIENCE end
 	if o == "UIConfigExperienceArtifact" then o = L_GUI_EXPERIENCE_ARTIFACT end

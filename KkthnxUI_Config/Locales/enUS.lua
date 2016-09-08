@@ -57,6 +57,7 @@ L_GUI_BLIZZARD_COLOR_TEXTURES = "Change most UI texture hue colors."
 L_GUI_BLIZZARD_TEXTURES_COLOR = "UI texture hue color. (Default is Classcolor)"
 L_GUI_BLIZZARD_DURABILITY = "Display the durability % on character slot buttons"
 L_GUI_BLIZZARD_REPUTATIONS = "Display reputation rewards for quests"
+L_GUI_BLIZZARD_FADE_QUEST = "Enable mouseover fade for objective tracker"
 -- ExpRep Localization
 L_GUI_EXPERIENCE = "XPRep & Artifact"
 L_GUI_EXPERIENCE_ARTIFACT = "Enable the Artifact bar."
