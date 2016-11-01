@@ -1,5 +1,4 @@
 local K, C, L = select(2, ...):unpack()
-local K, C, L = select(2, ...):unpack()
 if C.ActionBar.Enable ~= true or C.ActionBar.ToggleMode ~= true then return end
 
 -- LUA API
@@ -181,13 +180,14 @@ local SplitBars = function()
 			VehicleButtonAnchor:ClearAllPoints()
 			VehicleButtonAnchor:SetPoint("BOTTOMRIGHT", SplitBarLeft, "BOTTOMLEFT", -C.ActionBar.ButtonSpace, 0)
 			if KkthnxUIDataPerChar.BottomBars == 2 then
-				ToggleBarText(3, "<\n<\n<", false, true)
-				ToggleBarText(4, ">\n>\n>", false, true)
+				ToggleBarText(3, ">\n>\n>", false, true)
+				ToggleBarText(4, "<\n<\n<", false, true)
 			else
 				ToggleBarText(3, "<\n<", false, true)
 				ToggleBarText(4, ">\n>", false, true)
 			end
 			Bar5Holder:Show()
+			ActionBarAnchor:Hide()
 		elseif KkthnxUIDataPerChar.SplitBars == false then
 			ToggleBar[3]:ClearAllPoints()
 			ToggleBar[3]:SetPoint("BOTTOMLEFT", ActionBarAnchor, "BOTTOMRIGHT", C.ActionBar.ButtonSpace, 0)
@@ -196,8 +196,8 @@ local SplitBars = function()
 			VehicleButtonAnchor:ClearAllPoints()
 			VehicleButtonAnchor:SetPoint("BOTTOMRIGHT", ActionBarAnchor, "BOTTOMLEFT", -C.ActionBar.ButtonSpace, 0)
 			if KkthnxUIDataPerChar.BottomBars == 2 then
-				ToggleBarText(3, ">\n>\n>", true)
-				ToggleBarText(4, "<\n<\n<", true)
+				ToggleBarText(3, "<\n<\n<", true)
+				ToggleBarText(4, ">\n>\n>", true)
 			else
 				ToggleBarText(3, ">\n>", true)
 				ToggleBarText(4, "<\n<", true)
@@ -205,6 +205,7 @@ local SplitBars = function()
 			Bar5Holder:Hide()
 			SplitBarLeft:Hide()
 			SplitBarRight:Hide()
+			ActionBarAnchor:Show()
 		end
 	end
 end

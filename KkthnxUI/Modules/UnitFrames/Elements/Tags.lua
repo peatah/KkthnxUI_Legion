@@ -83,11 +83,11 @@ if (not oUF.Tags["role:raid"]) then
         local role = UnitGroupRolesAssigned(unit)
         if (role) then
             if (role == "TANK") then
-                role = ">"
+                role = "*"
             elseif (role == "HEALER") then
                 role = "+"
             elseif (role == "DAMAGER") then
-                role = "-"
+                role = ""
             elseif (role == "NONE") then
                 role = ""
             end
@@ -103,5 +103,5 @@ oUF.Tags.Events["name:raid"] = "UNIT_NAME_UPDATE"
 oUF.Tags.Methods["name:raid"] = function(unit)
     local name = UnitName(unit) or UNKNOWN
 
-    return K.ShortenString(name, 5)
+    return K.ShortenString(name, 3)
 end

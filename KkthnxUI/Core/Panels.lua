@@ -46,11 +46,11 @@ Movers:RegisterFrame(RightBarAnchor)
 -- Split bar anchor
 if C.ActionBar.SplitBars == true then
 	local SplitBarLeft = CreateFrame("Frame", "SplitBarLeft", PetBattleFrameHider)
-	SplitBarLeft:CreatePanel("Invisible", (C.ActionBar.ButtonSize * 3) + (C.ActionBar.ButtonSpace * 2), (C.ActionBar.ButtonSize * 2) + C.ActionBar.ButtonSpace, "BOTTOMRIGHT", ActionBarAnchor, "BOTTOMLEFT", -C.ActionBar.ButtonSpace, 0)
+	SplitBarLeft:CreatePanel("Invisible", (C.ActionBar.ButtonSize * 3) + (C.ActionBar.ButtonSpace * 2), (C.ActionBar.ButtonSize * 2) + C.ActionBar.ButtonSpace, "BOTTOMRIGHT", ActionBarAnchor, "BOTTOMLEFT", (C.ActionBar.ButtonSize * 6) + 10, 0)
 	SplitBarLeft:SetFrameStrata("LOW")
 
 	local SplitBarRight = CreateFrame("Frame", "SplitBarRight", PetBattleFrameHider)
-	SplitBarRight:CreatePanel("Invisible", (C.ActionBar.ButtonSize * 3) + (C.ActionBar.ButtonSpace * 2), (C.ActionBar.ButtonSize * 2) + C.ActionBar.ButtonSpace, "BOTTOMLEFT", ActionBarAnchor, "BOTTOMRIGHT", C.ActionBar.ButtonSpace, 0)
+	SplitBarRight:CreatePanel("Invisible", (C.ActionBar.ButtonSize * 3) + (C.ActionBar.ButtonSpace * 2), (C.ActionBar.ButtonSize * 2) + C.ActionBar.ButtonSpace, "BOTTOMLEFT", ActionBarAnchor, "BOTTOMRIGHT", -(C.ActionBar.ButtonSize * 6) - 10, 0)
 	SplitBarRight:SetFrameStrata("LOW")
 end
 

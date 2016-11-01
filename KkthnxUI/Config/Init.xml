@@ -2,5 +2,6 @@
 	<Script file="Settings.lua"/>
 	<Script file="Positions.lua"/>
 	<Script file="Profiles.lua"/>
+	<Script file="Peatuh.lua"/>
 	<Script file="Addons.lua"/>
 </Ui>

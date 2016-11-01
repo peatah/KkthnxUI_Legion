@@ -36,7 +36,7 @@ do
 			{47788, "TOPLEFT", {0, 1,0 }}, -- Guardian Spirit
 		},
 		SHAMAN = {
-			{61295, "TOPLEFT", {0.7, 0.3, 0.7}}, -- Riptide
+			{61295, "TOPRIGHT", {0.7, 0.3, 0.7}}, -- Riptide
 			{204288, "BOTTOMRIGHT", {0.7, 0.4, 0}}, -- Earth Shield (PvP Only)
 		},
 		WARLOCK = {
@@ -61,7 +61,7 @@ end
 
 local offsets
 do
-	local space = 2
+	local space = 0
 
 	offsets = {
 		TOPLEFT = {
@@ -270,7 +270,7 @@ local function UpdateHealth(Health, unit, cur, max)
 		Health.bg:SetVertexColor(r * 0.25, g * 0.25, b * 0.25)
 	end
 
-	Health.Value:SetText(GetHealthText(unit, cur, max))
+	-- Health.Value:SetText(GetHealthText(unit, cur, max))
 end
 
 local function CreateRaidLayout(self, unit)
@@ -318,17 +318,17 @@ local function CreateRaidLayout(self, unit)
 	self.Health.bg:SetAllPoints(self.Health)
 	self.Health.bg:SetTexture(C.Media.Blank)
 
-	self.Health.bg.multiplier = 0.3
+	self.Health.bg.multiplier = 0
 
 	-- Health text
 	self.Health.Value = self.Health:CreateFontString(nil, "OVERLAY")
-	self.Health.Value:SetPoint("TOP", self.Health, "CENTER", 0, 2)
+	self.Health.Value:SetPoint("BOTTOM", self.Health, "CENTER", 0, 0)
 	self.Health.Value:SetFont(C.Media.Font, 11)
 	self.Health.Value:SetShadowOffset(K.Mult, -K.Scale(-3))
 
 	-- Name text
 	self.Name = self.Health:CreateFontString(nil, "OVERLAY")
-	self.Name:SetPoint("BOTTOM", self.Health, "CENTER", 0, 3)
+	self.Name:SetPoint("TOP", self.Health, "CENTER", 0, 5)
 	self.Name:SetFont(C.Media.Font, C.Media.Font_Size)
 	self.Name:SetShadowOffset(K.Mult, -K.Scale(-3))
 	self.Name:SetTextColor(1, 0.82, 0, 1)

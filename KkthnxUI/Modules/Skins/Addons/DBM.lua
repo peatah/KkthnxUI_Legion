@@ -287,7 +287,7 @@ function K.UploadDBM()
 		DBM_AllSavedOptions["Default"].SpecialWarningFont = C.Media.Font
 		DBM_AllSavedOptions["Default"].SpecialWarningFontSize = 50
 		DBM_AllSavedOptions["Default"].SpecialWarningX = 0
-		DBM_AllSavedOptions["Default"].SpecialWarningY = 75
+		DBM_AllSavedOptions["Default"].SpecialWarningY = 275
 
 		DBT_AllPersistentOptions["Default"]["DBM"].StartColorR = K.Color.r
 		DBT_AllPersistentOptions["Default"]["DBM"].StartColorG = K.Color.g

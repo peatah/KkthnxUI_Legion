@@ -181,3 +181,16 @@ strip:SetScript("OnEvent", function(self)
 		self.model = DressUpModel
 	end
 end)
+
+-- Hide blizzard combat text
+SetCVar("floatingCombatTextCombatHealing", 0)
+SetCVar("floatingCombatTextCombatDamage", 0)
+
+local frame = CreateFrame("Frame")
+frame:RegisterEvent("PLAYER_LOGOUT")
+frame:SetScript("OnEvent", function(self, event)
+	if event == "PLAYER_LOGOUT" then
+		SetCVar("floatingCombatTextCombatHealing", 0)
+		SetCVar("floatingCombatTextCombatDamage", 0)
+	end
+end)
