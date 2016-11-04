@@ -14,6 +14,7 @@ C["Announcements"]["SaySapped"] = true
 C["Auras"]["BuffSize"] = 42 
 -- C["Auras"]["Consolidate"] = true
 C["Auras"]["Animation"] = true
+C["Bags"]["Enable"] = false
 C["Blizzard"]["EasyDelete"] = true
 -- C["Blizzard"]["ColorTextures"] = true
 -- C["Blizzard"]["TexturesColor"] = {0, 0, 0, 0} 

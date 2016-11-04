@@ -9,7 +9,7 @@ local IsAltKeyDown, IsControlKeyDown = IsAltKeyDown, IsControlKeyDown
 hooksecurefunc("QuestLogQuests_Update", function()
 	for i, button in pairs(QuestMapFrame.QuestsFrame.Contents.Titles) do
 		if button:IsShown() then
-			print(button.questID, button.questLogIndex)
+			-- print(button.questID, button.questLogIndex)
 			local level = strmatch(GetQuestLink(button.questID), "quest:%d+:(%d+)")
 			if level then
 				local height = button.Text:GetHeight()

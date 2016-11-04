@@ -183,14 +183,16 @@ strip:SetScript("OnEvent", function(self)
 end)
 
 -- Hide blizzard combat text
-SetCVar("floatingCombatTextCombatHealing", 0)
-SetCVar("floatingCombatTextCombatDamage", 0)
+if false then 
+	SetCVar("floatingCombatTextCombatHealing", 0)
+	SetCVar("floatingCombatTextCombatDamage", 0)
 
-local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_LOGOUT")
-frame:SetScript("OnEvent", function(self, event)
-	if event == "PLAYER_LOGOUT" then
-		SetCVar("floatingCombatTextCombatHealing", 0)
-		SetCVar("floatingCombatTextCombatDamage", 0)
-	end
-end)
+	local frame = CreateFrame("Frame")
+	frame:RegisterEvent("PLAYER_LOGOUT")
+	frame:SetScript("OnEvent", function(self, event)
+		if event == "PLAYER_LOGOUT" then
+			SetCVar("floatingCombatTextCombatHealing", 0)
+			SetCVar("floatingCombatTextCombatDamage", 0)
+		end
+	end)
+end
