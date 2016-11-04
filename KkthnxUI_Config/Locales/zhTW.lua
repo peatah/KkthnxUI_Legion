@@ -1,3 +1,10 @@
+-- Localization for zhCN clients
+local Locale = GetLocale()
+
+if (Locale ~= "zhTW") then
+	return
+end
+
 -- Localization for enUS & enGB clients
 local PerformanceSlight = "\n|cffFF0000Disabling this may slightly increase performance|r" -- For semi-high CPU options
 local ToggleOffReminder = "\n|cffFF0000Turn this off to manually input your bar numbers|r"
@@ -274,7 +281,6 @@ L_GUI_RAIDFRAME_MAINTANKFRAMES = "Enable the use of main tank/assist frames in r
 L_GUI_RAIDFRAME_MANABARSHOW = "Display Manabar"
 L_GUI_RAIDFRAME_MANABAR_HORIZONTAL = "Display the manabar horizontal"
 L_GUI_RAIDFRAME_MAXUNIT_PERCOLUMN = "How many units per raid column"
-L_GUI_RAIDFRAME_RAIDASPARTY = "Display raid frames instead of party frames"
 L_GUI_RAIDFRAME_SCALE = "Scale of raid frames"
 L_GUI_RAIDFRAME_SHOWMOUSEOVER_HIGHLIGHT = "Show a highlight texture on mouseover"
 L_GUI_RAIDFRAME_SHOWRESURRECT_TEXT = "Display resurrection text"

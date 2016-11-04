@@ -108,13 +108,28 @@ local function Local(o)
 	if o == "UIConfigBlizzardReplaceBlizzardFonts" then o = L_GUI_BLIZZARD_REPLACE_BLIZZARD_FONTS end
 	if o == "UIConfigBlizzardReputationGain" then o = L_GUI_BLIZZARD_REPUTATIONGAIN end
 	if o == "UIConfigBlizzardTexturesColor" then o = L_GUI_BLIZZARD_TEXTURES_COLOR end
-	-- ExpRep Settings
+	-- DataBar Settings
 	if o == "UIConfigDataBars" then o = L_GUI_DATABARS end
-	if o == "UIConfigDataBarsArtifact" then o = L_GUI_DATABARS_ARTIFACT end
-	if o == "UIConfigDataBarsExperience" then o = L_GUI_DATABARS_EXPERIENCE end
-	if o == "UIConfigDataBarsExperienceClassColor" then o = L_GUI_DATABARS_EXPERIENCE_CLASSCOLOR end
-	if o == "UIConfigDataBarsHeight" then o = L_GUI_DATABARS_HEIGHT end
-	if o == "UIConfigDataBarsWidth" then o = L_GUI_DATABARS_WIDTH end
+	if o == "UIConfigDataBarsArtifactColor" then o = L_GUI_DATABARS_ARTIFACT_COLOR end
+	if o == "UIConfigDataBarsArtifactEnable" then o = L_GUI_DATABARS_ARTIFACT_ENABLE end
+	if o == "UIConfigDataBarsArtifactFade" then o = L_GUI_DATABARS_ARTIFACT_FADE end
+	if o == "UIConfigDataBarsArtifactHeight" then o = L_GUI_DATABARS_ARTIFACT_HEIGHT end
+	if o == "UIConfigDataBarsArtifactWidth" then o = L_GUI_DATABARS_ARTIFACT_WIDTH end
+	if o == "UIConfigDataBarsExperienceColor" then o = L_GUI_DATABARS_EXPERIENCE_COLOR end
+	if o == "UIConfigDataBarsExperienceEnable" then o = L_GUI_DATABARS_EXPERIENCE_ENABLE end
+	if o == "UIConfigDataBarsExperienceFade" then o = L_GUI_DATABARS_EXPERIENCE_FADE end
+	if o == "UIConfigDataBarsExperienceHeight" then o = L_GUI_DATABARS_EXPERIENCE_HEIGHT end
+	if o == "UIConfigDataBarsExperienceRestedColor" then o = L_GUI_DATABARS_EXPERIENCE_REST_COLOR end
+	if o == "UIConfigDataBarsExperienceWidth" then o = L_GUI_DATABARS_EXPERIENCE_WIDTH end
+	if o == "UIConfigDataBarsHonorColor" then o = L_GUI_DATABARS_HONOR_COLOR end
+	if o == "UIConfigDataBarsHonorEnable" then o = L_GUI_DATABARS_HONOR_ENABLE end
+	if o == "UIConfigDataBarsHonorFade" then o = L_GUI_DATABARS_HONOR_FADE end
+	if o == "UIConfigDataBarsHonorHeight" then o = L_GUI_DATABARS_HONOR_HEIGHT end
+	if o == "UIConfigDataBarsHonorWidth" then o = L_GUI_DATABARS_HONOR_WIDTH end
+	if o == "UIConfigDataBarsReputationEnable" then o = L_GUI_DATABARS_REPUTATION_ENABLE end
+	if o == "UIConfigDataBarsReputationFade" then o = L_GUI_DATABARS_REPUTATION_FADE end
+	if o == "UIConfigDataBarsReputationHeight" then o = L_GUI_DATABARS_REPUTATION_HEIGHT end
+	if o == "UIConfigDataBarsReputationWidth" then o = L_GUI_DATABARS_REPUTATION_WIDTH end
 	-- Auras Settings
 	if o == "UIConfigAuras" then o = L_GUI_AURAS end
 	if o == "UIConfigAurasEnable" then o = L_GUI_AURAS_ENABLE end
@@ -142,7 +157,7 @@ local function Local(o)
 	if o == "UIConfigChatWhispSound" then o = L_GUI_CHAT_WHISP end
 	if o == "UIConfigChatWidth" then o = L_GUI_CHAT_WIDTH end
 	-- DataText Settings
-	if o == "UIConfigDataText" then o = L_GUI_DATATEXT end	
+	if o == "UIConfigDataText" then o = L_GUI_DATATEXT end
 	if o == "UIConfigDataTextLocation" then o = L_GUI_DATATEXT_LOCATION end
 	if o == "UIConfigDataTextSystem" then o = L_GUI_DATATEXT_SYSTEM end
 	if o == "UIConfigDataTextTime" then o = L_GUI_DATATEXT_TIME end
@@ -261,9 +276,8 @@ local function Local(o)
 	if o == "UIConfigTooltipSpellID" then o = L_GUI_TOOLTIP_SPELL_ID end
 	-- Unitframe Settings
 	if o == "UIConfigUnitframe" then o = L_GUI_UNITFRAME end
-	if o == "UIConfigUnitframeBuilderSpender" then o = L_GUI_UNITFRAME_BUILDERSPENDER end
-	if o == "UIConfigUnitframeCastbars" then o = L_GUI_UNITFRAME_CASTBARS end
 	if o == "UIConfigUnitframeCastbarSafeZoneColor" then o = L_GUI_UNITFRAME_CASTBARSAFEZONECOLOR end
+	if o == "UIConfigUnitframeCastbars" then o = L_GUI_UNITFRAME_CASTBARS end
 	if o == "UIConfigUnitframeClassColor" then o = L_GUI_UNITFRAME_CLASSCOLOR end
 	if o == "UIConfigUnitframeClassPortraits" then o = L_GUI_UNITFRAME_CLASSPORTRAITS end
 	if o == "UIConfigUnitframeClickThrough" then o = L_GUI_UNITFRAME_CLICKTHROUGH end
@@ -275,14 +289,15 @@ local function Local(o)
 	if o == "UIConfigUnitframeFocusCastbarWidth" then o = L_GUI_UNITFRAME_FOCUSCASTBAR_WIDTH end
 	if o == "UIConfigUnitframeFocusModifier" then o = L_GUI_UNITFRAME_FOCUS_MODIFIER end
 	if o == "UIConfigUnitframeParty" then o = L_GUI_UNITFRAME_PARTY end
-	-- if o == "UIConfigUnitframePartyInRaid" then o = L_GUI_UNITFRAME_PARTYINRAID end
 	if o == "UIConfigUnitframePlayerCastbarHeight" then o = L_GUI_UNITFRAME_PLAYERCASTBAR_HEIGHT end
 	if o == "UIConfigUnitframePlayerCastbarWidth" then o = L_GUI_UNITFRAME_PLAYERCASTBAR_WIDTH end
 	if o == "UIConfigUnitframePlayerDebuffsOnly" then o = L_GUI_UNITFRAME_PLAYERDEBUFFS_ONLY end
 	if o == "UIConfigUnitframePortraitTimer" then o = L_GUI_UNITFRAME_PORTRAITTIMER end
 	if o == "UIConfigUnitframePowerPredictionBar" then o = L_GUI_UNITFRAME_POWERPREDICTIONBAR end
-	if o == "UIConfigUnitframePowerUseAtlas" then o = L_GUI_UNITFRAME_POWERUSEATLAS end
 	if o == "UIConfigUnitframeScale" then o = L_GUI_UNITFRAME_SCALE end
+	if o == "UIConfigUnitframeShowArena" then o = L_GUI_UNITFRAME_SHOWARENA end
+	if o == "UIConfigUnitframeShowBoss" then o = L_GUI_UNITFRAME_SHOWBOSS end
+	if o == "UIConfigUnitframeShowPlayer" then o = L_GUI_UNITFRAME_SHOWPLAYER end
 	if o == "UIConfigUnitframeStyle" then o = L_GUI_UNITFRAME_STYLE end
 	if o == "UIConfigUnitframeTargetCastbarHeight" then o = L_GUI_UNITFRAME_TARGETCASTBAR_HEIGHT end
 	if o == "UIConfigUnitframeTargetCastbarWidth" then o = L_GUI_UNITFRAME_TARGETCASTBAR_WIDTH end
@@ -293,6 +308,8 @@ local function Local(o)
 	if o == "UIConfigUnitframeThreatValue" then o = L_GUI_UNITFRAME_THREATVALUE end
 	-- Raidframe Settings
 	if o == "UIConfigRaidframe" then o = L_GUI_RAIDFRAME end
+	if o == "UIConfigRaidframeAuraWatch" then o = L_GUI_RAIDFRAME_AURAWATCH end
+	if o == "UIConfigRaidframeAuraWatchTimers" then o = L_GUI_RAIDFRAME_AURAWATCH_TIMERS end
 	if o == "UIConfigRaidframeDeficitThreshold" then o = L_GUI_RAIDFRAME_DEFICITTHRESHOLD end
 	if o == "UIConfigRaidframeEnable" then o = L_GUI_RAIDFRAME_ENABLE end
 	if o == "UIConfigRaidframeHeight" then o = L_GUI_RAIDFRAME_HEIGHT end
@@ -512,6 +529,11 @@ function CreateUIConfig()
 	UIConfigMain:SetBackdropBorderColor(K.Color.r, K.Color.g, K.Color.b)
 	UIConfigMain:SetFrameStrata("DIALOG")
 	UIConfigMain:SetFrameLevel(20)
+	UIConfigMain:EnableMouse(true)
+	UIConfigMain:SetScript("OnMouseDown", function() UIConfigMain:StartMoving() end)
+	UIConfigMain:SetScript("OnMouseUp", function() UIConfigMain:StopMovingOrSizing() end)
+	UIConfigMain:SetClampedToScreen(true)
+	UIConfigMain:SetMovable(true)
 	tinsert(UISpecialFrames, "UIConfigMain")
 
 	-- Version Title
@@ -832,11 +854,11 @@ function CreateUIConfig()
 		end
 		KkthnxUIConfigSettings = {}
 	end)
-	
+
 	local load = NormalButton("|cff00FF00APPLY|r", UIConfigMain)
 	load:SetPoint("TOP", totalreset, "BOTTOM", 0, -30)
 	load:SetScript("OnClick", function(self) ReloadUI() end)
-	
+
 	local close = NormalButton("|cffFF0000CLOSE|r", UIConfigMain)
 	close:SetPoint("TOP", load, "BOTTOM", 0, -8)
 	close:SetScript("OnClick", function(self) PlaySound("igMainMenuOption") UIConfigMain:Hide() end)
@@ -928,7 +950,7 @@ do
 		subtitle2:SetWidth(380)
 		subtitle2:SetPoint("TOPLEFT", title2, "BOTTOMLEFT", 0, -8)
 		subtitle2:SetJustifyH("LEFT")
-		subtitle2:SetText("ALZA, AcidWeb, Aezay, Affli, Ailae, Allez, Ammo, Astromech, Beoko, BernCarney, Bitbyte, Blamdarot, Bozo, Bunny67, Caellian, Califpornia, Camealion, Chiril, Crum, CrusaderHeimdall, Cybey, Dawn, Don Kaban, Dridzt, Duffed, Durcyn, Eclipse, Egingell, Elv22, Evilpaul, Evl, Favorit, Fernir, Foof, Freebaser, freesay, Goldpaw, Gorlasch, Gsuz, Haleth, Haste, Hoochie, Hungtar, HyPeRnIcS, Hydra, Ildyria, Jaslm, Karl_w_w, Karudon, Katae, Kellett, Kemayo, Killakhan, Kraftman, Kunda, Leatrix, Magdain, |cFFFF69B4Magicnachos|r, Meurtcriss, Monolit, MrRuben5, Myrilandell of Lothar, Nathanyel, Nefarion, Nightcracker, Nils Ruesch, Partha, Peatah, Phanx, Rahanprout, Renstrom, RustamIrzaev, SDPhantom, Safturento, Sara.Festung, Sildor, Silverwind, SinaC, Slakah, Soeters, Starlon, Suicidal Katt, Syzgyn, Tekkub, Telroth, Thalyra, Thizzelle, Tia Lynn, Tohveli, Tukz, Tuller, Veev, Villiv, Wetxius, Woffle of Dark Iron, Wrug, Xuerian, Yleaf, Zork, g0st, gi2k15, iSpawnAtHome, m2jest1c, p3lim, sticklord")
+		subtitle2:SetText("ALZA, AcidWeb, Aezay, Affli, Ailae, Allez, Ammo, Astromech, Beoko, BernCarney, Bitbyte, Blamdarot, Bozo, Bunny67, Caellian, Califpornia, Camealion, Chiril, Crum, CrusaderHeimdall, Cybey, Dawn, Don Kaban, Dridzt, Duffed, Durcyn, Eclipse, Egingell, Elv22, Evilpaul, Evl, Favorit, Fernir, Foof, Freebaser, freesay, Goldpaw, Gorlasch, Gsuz, Haleth, Haste, Hoochie, Hungtar, HyPeRnIcS, Hydra, Ildyria, Jaslm, Karl_w_w, Karudon, Katae, Kellett, Kemayo, Killakhan, Kraftman, Kunda, Leatrix, Magdain, |cFFFF69B4Magicnachos|r, Meurtcriss, Monolit, MrRuben5, Myrilandell of Lothar, Nathanyel, Nefarion, Nightcracker, Nils Ruesch, Partha, Peatah, Phanx, Rahanprout, Rav, Renstrom, RustamIrzaev, SDPhantom, Safturento, Sara.Festung, Sildor, Silverwind, SinaC, Slakah, Soeters, Starlon, Suicidal Katt, Syzgyn, Tekkub, Telroth, Thalyra, Thizzelle, Tia Lynn, Tohveli, Tukz, Tuller, Veev, Villiv, Wetxius, Woffle of Dark Iron, Wrug, Xuerian, Yleaf, Zork, g0st, gi2k15, iSpawnAtHome, m2jest1c, p3lim, sticklord")
 
 		local title3 = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title3:SetPoint("TOPLEFT", subtitle2, "BOTTOMLEFT", 0, -16)

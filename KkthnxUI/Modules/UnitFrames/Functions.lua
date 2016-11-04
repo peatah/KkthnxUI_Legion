@@ -18,7 +18,7 @@ local UnitSelectionColor = UnitSelectionColor
 local UnitPower, UnitPowerMax = UnitPower, UnitPowerMax
 
 local _, ns = ...
-local oUF = ns.oUF
+local oUF = ns.oUF or oUF
 local colors = K.Colors
 
 function K.UnitframeValue(self)
@@ -131,7 +131,6 @@ do
 			self.Name.Bg:SetVertexColor(UnitSelectionColor(unit))
 		end
 
-
 		if absent then
 			Health:SetStatusBarColor(0.5, 0.5, 0.5)
 			if Health.Value then
@@ -162,13 +161,13 @@ end
 
 -- Extra health bars
 function K.UpdateIncHeals(self, event, unit)
-	if (self.unit ~= unit) then return end
+	if (unit) and (self.unit ~= unit) and (self.realUnit ~= unit) then return; end
 	local hp = self.HealPrediction
 	local curHP, maxHP = UnitHealth(unit), UnitHealthMax(unit)
-	local incHeal = UnitGetIncomingHeals(unit) or 0
+	local incHeal = (UnitGetIncomingHeals(unit) or 0) * 2
 	local healAbsorb = UnitGetTotalHealAbsorbs(unit) or 0
 
-	if ( healAbsorb > 0) then
+	if (healAbsorb > 0) then
 		hp.necroHeals:SetMinMaxValues(0, curHP)
 		hp.necroHeals:SetValue(math.min(healAbsorb, curHP))
 		hp.necroHeals:Show()
@@ -360,4 +359,86 @@ function K.CreateStatusBar(parent, layer, name, AddBackdrop)
 	end
 
 	return bar
+end
+
+K.RaidBuffsTrackingPosition = {
+	TOPLEFT = {6, 1},
+	TOPRIGHT = {-6, 1},
+	BOTTOMLEFT = {6, 1},
+	BOTTOMRIGHT = {-6, 1},
+	LEFT = {6, 1},
+	RIGHT = {-6, 1},
+	TOP = {0, 0},
+	BOTTOM = {0, 0},
+}
+
+function K.CreateAuraWatchIcon(self, icon)
+	icon:SetBackdrop(K.TwoPixelBorder)
+	icon:CreateShadow()
+	icon.icon:SetPoint("TOPLEFT", 1, -1)
+	icon.icon:SetPoint("BOTTOMRIGHT", -1, 1)
+	icon.icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+	icon.icon:SetDrawLayer("ARTWORK")
+	if (icon.cd) then
+		icon.cd:SetHideCountdownNumbers(true)
+		icon.cd:SetReverse(true)
+	end
+	icon.overlay:SetTexture()
+end
+
+-- create the icon
+function K.CreateAuraWatch(self)
+	local Class = select(2, UnitClass("player"))
+	local Auras = CreateFrame("Frame", nil, self)
+	Auras:SetPoint("TOPLEFT", self.Health, 2, -2)
+	Auras:SetPoint("BOTTOMRIGHT", self.Health, -2, 2)
+	Auras.presentAlpha = 1
+	Auras.missingAlpha = 0
+	Auras.icons = {}
+	Auras.PostCreateIcon = K.CreateAuraWatchIcon
+	Auras.strictMatching = true
+
+	if (not C.Raidframe.AuraWatchTimers) then
+		Auras.hideCooldown = true
+	end
+
+	local buffs = {}
+	if (K.RaidBuffsTracking["ALL"]) then
+		for key, value in pairs(K.RaidBuffsTracking["ALL"]) do
+			tinsert(buffs, value)
+		end
+	end
+
+	if (K.RaidBuffsTracking[Class]) then
+		for key, value in pairs(K.RaidBuffsTracking[Class]) do
+			tinsert(buffs, value)
+		end
+	end
+
+	-- Cornerbuffs
+	if buffs then
+		for key, spell in pairs(buffs) do
+			local Icon = CreateFrame("Frame", nil, Auras)
+			Icon.spellID = spell[1]
+			Icon.anyUnit = spell[4]
+			Icon:SetWidth(6)
+			Icon:SetHeight(6)
+			Icon:SetPoint(spell[2], 0, 0)
+			local Texture = Icon:CreateTexture(nil, "OVERLAY")
+			Texture:SetAllPoints(Icon)
+			Texture:SetTexture(C.Media.Blank)
+			if (spell[3]) then
+				Texture:SetVertexColor(unpack(spell[3]))
+			else
+				Texture:SetVertexColor(0.8, 0.8, 0.8)
+			end
+			local Count = Icon:CreateFontString(nil, "OVERLAY")
+			Count:SetFont(C.Media.Font, 9, "THINOUTLINE")
+			Count:SetPoint("CENTER", unpack(K.RaidBuffsTrackingPosition[spell[2]]))
+			Icon.count = Count
+			Auras.icons[spell[1]] = Icon
+		end
+	end
+
+	self.AuraWatch = Auras
 end

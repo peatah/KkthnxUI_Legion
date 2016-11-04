@@ -1,3 +1,10 @@
+-- Localization for zhCN clients
+local Locale = GetLocale()
+
+if (Locale ~= "zhCN") then
+	return
+end
+
 -- Localization for enUS & enGB clients
 local PerformanceSlight = "\n|cffFF0000Disabling this may slightly increase performance|r" -- For semi-high CPU options
 local ToggleOffReminder = "\n|cffFF0000Turn this off to manually input your bar numbers|r"
@@ -265,23 +272,22 @@ L_GUI_RAIDFRAME = "Raid Frames"
 L_GUI_RAIDFRAME_AURAWATCH = "Display timers for class specific buffs in the corners of the raid frames"
 L_GUI_RAIDFRAME_AURAWATCH_TIMERS = "Display a timer on debuff icons created by Debuff Watch"
 L_GUI_RAIDFRAME_DEFICITTHRESHOLD = "Health deficit threshold"
-L_GUI_RAIDFRAME_ENABLE = "Enable raid frames"
 L_GUI_RAIDFRAME_HEIGHT = "Height of raid frames"
 L_GUI_RAIDFRAME_HORIZONTAL_HEALTHBARS = "Display the healthbars horizontal"
 L_GUI_RAIDFRAME_ICONSIZE = "Size of debuff icons diplayed on raid frames."
 L_GUI_RAIDFRAME_INDICATORSIZE = "Size of indicators on raid frames"
-L_GUI_RAIDFRAME_MAINTANKFRAMES = "Enable the use of main tank/assist frames in raid."
-L_GUI_RAIDFRAME_MANABARSHOW = "Display Manabar"
 L_GUI_RAIDFRAME_MANABAR_HORIZONTAL = "Display the manabar horizontal"
+L_GUI_RAIDFRAME_MANABARSHOW = "Display Manabar"
 L_GUI_RAIDFRAME_MAXUNIT_PERCOLUMN = "How many units per raid column"
-L_GUI_RAIDFRAME_RAIDASPARTY = "Display raid frames instead of party frames"
 L_GUI_RAIDFRAME_SCALE = "Scale of raid frames"
+L_GUI_RAIDFRAME_SHOW_NOTHERETIMER = "Show AFK/Offline timers"
 L_GUI_RAIDFRAME_SHOWMOUSEOVER_HIGHLIGHT = "Show a highlight texture on mouseover"
 L_GUI_RAIDFRAME_SHOWRESURRECT_TEXT = "Display resurrection text"
 L_GUI_RAIDFRAME_SHOWROLE_PREFIX = "Display role prefixes"
 L_GUI_RAIDFRAME_SHOWTHREATTEXT = "Show threat text"
-L_GUI_RAIDFRAME_SHOW_NOTHERETIMER = "Show AFK/Offline timers"
 L_GUI_RAIDFRAME_WIDTH = "Width of raid frames"
+L_GUI_RAIDFRAME_ENABLE = "Enable raid frames"
+L_GUI_RAIDFRAME_MAINTANKFRAMES = "Enable the use of main tank/assist frames in raid."
 -- WorldMap
 L_GUI_WORLDMAP = "World Map"
 L_GUI_WORLDMAP_ALPHA_WHENMOVING = "Alpha of the world map when you are moving."

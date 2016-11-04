@@ -20,7 +20,9 @@ local Locale = GetLocale()
 K.Backdrop = {bgFile = C.Media.Blank, edgeFile = C.Media.Blizz, edgeSize = 14, insets = {left = 2.5, right = 2.5, top = 2.5, bottom = 2.5}}
 K.Border = {edgeFile = C.Media.Blizz, edgeSize = 14}
 K.BorderBackdrop = {bgFile = C.Media.Blank}
+K.BorderBackdropTwo = {bgFile = C.Media.Blank, insets = {top = -K.Mult, left = -K.Mult, bottom = -K.Mult, right = -K.Mult}}
 K.PixelBorder = {edgeFile = C.Media.Blank, edgeSize = K.Mult, insets = {left = K.Mult, right = K.Mult, top = K.Mult, bottom = K.Mult}}
+K.TwoPixelBorder = {bgFile = C.Media.Blank, edgeFile = C.Media.Blank, tile = true, tileSize = 16, edgeSize = 2, insets = {left = 2, right = 2, top = 2, bottom = 2}}
 K.ShadowBackdrop = {edgeFile = C.Media.Glow, edgeSize = 3, insets = {left = 5, right = 5, top = 5, bottom = 5}}
 
 -- This frame everything in KkthnxUI should be anchored to for Eyefinity support.
@@ -93,24 +95,58 @@ K.RGBToHex = function(r, g, b)
 	return format("|cff%02x%02x%02x", r * 255, g * 255, b * 255)
 end
 
--- Create a fake backdrop frame.
-K.CreateVirtualFrame = function(parent, point)
-	if point == nil then point = parent end
+-- We might need to move these to API?
+K.CreateBlizzardFrame = function(frame, point)
+	if point == nil then point = frame end
 
 	if point.backdrop then return end
-	parent.backdrop = CreateFrame("Frame", nil , parent)
-	parent.backdrop:SetAllPoints()
-	parent.backdrop:SetBackdrop(K.Backdrop)
-	parent.backdrop:SetPoint("TOPLEFT", point, -3 * K.NoScaleMult, 3 * K.NoScaleMult)
-	parent.backdrop:SetPoint("BOTTOMRIGHT", point, 3 * K.NoScaleMult, -3 * K.NoScaleMult)
-	parent.backdrop:SetBackdropColor(unpack(C.Media.Backdrop_Color))
-	parent.backdrop:SetBackdropBorderColor(unpack(C.Media.Border_Color))
+	frame.backdrop = CreateFrame("Frame", nil , frame)
+	frame.backdrop:SetAllPoints()
+	frame.backdrop:SetBackdrop(K.Backdrop)
+	frame.backdrop:SetPoint("TOPLEFT", point, -3 * K.NoScaleMult, 3 * K.NoScaleMult)
+	frame.backdrop:SetPoint("BOTTOMRIGHT", point, 3 * K.NoScaleMult, -3 * K.NoScaleMult)
+	frame.backdrop:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+	frame.backdrop:SetBackdropBorderColor(unpack(C.Media.Border_Color))
 
-	if parent:GetFrameLevel() - 1 > 0 then
-		parent.backdrop:SetFrameLevel(parent:GetFrameLevel() - 1)
+	if frame:GetFrameLevel() - 1 > 0 then
+		frame.backdrop:SetFrameLevel(frame:GetFrameLevel() - 1)
 	else
-		parent.backdrop:SetFrameLevel(0)
+		frame.backdrop:SetFrameLevel(0)
 	end
+end
+
+K.SetBlizzardBorder = function(frame, r, g, b, a)
+	if not a then a = 1 end
+	frame.backdrop:SetBackdropBorderColor(r, g, b, a)
+end
+
+K.CreateShadowFrame = function(frame, point)
+	if point == nil then point = frame end
+
+	if point.backdrop then return end
+	frame.backdrop = CreateFrame("Frame", nil , frame)
+	frame.backdrop:SetAllPoints()
+	frame.backdrop:SetBackdrop({
+		bgFile = C.Media.Blank,
+		edgeFile = C.Media.Glow,
+		edgeSize = 3 * K.NoScaleMult,
+		insets = {top = 3 * K.NoScaleMult, left = 3 * K.NoScaleMult, bottom = 3 * K.NoScaleMult, right = 3 * K.NoScaleMult}
+	})
+	frame.backdrop:SetPoint("TOPLEFT", point, -3 * K.NoScaleMult, 3 * K.NoScaleMult)
+	frame.backdrop:SetPoint("BOTTOMRIGHT", point, 3 * K.NoScaleMult, -3 * K.NoScaleMult)
+	frame.backdrop:SetBackdropColor(.05, .05, .05, .9)
+	frame.backdrop:SetBackdropBorderColor(0, 0, 0, 1)
+
+	if frame:GetFrameLevel() - 1 > 0 then
+		frame.backdrop:SetFrameLevel(frame:GetFrameLevel() - 1)
+	else
+		frame.backdrop:SetFrameLevel(0)
+	end
+end
+
+K.SetShadowBorder = function(frame, r, g, b, a)
+	if not a then a = 0.9 end
+	frame.backdrop:SetBackdropBorderColor(r, g, b, a)
 end
 
 -- Chat channel check
@@ -193,6 +229,11 @@ K.ShortenString = function(string, numChars, dots)
 			return string
 		end
 	end
+end
+
+K.Abbreviate = function(name)
+	local newname = (string.len(name) > 18) and string.gsub(name, "%s?(.[\128-\191]*)%S+%s", "%1. ") or name
+	return K.ShortenString(newname, 18, false)
 end
 
 K.FormatMoney = function(value)

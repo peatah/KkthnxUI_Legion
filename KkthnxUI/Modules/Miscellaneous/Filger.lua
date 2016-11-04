@@ -134,8 +134,7 @@ function Filger:DisplayActives()
 		if not bar then
 			bar = CreateFrame("Frame", "FilgerAnchor"..id.."Frame"..index, self)
 			bar:SetScale(1)
-			--bar:SetTemplate()
-			K.CreateVirtualFrame(bar)
+			K.CreateBlizzardFrame(bar)
 
 			if index == 1 then
 				bar:SetPoint(unpack(self.Position))
@@ -161,7 +160,7 @@ function Filger:DisplayActives()
 			end
 
 			if self.Mode == "ICON" then
-				bar:CreateBlizzShadow(5)
+				bar:CreateBlizzShadow(6)
 				if bar.cooldown then
 					bar.cooldown = _G[bar.cooldown:GetName()]
 				else
@@ -205,7 +204,7 @@ function Filger:DisplayActives()
 					bar.bg:SetPoint("TOPLEFT", -2, 2)
 					bar.bg:SetPoint("BOTTOMRIGHT", 2, -2)
 					bar.bg:SetFrameStrata("BACKGROUND")
-					K.CreateVirtualFrame(bar.bg)
+					K.CreateBlizzardFrame(bar.bg)
 				end
 
 				if bar.background then

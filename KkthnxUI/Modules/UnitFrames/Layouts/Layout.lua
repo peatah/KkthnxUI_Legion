@@ -3,7 +3,7 @@ if C.Unitframe.Enable ~= true then return end
 
 local _, ns = ...
 local config = ns.config
-local oUF = ns.oUF
+local oUF = ns.oUF or oUF
 local textPath = "Interface\\AddOns\\KkthnxUI\\Media\\Unitframes\\"
 local pathFat = textPath.."Fat\\"
 local pathNormal = textPath.."Normal\\"
@@ -456,7 +456,7 @@ local function CreateUnitLayout(self, unit)
 	table.insert(self.mouseovers, self.Health)
 	self.Health.PostUpdate = K.PostUpdateHealth
 	self.Health.Smooth = true
-	self.Health.frequentUpdates = self.cUnit == "boss"
+	self.Health.frequentUpdates = true
 
 	self.Health.colorTapping = true
 	self.Health.colorDisconnected = true
@@ -475,9 +475,7 @@ local function CreateUnitLayout(self, unit)
 	self.Power.frequentUpdates = self.cUnit == "player" or self.cUnit == "boss"
 	self.Power.PostUpdate = K.PostUpdatePower
 	self.Power.Smooth = true
-
 	self.Power.colorPower = true
-	self.Power.useAtlas = C.Unitframe.PowerUseAtlas
 
 	-- Power Text
 	if (data.mpt) then
@@ -488,7 +486,7 @@ local function CreateUnitLayout(self, unit)
 	if data.nam then
 		self.Name = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
 		self.Name:SetShadowOffset(K.Mult, -K.Scale(-3))
-		self:Tag(self.Name, "[kkthnx:name]")
+		self:Tag(self.Name, "[KkthnxUI:Name]")
 	end
 
 	-- Portrait
@@ -521,8 +519,8 @@ local function CreateUnitLayout(self, unit)
 		self.Level = self:CreateFontString(nil, "ARTWORK")
 		self.Level:SetFont(C.Media.Font, C.Media.Font_Size)
 		self.Level:SetShadowOffset(K.Mult, -K.Scale(-3))
-		self.Level:SetPoint("CENTER", self.Texture, (unit == "player" and -63) or 63, -15.5)
-		self:Tag(self.Level, "[kkthnx:level]")
+		self.Level:SetPoint("CENTER", self.Texture, (self.cUnit == "player" and -63) or 63, -15.5)
+		self:Tag(self.Level, "[KkthnxUI:Level]")
 
 		-- PvP Icon
 		self.PvP = self:CreateTexture(nil, "OVERLAY")
@@ -532,8 +530,7 @@ local function CreateUnitLayout(self, unit)
 		self.PvP.Prestige:SetSize(50, 52)
 		self.PvP.Prestige:SetPoint("CENTER", self.PvP, "CENTER")
 
-		-- Special Bars
-		-- Incoming Heals
+		-- Heal Prediction
 		local incHeals = K.CreateStatusBar(self.Health)
 		incHeals:SetPoint("TOPLEFT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
 		incHeals:SetPoint("BOTTOMRIGHT")
@@ -554,24 +551,22 @@ local function CreateUnitLayout(self, unit)
 			necroHeals = necroHeals,
 			Override = K.UpdateIncHeals,
 		}
-		if (config.absorbBar) then
-			-- Absorb bar
-			local absorb = CreateFrame("StatusBar", nil, self.Health)
-			absorb:SetStatusBarTexture(config.absorbtexture, "OVERLAY")
-			absorb:SetFrameLevel(self:GetFrameLevel() - 1)
-			absorb:SetStatusBarColor(1, 1, 1, 1)
-			absorb:GetStatusBarTexture():SetBlendMode("ADD")
-			absorb:SetPoint("BOTTOMLEFT", self.Health, "BOTTOMLEFT")
-			absorb:SetPoint("TOPRIGHT", self.Health, "BOTTOMRIGHT", 0, 5)
 
-			local spark = absorb:CreateTexture(nil, "ARTWORK")
-			spark:SetTexture(config.absorbspark)
-			spark:SetBlendMode("ADD")
-			spark:SetPoint("BOTTOMLEFT", absorb:GetStatusBarTexture(),"BOTTOMRIGHT")
-			spark:SetSize(5, 5)
-			absorb.spark = spark
-			self.HealPrediction.TotalAbsorb = absorb
-		end
+		local absorb = CreateFrame("StatusBar", nil, self.Health)
+		absorb:SetStatusBarTexture("Interface\\AddOns\\KkthnxUI\\Media\\Textures\\AbsorbTexture", "OVERLAY")
+		absorb:SetFrameLevel(self:GetFrameLevel() - 1)
+		absorb:SetStatusBarColor(1, 1, 1, 1)
+		absorb:GetStatusBarTexture():SetBlendMode("ADD")
+		absorb:SetPoint("BOTTOMLEFT", self.Health, "BOTTOMLEFT")
+		absorb:SetPoint("TOPRIGHT", self.Health, "BOTTOMRIGHT", 0, 5)
+
+		local spark = absorb:CreateTexture(nil, "ARTWORK")
+		spark:SetTexture("Interface\\AddOns\\KkthnxUI\\Media\\Textures\\AbsorbSpark")
+		spark:SetBlendMode("ADD")
+		spark:SetPoint("BOTTOMLEFT", absorb:GetStatusBarTexture(),"BOTTOMRIGHT")
+		spark:SetSize(5, 5)
+		absorb.spark = spark
+		self.HealPrediction.TotalAbsorb = absorb
 
 		-- Combat CombatFeedbackText
 		if (C.Unitframe.CombatText) then
@@ -707,23 +702,6 @@ local function CreateUnitLayout(self, unit)
 			self.classPowerBar = ns.classModule[K.Class](self, config, uconfig)
 		end
 
-		-- builderspender (white overlay when gaining/losing power)
-		if (C.Unitframe.BuilderSpender) then
-			local FeedbackFrame = CreateFrame("Frame", nil, self.Power, "BuilderSpenderFrame")
-			FeedbackFrame:SetFrameLevel(self.Power:GetFrameLevel())
-			FeedbackFrame:SetAllPoints(self.Power)
-			FeedbackFrame:SetPoint("TOPLEFT", self.Power, "TOPLEFT", 0, -1)
-			FeedbackFrame.BarTexture:SetTexture()
-
-			local FullPowerFrame = CreateFrame("Frame", nil, self.Power, "FullResourcePulseFrame")
-			FullPowerFrame:SetAllPoints(self.Power)
-			self.BuilderSpender = {
-				FeedbackFrame = FeedbackFrame,
-				FullPowerFrame = FullPowerFrame,
-			}
-			self.Power.Smooth = false
-		end
-
 		-- Power Prediction Bar (Display estimated cost of spells when casting)
 		if (C.Unitframe.PowerPredictionBar) then
 			local mainBar, altBar
@@ -763,7 +741,7 @@ local function CreateUnitLayout(self, unit)
 			self.PvPTimer:SetShadowOffset(K.Mult, -K.Scale(-3))
 			self.PvPTimer:SetPoint("BOTTOM", self.PvP, "TOP", 2, -24 )
 			self.PvPTimer.frequentUpdates = 0.5
-			self:Tag(self.PvPTimer, "[kkthnx:pvptimer]")
+			self:Tag(self.PvPTimer, "[KkthnxUI:PvPTimer]")
 		end
 
 		-- Combat icon
@@ -786,7 +764,7 @@ local function CreateUnitLayout(self, unit)
 	end
 
 	-- Focus & Target Frame
-	if (unit == 'target' or unit == 'focus') then
+	if (self.cUnit == "target" or self.cUnit == "focus") then
 		-- Questmob Icon
 		self.QuestIcon = self:CreateTexture(nil, "OVERLAY")
 		self.QuestIcon:SetSize(32, 32)
@@ -797,7 +775,7 @@ local function CreateUnitLayout(self, unit)
 		end)
 	end
 
-	if (unit == "player") then
+	if (self.cUnit == "player") then
 		if (C.Unitframe.ThreatValue) then
 			self.NumericalThreat = CreateFrame("Frame", nil, self)
 			self.NumericalThreat:SetSize(49, 18)
@@ -916,6 +894,7 @@ local function CreateUnitLayout(self, unit)
 			outsideAlpha = 0.8,
 		}
 	end
+
 	self.CFade = {
 		FadeInMin = .2,
 		FadeInMax = 1,
@@ -957,7 +936,7 @@ if (config.focustarget.enable) then
 end
 
 if (C.Unitframe.Party) then
-	local party = oUF:SpawnHeader("oUF_KkthnxParty", nil, (C.Raidframe.RaidAsParty and "custom [group:party][group:raid] hide;show") or "custom [group:party,nogroup:raid] show; hide",
+	local party = oUF:SpawnHeader("oUF_KkthnxParty", nil, (C.Raidframe.RaidAsParty and "custom [group:party][group:raid] hide;show") or "custom [@raid6, exists] hide; show",
 	"oUF-initialConfigFunction", [[
 	local header = self:GetParent()
 	self:SetWidth(header:GetAttribute("initial-width"))
@@ -971,8 +950,8 @@ if (C.Unitframe.Party) then
 	"groupFilter", "1, 2, 3, 4, 5, 6, 7, 8",
 	"groupingOrder", "1, 2, 3, 4, 5, 6, 7, 8",
 	"groupBy", "GROUP",
-	"showPlayer", true, -- Need to add this as an option.
-	"yOffset", K.Scale(-30)
+	"showPlayer", C.Unitframe.ShowPlayer, -- Need to add this as an option.
+	"yOffset", K.Scale(-32)
 	)
 
 	party:SetPoint(unpack(C.Position.UnitFrames.Party))
@@ -980,7 +959,7 @@ if (C.Unitframe.Party) then
 	Movers:RegisterFrame(party)
 end
 
-if (config.showBoss) then
+if (C.Unitframe.ShowBoss) then
 	local boss = {}
 	for i = 1, MAX_BOSS_FRAMES do
 		boss[i] = oUF:Spawn("boss"..i, "oUF_KkthnxBossFrame"..i)
@@ -994,7 +973,7 @@ if (config.showBoss) then
 	end
 end
 
-if (config.showArena) then
+if (C.Unitframe.ShowArena) then
 	local arena = {}
 	for i = 1, 5 do
 		arena[i] = oUF:Spawn("arena"..i, "oUF_KkthnxArenaFrame"..i)

@@ -2,7 +2,7 @@ local K, C, L = select(2, ...):unpack()
 if C.Unitframe.Enable ~= true then return end
 
 local _, ns = ...
-local oUF = ns.oUF
+local oUF = ns.oUF or oUF
 
 -- Event handler
 local oUFKkthnx = CreateFrame("Frame", "oUFKkthnx")
@@ -30,18 +30,6 @@ function oUFKkthnx:ADDON_LOADED(event, addon)
 		foc:SetAttribute("macrotext", "/focus mouseover")
 		SetOverrideBindingClick(Focuser, true, C.Unitframe.FocusModifier.."BUTTON"..C.Unitframe.FocusButton, "Focuser")
 	end
-
-	-- Border Texture
-	local prefix = ""
-	if (ns.config.borderType == "beauty") then
-		prefix = ""
-	elseif(ns.config.borderType == "kkthnx") then
-		prefix = "2"
-	end
-
-	ns.config.textureBorder = "Interface\\AddOns\\KkthnxUI\\Media\\Border\\"..prefix.."borderNormal"
-	ns.config.textureBorderWhite = "Interface\\AddOns\\KkthnxUI\\Media\\Border\\"..prefix.."borderWhite"
-	ns.config.textureBorderShadow = "Interface\\AddOns\\KkthnxUI\\Media\\Border\\"..prefix.."borderShadow"
 
 	self:UnregisterEvent(event)
 	self:RegisterEvent("MODIFIER_STATE_CHANGED") -- Showing auras

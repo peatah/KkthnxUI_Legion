@@ -172,21 +172,22 @@ SLASH_CLEARCHAT2 = "/clearchat"
 -- Test blizzard alert frames
 SlashCmdList.TEST_ACHIEVEMENT = function()
 	PlaySound("LFG_Rewards")
-
 	if not AchievementFrame then
 		AchievementFrame_LoadUI()
 	end
-
 	AchievementAlertSystem:AddAlert(112)
 	CriteriaAlertSystem:AddAlert(9023, "Doing great!")
+	GuildChallengeAlertSystem:AddAlert(3, 2, 5)
+	InvasionAlertSystem:AddAlert(678, "Legion", true, 1, 1)
+	GarrisonShipFollowerAlertSystem:AddAlert(592, "Ship", "Transport", "GarrBuilding_Barracks_1_H", 3, 2, 1)
+	GarrisonBuildingAlertSystem:AddAlert("Barracks")
+	LegendaryItemAlertSystem:AddAlert("\124cffa335ee\124Hitem:18832:0:0:0:0:0:0:0:0:0:0\124h[Brutality Blade]\124h\124r")
 	LootAlertSystem:AddAlert("\124cffa335ee\124Hitem:18832::::::::::\124h[Brutality Blade]\124h\124r", 1, 1, 100, 2, false, false, 0, false, false)
 	LootUpgradeAlertSystem:AddAlert("\124cffa335ee\124Hitem:18832::::::::::\124h[Brutality Blade]\124h\124r", 1, 1, 1, nil, nil, false)
 	MoneyWonAlertSystem:AddAlert(815)
-	NewRecipeLearnedAlertSystem:AddAlert(204)
-	GuildChallengeAlertSystem:AddAlert(3, 2, 5)
-	LegendaryItemAlertSystem:AddAlert("\124cffa335ee\124Hitem:18832:0:0:0:0:0:0:0:0:0:0\124h[Brutality Blade]\124h\124r")
 	StorePurchaseAlertSystem:AddAlert("\124cffa335ee\124Hitem:180545::::::::::\124h[Mystic Runesaber]\124h\124r", "", "", 214)
 	DigsiteCompleteAlertSystem:AddAlert(1)
+	NewRecipeLearnedAlertSystem:AddAlert(204)
 end
 SLASH_TEST_ACHIEVEMENT1 = "/testa"
 
@@ -312,22 +313,23 @@ SLASH_TEST_UI1 = "/testui"
 -- Reduce video settings to optimize performance
 local function BoostUI()
 
-	SetCVar("environmentDetail", 0.5)
-	SetCVar("extshadowquality", 0)
+	SetCVar("SSAO", 0)
+	SetCVar("ShadowTextureSize", 1024)
+	SetCVar("environmentDetail", 60)
 	SetCVar("farclip", 500)
-	SetCVar("ffx", 0)
 	SetCVar("groundeffectdensity", 16)
 	SetCVar("groundeffectdist", 1)
 	SetCVar("hwPCF", 1)
-	SetCVar("m2Faster", 1)
-	SetCVar("shadowLOD", 0)
+	SetCVar("hwPCF", 1)
+	SetCVar("reflectionMode", 0)
+	SetCVar("shadowMode", 0)
 	SetCVar("showfootprintparticles", 0)
-	SetCVar("showfootprints", 0)
 	SetCVar("skycloudlod", 1)
 	SetCVar("timingmethod", 1)
-	SetMultisampleFormat(1)
+	SetCVar("waterDetail", 0)
+	SetCVar("weatherDensity", 0)
 
-	StaticPopup_Show("BOOST_UI_RELOAD")
+	RestartGx()
 end
 
 -- Add a warning so we do not piss people off.
@@ -343,17 +345,6 @@ StaticPopupDialogs.BOOST_UI = {
 	preferredIndex = 3,
 }
 
-SLASH_BOOSTUI1 = "/boost"
+SLASH_BOOSTUI1 = "/boostfps"
 SLASH_BOOSTUI2 = "/boostui"
 SlashCmdList.BOOSTUI = function() StaticPopup_Show("BOOST_UI") end
-
-StaticPopupDialogs.BOOST_UI_RELOAD = {
-	text = L_POPUP_RELOADUI,
-	button1 = ACCEPT,
-	button2 = CANCEL,
-	OnAccept = function() ReloadUI() end,
-	timeout = 0,
-	whileDead = 1,
-	hideOnEscape = false,
-	preferredIndex = 3,
-}

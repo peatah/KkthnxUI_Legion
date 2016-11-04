@@ -1,4 +1,7 @@
--- Localization FOR ENUS & ENGB CLIENTS
+-- Localization for zhTW clients
+if (GetLocale() ~= "zhTW") then
+	return
+end
 
 -- AFKSpin Localization
 L_AFKSCREEN_NOGUILD = "No Guild"
