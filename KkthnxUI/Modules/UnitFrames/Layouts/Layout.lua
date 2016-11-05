@@ -20,90 +20,90 @@ local DataNormal = {
 		normal = pathNormal .. "Target",
 	},
 	vehicle = {-- w = width, h = height, x offset, y offset, t=texture, j = justify, s = size, c=Texture Coordinates, p = point
-		siz = {w = 175, h = 42}, -- size
-		tex = {w = 240, h = 121, x = 0, y = -8, t = "Interface\\Vehicles\\UI-Vehicle-Frame", c = {0, 1, 0, 1}}, --texture
-		hpb = {w = 108, h = 9, x = 30, y = 1,}, --Healthbar
-		hpt = {x = 0, y = 1, j = "CENTER", s = 13}, -- Healthtext
-		mpb = {w = 108, h = 9, x = 0, y = 0,}, -- Mana bar
-		mpt = {x = 0, y = 0, j = "CENTER", s = 13}, -- Mana bar text
-		nam = {w = 110, h = 10, x = 0, y = 22, j = "CENTER", s = 12}, -- Name text
-		por = {w = 56, h = 56, x = -64, y = 10,}, -- Portrait
-		glo = {w = 242, h = 92, x = 13, y = 0, t = "Interface\\Vehicles\\UI-VEHICLE-FRAME-FLASH", c = {0, 1, 0, 1}}, -- Glow texture
-	},
-	vehicleorganic = {
-		siz = {w = 175, h = 42},
-		tex = {w = 240, h = 121, x = 0, y = -8, t = "Interface\\Vehicles\\UI-Vehicle-Frame-Organic", c = {0, 1, 0, 1}},
-		hpb = {w = 108, h = 9, x = 30, y = 1,},
-		hpt = {x = 0, y = 1, j = "CENTER", s = 13},
-		mpb = {w = 108, h = 9, x = 0, y = 0,},
-		mpt = {x = 0, y = 0, j = "CENTER", s = 13},
-		nam = {w = 110, h = 10, x = 0, y = 22, j = "CENTER", s = 12},
-		por = {w = 56, h = 56, x = -64, y = 10,},
-		glo = {w = 242, h = 92, x = 13, y = 0, t = "Interface\\Vehicles\\UI-VEHICLE-FRAME-ORGANIC-FLASH", c = {0, 1, 0, 1}},
-	},
-	player = {
-		siz = {w = 175, h = 42},
-		tex = {w = 232, h = 100, x = -20, y = -7, t = pathNormal.."Target", c = {1, 0.09375, 0, 0.78125}},
-		hpb = {w = 118, h = 19, x = 50, y = 16,},
-		hpt = {x = 0, y = 1, j = "CENTER", s = 13},
-		mpb = {w = 118, h = 20, x = 0, y = 0,},
-		mpt = {x = 0, y = 0, j = "CENTER", s = 13},
-		nam = {w = 110, h = 10, x = 0, y = 17, j = "CENTER", s = 12},
-		por = {w = 64, h = 64, x = -41, y = 6,},
-		glo = {w = 242, h = 92, x = 13, y = 0, t = pathNormal.."Target-Flash", c = {0.945, 0, 0, 0.182}},
-	},
-	target = {-- and focus
-		siz = {w = 175, h = 42},
-		tex = {w = 230, h = 100, x = 20, y = -7, t = pathNormal.."Target", c = {0.09375, 1, 0, 0.78125}},
-		hpb = {w = 118, h = 19, x = -50, y = 16,},
-		hpt = {x = 0, y = 1, j = "CENTER", s = 13},
-		mpb = {w = 118, h = 20, x = 0, y = 0,},
-		mpt = {x = 0, y = 0, j = "CENTER", s = 13},
-		nam = {w = 110, h = 10, x = 0, y = 17, j = "CENTER", s = 12},
-		por = {w = 64, h = 64, x = 41, y = 6,},
-		glo = {w = 239, h = 94, x = -24, y = 1, t = pathNormal.."Target-Flash", c = {0, 0.945, 0, 0.182}},
-	},
-	targettarget = {-- and focus target
-		siz = {w = 85, h = 20},
-		tex = {w = 128, h = 64, x = 16, y = -10, t = pathNormal.."TargetOfTarget", c = {0, 1, 0, 1}},
-		hpb = {w = 43, h = 6, x = 2, y = 14,},
-		hpt = {x = -2, y = 0, j = "CENTER", s = 10},
-		mpb = {w = 37, h = 7, x = -1, y = 0,},
-		nam = {w = 65, h = 10, x = 11, y = -18, j = "LEFT", s = 12},
-		por = {w = 40, h = 40, x = -40, y = 10,},
-	},
-	pet = {
-		siz = {w = 110, h = 37},
-		tex = {w = 128, h = 64, x = 4, y = -10, t = pathNormal.."Pet", c = {0, 1, 0, 1}},
-		hpb = {w = 69, h = 8, x = 16, y = 7,},
-		hpt = {x = 1, y = 1, j = "CENTER", s = 10},
-		mpb = {w = 69, h = 8, x = 0, y = 0,},
-		mpt = {x = 0, y = 0, j = "CENTER", s = 13},
-		--nam = {w = 110, h = 10, x = 20, y = 15, j = "LEFT", s = 14},
-		por = {w = 37, h = 37, x = -41, y = 10,},
-		glo = {w = 128, h = 64, x = -4, y = 12, t = pathNormal.."Party-Flash", c = {0, 1, 1, 0}},
-	},
-	party = {
-		siz = {w = 115, h = 35},
-		tex = {w = 128, h = 64, x = 2, y = -16, t = pathNormal.."Party", c = {0, 1, 0, 1}},
-		hpb = {w = 69, h = 7, x = 17, y = 17,},
-		hpt = {x = 1, y = 1, j = "CENTER", s = 10},
-		mpb = {w = 70, h = 7, x = 0, y = 0,},
-		mpt = {x = 0, y = -2, j = "CENTER", s = 12},
-		nam = {w = 110, h = 10, x = 0, y = 15, j = "CENTER", s = 12},
-		por = {w = 37, h = 37, x = -39, y = 7,},
-		glo = {w = 128, h = 63, x = -3, y = 4, t = pathNormal.."Party-Flash", c = {0, 1, 0, 1}},
-	},
-	boss = {
-		siz = {w = 132, h = 46},
-		tex = {w = 250, h = 129, x = 31, y = -24, t = pathNormal.."Boss", c = {0, 1, 0, 1}},
-		hpb = {w = 115, h = 9, x = -38, y = 17,},
-		hpt = {x = 0, y = 0, j = "CENTER", s = 13},
-		mpb = {w = 115, h = 8, x = 0, y = -3,},
-		mpt = {x = 0, y = 0, j = "CENTER", s = 13},
-		nam = {w = 110, h = 10, x = 0, y = 16, j = "CENTER", s = 12},
-		glo = {w = 241, h = 100, x = -2, y = 3, t = pathNormal.."Boss-Flash", c = {0.0, 0.945, 0.0, 0.73125}},
-	},
+	siz = {w = 175, h = 42}, -- size
+	tex = {w = 240, h = 121, x = 0, y = -8, t = "Interface\\Vehicles\\UI-Vehicle-Frame", c = {0, 1, 0, 1}}, --texture
+	hpb = {w = 108, h = 9, x = 30, y = 1,}, --Healthbar
+	hpt = {x = 0, y = 1, j = "CENTER", s = 13}, -- Healthtext
+	mpb = {w = 108, h = 9, x = 0, y = 0,}, -- Mana bar
+	mpt = {x = 0, y = 0, j = "CENTER", s = 13}, -- Mana bar text
+	nam = {w = 110, h = 10, x = 0, y = 22, j = "CENTER", s = 12}, -- Name text
+	por = {w = 56, h = 56, x = -64, y = 10,}, -- Portrait
+	glo = {w = 242, h = 92, x = 13, y = 0, t = "Interface\\Vehicles\\UI-VEHICLE-FRAME-FLASH", c = {0, 1, 0, 1}}, -- Glow texture
+},
+vehicleorganic = {
+	siz = {w = 175, h = 42},
+	tex = {w = 240, h = 121, x = 0, y = -8, t = "Interface\\Vehicles\\UI-Vehicle-Frame-Organic", c = {0, 1, 0, 1}},
+	hpb = {w = 108, h = 9, x = 30, y = 1,},
+	hpt = {x = 0, y = 1, j = "CENTER", s = 13},
+	mpb = {w = 108, h = 9, x = 0, y = 0,},
+	mpt = {x = 0, y = 0, j = "CENTER", s = 13},
+	nam = {w = 110, h = 10, x = 0, y = 22, j = "CENTER", s = 12},
+	por = {w = 56, h = 56, x = -64, y = 10,},
+	glo = {w = 242, h = 92, x = 13, y = 0, t = "Interface\\Vehicles\\UI-VEHICLE-FRAME-ORGANIC-FLASH", c = {0, 1, 0, 1}},
+},
+player = {
+	siz = {w = 175, h = 42},
+	tex = {w = 232, h = 100, x = -20, y = -7, t = pathNormal.."Target", c = {1, 0.09375, 0, 0.78125}},
+	hpb = {w = 118, h = 19, x = 50, y = 16,},
+	hpt = {x = 0, y = 1, j = "CENTER", s = 13},
+	mpb = {w = 118, h = 20, x = 0, y = 0,},
+	mpt = {x = 0, y = 0, j = "CENTER", s = 13},
+	nam = {w = 110, h = 10, x = 0, y = 17, j = "CENTER", s = 12},
+	por = {w = 64, h = 64, x = -41, y = 6,},
+	glo = {w = 242, h = 92, x = 13, y = 0, t = pathNormal.."Target-Flash", c = {0.945, 0, 0, 0.182}},
+},
+target = {-- and focus
+siz = {w = 175, h = 42},
+tex = {w = 230, h = 100, x = 20, y = -7, t = pathNormal.."Target", c = {0.09375, 1, 0, 0.78125}},
+hpb = {w = 118, h = 19, x = -50, y = 16,},
+hpt = {x = 0, y = 1, j = "CENTER", s = 13},
+mpb = {w = 118, h = 20, x = 0, y = 0,},
+mpt = {x = 0, y = 0, j = "CENTER", s = 13},
+nam = {w = 110, h = 10, x = 0, y = 17, j = "CENTER", s = 12},
+por = {w = 64, h = 64, x = 41, y = 6,},
+glo = {w = 239, h = 94, x = -24, y = 1, t = pathNormal.."Target-Flash", c = {0, 0.945, 0, 0.182}},
+},
+targettarget = {-- and focus target
+siz = {w = 85, h = 20},
+tex = {w = 128, h = 64, x = 16, y = -10, t = pathNormal.."TargetOfTarget", c = {0, 1, 0, 1}},
+hpb = {w = 43, h = 6, x = 2, y = 14,},
+hpt = {x = -2, y = 0, j = "CENTER", s = 10},
+mpb = {w = 37, h = 7, x = -1, y = 0,},
+nam = {w = 65, h = 10, x = 11, y = -18, j = "LEFT", s = 12},
+por = {w = 40, h = 40, x = -40, y = 10,},
+},
+pet = {
+	siz = {w = 110, h = 37},
+	tex = {w = 128, h = 64, x = 4, y = -10, t = pathNormal.."Pet", c = {0, 1, 0, 1}},
+	hpb = {w = 69, h = 8, x = 16, y = 7,},
+	hpt = {x = 1, y = 1, j = "CENTER", s = 10},
+	mpb = {w = 69, h = 8, x = 0, y = 0,},
+	mpt = {x = 0, y = 0, j = "CENTER", s = 13},
+	--nam = {w = 110, h = 10, x = 20, y = 15, j = "LEFT", s = 14},
+	por = {w = 37, h = 37, x = -41, y = 10,},
+	glo = {w = 128, h = 64, x = -4, y = 12, t = pathNormal.."Party-Flash", c = {0, 1, 1, 0}},
+},
+party = {
+	siz = {w = 115, h = 35},
+	tex = {w = 128, h = 64, x = 2, y = -16, t = pathNormal.."Party", c = {0, 1, 0, 1}},
+	hpb = {w = 69, h = 7, x = 17, y = 17,},
+	hpt = {x = 1, y = 1, j = "CENTER", s = 10},
+	mpb = {w = 70, h = 7, x = 0, y = 0,},
+	mpt = {x = 0, y = -2, j = "CENTER", s = 12},
+	nam = {w = 110, h = 10, x = 0, y = 15, j = "CENTER", s = 12},
+	por = {w = 37, h = 37, x = -39, y = 7,},
+	glo = {w = 128, h = 63, x = -3, y = 4, t = pathNormal.."Party-Flash", c = {0, 1, 0, 1}},
+},
+boss = {
+	siz = {w = 132, h = 46},
+	tex = {w = 250, h = 129, x = 31, y = -24, t = pathNormal.."Boss", c = {0, 1, 0, 1}},
+	hpb = {w = 115, h = 9, x = -38, y = 17,},
+	hpt = {x = 0, y = 0, j = "CENTER", s = 13},
+	mpb = {w = 115, h = 8, x = 0, y = -3,},
+	mpt = {x = 0, y = 0, j = "CENTER", s = 13},
+	nam = {w = 110, h = 10, x = 0, y = 16, j = "CENTER", s = 12},
+	glo = {w = 241, h = 100, x = -2, y = 3, t = pathNormal.."Boss-Flash", c = {0.0, 0.945, 0.0, 0.73125}},
+},
 }
 
 local DataFat = {
@@ -226,20 +226,6 @@ local function GetTargetTexture(cUnit, type)
 		return data[type]
 	else
 		return data["normal"]
-	end
-end
-
-local function updatePlayerStatus(element, ...)
-	local self = element.__owner
-	if UnitAffectingCombat("player") then
-		self.Resting:Hide()
-		self.Level:Hide()
-	elseif IsResting() then
-		self.Resting:Show()
-		self.Level:Hide()
-	elseif not self.Level:IsVisible() then
-		self.Level:Show()
-		self.Level:UpdateTag()
 	end
 end
 
@@ -740,7 +726,7 @@ local function CreateUnitLayout(self, unit)
 		if (self.PvP) then
 			self.PvPTimer = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
 			self.PvPTimer:SetShadowOffset(K.Mult,-K.Mult)
-			self.PvPTimer:SetPoint("BOTTOM", self.PvP, "TOP", 2, -24 )
+			self.PvPTimer:SetPoint("BOTTOM", self.PvP, "TOP", 0, -3)
 			self.PvPTimer.frequentUpdates = 0.5
 			self:Tag(self.PvPTimer, "[KkthnxUI:PvPTimer]")
 		end
@@ -749,13 +735,11 @@ local function CreateUnitLayout(self, unit)
 		self.Combat = self:CreateTexture(nil, "OVERLAY")
 		self.Combat:SetPoint("CENTER", self.Level, 1, 0)
 		self.Combat:SetSize(31, 33)
-		self.Combat.PostUpdate = updatePlayerStatus
 
 		-- Resting icon
 		self.Resting = self:CreateTexture(nil, "OVERLAY")
 		self.Resting:SetPoint("CENTER", self.Level, -0.5, 0)
 		self.Resting:SetSize(31, 34)
-		self.Resting.PostUpdate = updatePlayerStatus
 
 		-- player frame vehicle/normal update
 		self:RegisterEvent("UNIT_ENTERED_VEHICLE", UpdatePlayerFrame)
@@ -904,6 +888,10 @@ local function CreateUnitLayout(self, unit)
 	return self
 end
 
+local function FixPetUpdate(self, event, ...) -- Petframe doesnt always update correctly
+	oUF_KkthnxPet:GetScript("OnAttributeChanged")(oUF_KkthnxPet, "unit", "pet")
+end
+
 -- Spawn our frames.
 oUF:RegisterStyle("oUF_Kkthnx", CreateUnitLayout)
 oUF:SetActiveStyle("oUF_Kkthnx")
@@ -915,6 +903,7 @@ Movers:RegisterFrame(player)
 local pet = oUF:Spawn("pet", "oUF_KkthnxPet")
 pet:SetPoint(unpack(C.Position.UnitFrames.Pet))
 Movers:RegisterFrame(pet)
+player:RegisterEvent("UNIT_PET", FixPetUpdate)
 
 local target = oUF:Spawn("target", "oUF_KkthnxTarget")
 target:SetPoint(unpack(C.Position.UnitFrames.Target))
@@ -953,11 +942,11 @@ if (C.Unitframe.Party) then
 	"groupBy", "GROUP",
 	"showPlayer", C.Unitframe.ShowPlayer, -- Need to add this as an option.
 	"yOffset", K.Scale(-32)
-	)
+)
 
-	party:SetPoint(unpack(C.Position.UnitFrames.Party))
-	party:SetScale(1)
-	Movers:RegisterFrame(party)
+party:SetPoint(unpack(C.Position.UnitFrames.Party))
+party:SetScale(1)
+Movers:RegisterFrame(party)
 end
 
 if (C.Unitframe.ShowBoss) then
