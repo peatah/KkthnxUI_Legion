@@ -198,6 +198,7 @@ C["Misc"] = {
 	["AutoSellGrays"] = true,
 	["BGSpam"] = false,
 	["ColorPicker"] = false,
+	["CombatText"] = true,
 	["DurabilityWarninig"] = false,
 	["EnhancedMail"] = true,
 	["Errors"] = true,

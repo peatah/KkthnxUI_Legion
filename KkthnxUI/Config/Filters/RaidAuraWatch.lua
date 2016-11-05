@@ -285,7 +285,7 @@ K.RaidBuffsTracking = {
 		{114163, "BOTTOMLEFT", {0.81, 0.85, 0.1}, true},	 -- Eternal Flame
 	},
 	SHAMAN = {
-		{61295, "TOPLEFT", {0.7, 0.3, 0.7}}, -- Riptide
+		{61295, "TOPRIGHT", {0.7, 0.3, 0.7}}, -- Riptide
 	},
 	MONK = {
 		{119611, "TOPLEFT", {0.8, 0.4, 0.8}},	 -- Renewing Mist

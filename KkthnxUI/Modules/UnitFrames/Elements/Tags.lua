@@ -71,7 +71,7 @@ end
 oUF.Tags.Events["KkthnxUI:NameShort"] = "UNIT_NAME_UPDATE PARTY_LEADER_CHANGED GROUP_ROSTER_UPDATE"
 oUF.Tags.Methods["KkthnxUI:NameShort"] = function(unit)
 	local Name = UnitName(unit) or UNKNOWN
-	return K.ShortenString(Name, 5, false)
+	return K.ShortenString(Name, 3, false)
 end
 
 oUF.Tags.Events["KkthnxUI:NameMedium"] = "UNIT_NAME_UPDATE"
@@ -113,7 +113,7 @@ if (not oUF.Tags["KkthnxUI:RaidRole"]) then
             elseif (Role == "HEALER") then
                 Role = "+"
             elseif (Role == "DAMAGER") then
-                Role = "-"
+                Role = ""
             elseif (Role == "NONE") then
                 Role = ""
             end

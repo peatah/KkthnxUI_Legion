@@ -373,7 +373,8 @@ local function CreateRaidLayout(self, unit)
 		RaidDebuffs.count:SetTextColor(1, .9, 0)
 		RaidDebuffs.SetDebuffTypeColor = RaidDebuffs.SetBackdropBorderColor
 		RaidDebuffs.Debuffs = K.RaidDebuffsTracking
-
+		-- RaidDebuffs:SetBorderTexture("white")
+		-- RaidDebuffs:SetBorderColor(0.38, 0.38, 0.38)
 		self.RaidDebuffs = RaidDebuffs
 	end
 
@@ -416,14 +417,14 @@ local function CreateRaidLayout(self, unit)
 	end
 
 	-- Playertarget border
-	self:RegisterEvent("PLAYER_TARGET_CHANGED", function()
-		if (UnitIsUnit("target", self.unit)) then
-			self:SetBorderColor(1, 1, 1)
-		else
-			self:SetBorderTexture("white")
-			self:SetBorderColor(0.38, 0.38, 0.38)
-		end
-	end)
+	-- self:RegisterEvent("PLAYER_TARGET_CHANGED", function()
+	-- 	if (UnitIsUnit("target", self.unit)) then
+	-- 		self:SetBorderColor(1, 1, 1)
+	-- 	else
+	-- 		self:SetBorderTexture("white")
+	-- 		self:SetBorderColor(0.38, 0.38, 0.38)
+	-- 	end
+	-- end)
 
 	-- Range check
 	self.Range = {

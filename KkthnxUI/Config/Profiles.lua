@@ -56,6 +56,7 @@ C["Raidframe"]["Width"] = 32
 C["Raidframe"]["ManabarShow"] = false
 C["Raidframe"]["IndicatorSize"] = 10
 C["Raidframe"]["IconSize"] = 12
+C["Raidframe"]["RaidAsParty"] = true
 C["Unitframe"]["Scale"] = 1.2
 -- C["Unitframe"]["Party"] = false
 C["Unitframe"]["FlatClassPortraits"] = true
