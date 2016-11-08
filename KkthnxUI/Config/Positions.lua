@@ -31,13 +31,14 @@ C["Position"] = {
 	["Vehicle"] = {"TOP", "Minimap", "BOTTOM", 0, -18},
 	["VehicleBar"] = {"BOTTOMRIGHT", "ActionButton1", "BOTTOMLEFT", -3, 0},
 	["WorldMap"] = {"CENTER", "UIParent", "CENTER", 0, 100},
+	["ObjectiveTracker"] = {"TOPRIGHT", "UIParent", "TOPRIGHT", -160, -270},
 	-- Unitframe positions
 	UnitFrames = {
 		["Arena"] = {"BOTTOMRIGHT", "UIParent", "RIGHT", -140, 140},
 		["Boss"] = {"BOTTOMRIGHT", "UIParent", "RIGHT", -140, 140},
 		["Focus"] = {"BOTTOMRIGHT", "oUF_KkthnxPlayer", "TOPLEFT", -60, 30},
 		["FocusCastbar"] = {"BOTTOM", "oUF_KkthnxFocus", "TOP", 0, 50},
-		["FocusTarget"] = {"TOPLEFT", "oUF_KkthnxFocus", "BOTTOMRIGHT", -78, -16},
+		["FocusTarget"] = {"TOPLEFT", "oUF_KkthnxFocus", "BOTTOMRIGHT", -38, -16},
 		["Party"] = {"TOPLEFT", "UIParent", "TOPLEFT", 6, -175},
 		["Pet"] = {"TOPLEFT", "oUF_KkthnxPlayer", "BOTTOMLEFT", 0, -12},
 		["Player"] = {"BOTTOMRIGHT", "ActionBarAnchor", "TOPLEFT", -9, 175},
