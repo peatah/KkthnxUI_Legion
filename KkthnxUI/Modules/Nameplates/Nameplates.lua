@@ -383,7 +383,7 @@ function Plates:UpdateHealthColor()
 	local Red, Green, Blue = Plates.GetColor(self)
 
 	self.NewPlate.Health:SetStatusBarColor(Red, Green, Blue)
-	self.NewPlate.Health.Background:SetColorTexture(red, Green, Blue, 0.2)
+	self.NewPlate.Health.Background:SetColorTexture(0,0,0,1)
 	self.NewPlate.Name:SetTextColor(Red, Green, Blue)
 
 	if self.isClass or self.isTapped then return end
@@ -405,10 +405,10 @@ function Plates:UpdateHealthColor()
 				-- No Threat
 				if K.Role == "Tank" then
 					self.NewPlate.Health:SetStatusBarColor(badR, badG, badB)
-					self.NewPlate.Health.Background:SetColorTexture(badR, badG, badB, 0.2)
+					self.NewPlate.Health.Background:SetColorTexture(0,0,0,1)
 				else
 					self.NewPlate.Health:SetStatusBarColor(goodR, goodG, goodB)
-					self.NewPlate.Health.Background:SetColorTexture(goodR, goodG, goodB, 0.2)
+					self.NewPlate.Health.Background:SetColorTexture(0,0,0,1)
 				end
 			end
 		else
@@ -417,15 +417,15 @@ function Plates:UpdateHealthColor()
 				-- Have Threat
 				if K.Role == "Tank" then
 					self.NewPlate.Health:SetStatusBarColor(goodR, goodG, goodB)
-					self.NewPlate.Health.Background:SetColorTexture(goodR, goodG, goodB, 0.2)
+					self.NewPlate.Health.Background:SetColorTexture(0,0,0,1)
 				else
 					self.NewPlate.Health:SetStatusBarColor(badR, badG, badB)
-					self.NewPlate.Health.Background:SetColorTexture(badR, badG, badB, 0.2)
+					self.NewPlate.Health.Background:SetColorTexture(0,0,0,1)
 				end
 			else
 				-- Losing/Gaining Threat
 				self.NewPlate.Health:SetStatusBarColor(transitionR, transitionG, transitionB)
-				self.NewPlate.Health.Background:SetColorTexture(transitionR, transitionG, transitionB, 0.2)
+				self.NewPlate.Health.Background:SetColorTexture(0,0,0,1)
 			end
 		end
 	end
@@ -1390,7 +1390,7 @@ local function UpdateHealthColor(unitFrame)
 
 	if (r ~= unitFrame.r or g ~= unitFrame.g or b ~= unitFrame.b) then
 		unitFrame.healthBar:SetStatusBarColor(r, g, b)
-		unitFrame.healthBar.Background:SetColorTexture(r, g, b, 0.2)
+		unitFrame.healthBar.Background:SetColorTexture(0,0,0,1)
 		unitFrame.name:SetTextColor(r, g, b)
 		if threat then
 			local reaction = K.Colors.reaction[UnitReaction(unit, "player")]
