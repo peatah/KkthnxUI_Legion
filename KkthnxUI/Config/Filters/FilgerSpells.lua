@@ -413,6 +413,8 @@ C["filger_spells"] = {
 			{spellID = 207744, unitID = "target", caster = "player", filter = "DEBUFF"},
 			-- Frailty
 			{spellID = 224509, unitID = "target", caster = "player", filter = "DEBUFF"},
+			-- Bloodlet
+			{spellID = 207690, unitID = "target", caster = "player", filter = "DEBUFF"},
 		},
 		{
 			Name = "T_DE/BUFF_BAR",
@@ -701,6 +703,8 @@ C["filger_spells"] = {
 			{spellID = 215648, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Burning Intensity (Crit, Proc) [Infernal Writ]
 			{spellID = 215816, unitID = "player", caster = "player", filter = "BUFF"},
+			-- Maddening Whispers (Damage, Proc) [Wriggling Sinew]
+ 			{spellID = 222046, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Healing
 			-- Constellations (Mastery, Haste, or Critical Strike, Proc) [Etraeus' Celestial Map]
 			{spellID = 225136, unitID = "player", caster = "player", filter = "BUFF"},
@@ -1244,6 +1248,8 @@ C["filger_spells"] = {
 			{spellID = 215648, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Burning Intensity (Crit, Proc) [Infernal Writ]
 			{spellID = 215816, unitID = "player", caster = "player", filter = "BUFF"},
+			-- Maddening Whispers (Damage, Proc) [Wriggling Sinew]
+ 			{spellID = 222046, unitID = "player", caster = "player", filter = "BUFF"},
 
 			-- Enchants
 			-- Mark of the Claw (Crit and Haste)
@@ -1925,6 +1931,8 @@ C["filger_spells"] = {
 			{spellID = 115750, filter = "CD"},
 			-- Holy Avenger
 			{spellID = 105809, filter = "CD"},
+			-- Holy Wrath
+  		{spellID = 210220, filter = "CD"},
 			-- Aura Mastery
 			{spellID = 31821, filter = "CD"},
 			-- Blessing of Sacrifice
@@ -2068,6 +2076,8 @@ C["filger_spells"] = {
 			{spellID = 215648, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Burning Intensity (Crit, Proc) [Infernal Writ]
 			{spellID = 215816, unitID = "player", caster = "player", filter = "BUFF"},
+			-- Maddening Whispers (Damage, Proc) [Wriggling Sinew]
+ 			{spellID = 222046, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Healing
 			-- Constellations (Mastery, Haste, or Critical Strike, Proc) [Etraeus' Celestial Map]
 			{spellID = 225136, unitID = "player", caster = "player", filter = "BUFF"},
@@ -2675,6 +2685,8 @@ C["filger_spells"] = {
 			{spellID = 215648, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Burning Intensity (Crit, Proc) [Infernal Writ]
 			{spellID = 215816, unitID = "player", caster = "player", filter = "BUFF"},
+			-- Maddening Whispers (Damage, Proc) [Wriggling Sinew]
+ 			{spellID = 222046, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Healing
 			-- Constellations (Mastery, Haste, or Critical Strike, Proc) [Etraeus' Celestial Map]
 			{spellID = 225136, unitID = "player", caster = "player", filter = "BUFF"},
@@ -2723,7 +2735,7 @@ C["filger_spells"] = {
 			Position = {"LEFT", T_DE_BUFF_BAR_Anchor},
 
 			-- Earth Shield
-			--BETA {spellID = 974, unitID = "target", caster = "player", filter = "BUFF"},
+			{spellID = 204288, unitID = "target", caster = "player", filter = "BUFF"},
 			-- Riptide
 			{spellID = 61295, unitID = "target", caster = "player", filter = "BUFF"},
 		},
@@ -2914,6 +2926,8 @@ C["filger_spells"] = {
 			{spellID = 215648, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Burning Intensity (Crit, Proc) [Infernal Writ]
 			{spellID = 215816, unitID = "player", caster = "player", filter = "BUFF"},
+			-- Maddening Whispers (Damage, Proc) [Wriggling Sinew]
+ 			{spellID = 222046, unitID = "player", caster = "player", filter = "BUFF"},
 
 			-- Enchants
 			-- Mark of the Claw (Crit and Haste)
@@ -3805,14 +3819,20 @@ C["filger_spells"] = {
 			-- Momentum (debuff)
 			{spellID = 198108, unitID = "player", caster = "all", filter = "DEBUFF"},
 			-- Dragons of Nightmare
+			-- Mark of Ysondre
+			{spellID = 203102, unitID = "player", caster = "all", filter = "DEBUFF"},
+			-- Mark of Taerar
+			{spellID = 203121, unitID = "player", caster = "all", filter = "DEBUFF"},
+			-- Mark of Emeriss
+			{spellID = 203125, unitID = "player", caster = "all", filter = "DEBUFF"},
+			-- Mark of Lethon
+			{spellID = 203124, unitID = "player", caster = "all", filter = "DEBUFF"},
 			-- Nightmare Bloom (standing in, should be at least 1 player)
 			{spellID = 207681, unitID = "player", caster = "all", filter = "DEBUFF"},
 			-- Defiled Vines (root, magic)
 			{spellID = 203770, unitID = "player", caster = "all", filter = "DEBUFF"},
 			-- Volatile Infection (AoE dot)
 			{spellID = 203787, unitID = "player", caster = "all", filter = "DEBUFF"},
-			-- Shadow Burst (dot, stacks)
-			{spellID = 204044, unitID = "player", caster = "all", filter = "DEBUFF"},
 			-- Cenarius
 			-- Creeping Nightmares (dot, stacks)
 			{spellID = 210279, unitID = "player", caster = "all", filter = "DEBUFF"},

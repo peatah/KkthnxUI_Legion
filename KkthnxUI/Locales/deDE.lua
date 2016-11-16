@@ -1,3 +1,5 @@
+local K, C, L = select(2, ...):unpack()
+
 -- Localization for deDE clients
 if (GetLocale() ~= "deDE") then
 	return
@@ -76,24 +78,62 @@ L_DATABARS_HONOR_LEFTCLICK = "|cffccccccLinksklick: Öffnet die Ehreübersicht|r
 L_DATABARS_HONOR_RIGHTCLICK = "|cffccccccRechtsklick: Öffnet die Ehretalentübersicht|r"
 
 -- DataText Localization
+L_DATATEXT_ARMERROR = "Kann keine Daten für 'Ruf zu den Waffen' erhalten."
+L_DATATEXT_AVOIDANCESHORT = "Verm: "
+L_DATATEXT_BAGS = "Bags"
+L_DATATEXT_BANDWIDTH = "Bandbreite: "
 L_DATATEXT_BASESASSAULTED = "Stützpunkte angegriffen:"
 L_DATATEXT_BASESDEFENDED = "Stützpunkte verteidigt:"
 L_DATATEXT_CARTS_CONTROLLED = "Loren kontrolliert:"
+L_DATATEXT_COMBATTIME = "Kampf/Arena Zeit"
+L_DATATEXT_COORDS = "Coords"
 L_DATATEXT_DEMOLISHERSDESTROYED = "Verwüster zerstört:"
+L_DATATEXT_DOWNLOAD = "Download: "
 L_DATATEXT_FLAGSCAPTURED = "Flaggen eingenommen:"
 L_DATATEXT_FLAGSRETURNED = "Flaggen zurückgebracht:"
+L_DATATEXT_FPS = "FPS"
 L_DATATEXT_GATESDESTROYED = "Tore zerstört:"
+L_DATATEXT_GOLDDEFICIT = "Unterschied: "
+L_DATATEXT_GOLDEARNED = "Verdient: "
+L_DATATEXT_GOLDPROFIT = "Gewinn: "
+L_DATATEXT_GOLDSERVER = "Server: "
+L_DATATEXT_GOLDSPENT = "Ausgegeben: "
+L_DATATEXT_GOLDTOTAL = "Total: "
 L_DATATEXT_GRAVEYARDSASSAULTED = "Friedhöfe angegriffen:"
 L_DATATEXT_GRAVEYARDSDEFENDED = "Friedhöfe verteidigt:"
+L_DATATEXT_GUILDNOGUILD = "Keine Gilde"
+L_DATATEXT_LOOTSPEC_CHANGE = "|cffFFFFFFRight Click:|r Change Loot Specialization|r"
+L_DATATEXT_LOOTSPEC_SHOW = "|cffFFFFFFShift + Left Click:|r Show Talent Specialization UI|r"
+L_DATATEXT_LOOTSPEC_SPEC = "Spec"
+L_DATATEXT_LOOTSPEC_TALENT = "|cffFFFFFFLeft Click:|r Change Talent Specialization|r"
+L_DATATEXT_MICROMENU = "Mikromenu"
+L_DATATEXT_MS = "MS"
+L_DATATEXT_NODUNGEONARM = "Keine Instanz bietet derzeit eine 'Ruf zu den Waffen' Belohnung an."
+L_DATATEXT_NOORDERHALLUNLOCK = "Du hast Deine Ordenshalle noch nicht freigeschaltet, nun aber los!"
+L_DATATEXT_NOORDERHALLWO = "Ordenshalle+"
 L_DATATEXT_ORB_POSSESSIONS = "Kugel in besitz:"
+L_DATATEXT_ORDERHALL = "Ordenshalle"
+L_DATATEXT_ORDERHALLREPORT = "Klick: Öffnet den Ordenshallenbericht"
+L_DATATEXT_TOTALBAGSSLOTS = "Taschenplätze Gesamt:"
+L_DATATEXT_TOTALFREEBAGSSLOTS = "Taschenplätze frei:"
+L_DATATEXT_TOTALMEMORY = "Speichernutzung Übersicht:"
+L_DATATEXT_TOTALUSEDBAGSSLOTS = "Taschenplätze benutzt:"
 L_DATATEXT_TOWERSASSAULTED = "Türme angegriffen:"
 L_DATATEXT_TOWERSDEFENDED = "Türme verteidigt:"
 L_DATATEXT_VICTORY_POINTS = "Siegpunkte:"
-L_DATATEXT_TOTALMEMORY = "Speichernutzung Übersicht:"
-L_DATATEXT_DOWNLOAD = "Download: "
-L_DATATEXT_BANDWIDTH = "Bandbreite: "
-L_DATATEXT_FPS = "FPS"
-L_DATATEXT_MS = "MS"
+L_DATATEXT_SLOTS = {
+	[1] = {1, INVTYPE_HEAD, 1000},
+	[2] = {3, INVTYPE_SHOULDER, 1000},
+	[3] = {5, INVTYPE_ROBE, 1000},
+	[4] = {6, INVTYPE_WAIST, 1000},
+	[5] = {9, INVTYPE_WRIST, 1000},
+	[6] = {10, INVTYPE_HAND, 1000},
+	[7] = {7, INVTYPE_LEGS, 1000},
+	[8] = {8, INVTYPE_FEET, 1000},
+	[9] = {16, INVTYPE_WEAPONMAINHAND, 1000},
+	[10] = {17, INVTYPE_WEAPONOFFHAND, 1000},
+	[11] = {18, INVTYPE_RANGED, 1000}
+}
 
 -- AutoInvite Localization
 L_INVITE_ENABLE = "Automatische Einladungen aktiviert: "
@@ -104,10 +144,10 @@ L_INFO_DISBAND = "Auflösung der Gruppe..."
 L_INFO_DUEL = "Duellaufforderung abgelehnt von "
 L_INFO_PET_DUEL = "Haustierkampfduell abgelehnt von "
 L_INFO_INVITE = "Akzeptiere Einladung von "
-L_INFO_SETTINGS_DBM = "Tippe /settings DBM, um die Einstellungen für DBM zu übernehmen."
-L_INFO_SETTINGS_MSBT = "Tippe /settings MSBT, um die Einstellungen für MSBT zu übernehmen."
-L_INFO_SETTINGS_SKADA = "Tippe /settings Skada, um die Einstellungen für Skada zu übernehmen."
-L_INFO_SETTINGS_Abu = "Tippe /settings Abu, um die Einstellungen für oUF_Abu zu übernehmen."
+L_INFO_SETTINGS_DBM = "Tippe /settings dbm, um die Einstellungen für DBM zu übernehmen."
+L_INFO_SETTINGS_MSBT = "Tippe /settings msbt, um die Einstellungen für MSBT zu übernehmen."
+L_INFO_SETTINGS_SKADA = "Tippe /settings skada, um die Einstellungen für Skada zu übernehmen."
+L_INFO_SETTINGS_Abu = "Tippe /settings abu, um die Einstellungen für oUF_Abu zu übernehmen."
 L_INFO_SETTINGS_ALL = "Tippe /settings all, um die Einstellungen für alle Modifikationen zu übernehmen."
 L_INFO_NOT_INSTALLED = " ist nicht installiert."
 L_INFO_SKIN_DISABLED1 = "Skin für "
@@ -151,6 +191,8 @@ L_MISC_REPAIR = "Warnung! Du musst Deine Ausrüstung so schnell wie möglich rep
 L_MISC_SILVERSHORT = "|cffc7c7cfs|r"
 L_MISC_UI_OUTDATED = "Achtung! Deine Version von KkthnxUI ist veraltet. Du kansnt die neueste Version von Curse.com downloaden. Benutzte die Curse App und lasse Deine KkthnxUI automatisch vom Client aktualisieren!"
 L_MISC_UNDRESS = "Ausziehen"
+L_MISC_ENTERCOMBAT = "+ Kampfbeginn"
+L_MISC_LEAVECOMBAT = "- Kampfende"
 
 -- Popup Localization
 L_POPUP_ARMORY = "Armory"
@@ -233,3 +275,52 @@ L_SLASHCMD_HELP = {
     "Chatkopie aufrufen ->Rechtsunten im Chat auf das Symbol klicken.",
     "Mit der mittleren Maustaste auf das Chatkopie Symbol klicken um zu würfeln -> /roll.",
 }
+
+-- F.A.Q
+L_FAQ_BUTTON_01 = "General"
+L_FAQ_BUTTON_02 = "Action Bars"
+L_FAQ_BUTTON_03 = "Unit Frames"
+L_FAQ_BUTTON_04 = "Chat"
+L_FAQ_BUTTON_05 = "UI Commands"
+L_FAQ_BUTTON_06 = "Keybindings"
+L_FAQ_BUTTON_07 = "Minimap"
+L_FAQ_BUTTON_08 = "Bags"
+L_FAQ_BUTTON_09 = "Misc."
+L_FAQ_BUTTON_10 = "Bug Reports"
+L_FAQ_BUTTON_11 = "UI Update"
+L_FAQ_GENERALTITLE = "|cff3c9bedkkthnxUI - F.A.Q.|r"
+L_FAQ_GENERALTEXT1 = "Hello |cff3c9bed".. K.Name.."|r. Thank you that you have chose |cff3c9bedKkthnxUI "..K.Version.."|r.\n\nUse the menu on the left to learn more about the individual points about it.\n\nEnjoy the game and good loot!"
+L_FAQ_GENERALTEXT2 = ""
+L_FAQ_CONTENT1TITLE = "|cff3c9bedGeneral|r"
+L_FAQ_CONTENT1TEXT1 = ""
+L_FAQ_CONTENT1TEXT2 = ""
+L_FAQ_CONTENT2TITLE = "|cff3c9bedActionbars|r"
+L_FAQ_CONTENT2TEXT1 = ""
+L_FAQ_CONTENT2TEXT2 = ""
+L_FAQ_CONTENT3TITLE = "|cff3c9bedUnitframes|r"
+L_FAQ_CONTENT3TEXT1 = ""
+L_FAQ_CONTENT3TEXT2 = ""
+L_FAQ_CONTENT4TITLE = "|cff3c9bedChat|r"
+L_FAQ_CONTENT4TEXT1 = ""
+L_FAQ_CONTENT4TEXT2 = ""
+L_FAQ_CONTENT5TITLE = "|cff3c9bedUI Slashcommands|r"
+L_FAQ_CONTENT5TEXT1 = "The following chat commands are available to you:"
+L_FAQ_CONTENT5TEXT2 = "/rl - Reload interface./n/rc - Activates a ready check.\n/gm - Opens GM frame.\n/rd - Disband party or raid.\n/toraid - Convert to party or raid.\n/teleport - Teleportation from random dungeon.\n/spec, /ss - Switches between talent spec's.\n/frame - Description is not ready.\n/farmmode - Increase the size of the minimap.\n/moveui - Allows the movement of interface elements.\n/resetui - Resets general settings to default.\n/resetconfig - Resets KkthnxUI_Config settings.\n/settings ADDON_NAME - Applies settings to msbt, dbm, skada, or all addons.\n/pulsecd - Self cooldown pulse test.\n/tt - Whisper target.\n/ainv - Enables automatic invitation.\n/cfg - Opens interface settings.\n/patch - Display Wow patch info."
+L_FAQ_CONTENT6TITLE = "|cff3c9bedKeybinding|r"
+L_FAQ_CONTENT6TEXT1 = ""
+L_FAQ_CONTENT6TEXT2 = ""
+L_FAQ_CONTENT7TITLE = "|cff3c9bedMinimap|r"
+L_FAQ_CONTENT7TEXT1 = ""
+L_FAQ_CONTENT7TEXT2 = ""
+L_FAQ_CONTENT8TITLE = "|cff3c9bedBags|r"
+L_FAQ_CONTENT8TEXT1 = ""
+L_FAQ_CONTENT8TEXT2 = ""
+L_FAQ_CONTENT9TITLE = "|cff3c9bedMisc.|r"
+L_FAQ_CONTENT9TEXT1 = ""
+L_FAQ_CONTENT9TEXT2 = ""
+L_FAQ_CONTENT10TITLE = "|cff3c9bedOMG Errors|r"
+L_FAQ_CONTENT10TEXT1 = ""
+L_FAQ_CONTENT10TEXT2 = ""
+L_FAQ_CONTENT11TITLE = "|cff3c9bedUpdating UI|r"
+L_FAQ_CONTENT11TEXT1 = ""
+L_FAQ_CONTENT11TEXT2 = ""
