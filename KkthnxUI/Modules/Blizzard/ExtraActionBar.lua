@@ -8,11 +8,11 @@ local Movers = K.Movers
 
 -- MAKE EXTRAACTIONBARFRAME MOVABLE (USE MACRO /click extraactionbutton1)
 local anchor = CreateFrame("Frame", "ExtraButtonAnchor", UIParent)
-if C.ActionBar.SplitBars then
-	anchor:SetPoint(C.Position.ExtraButton[1], SplitBarLeft, C.Position.ExtraButton[3], C.Position.ExtraButton[4], C.Position.ExtraButton[5])
-else
+-- if C.ActionBar.SplitBars then
+	-- anchor:SetPoint(C.Position.ExtraButton[1], SplitBarLeft, C.Position.ExtraButton[3], C.Position.ExtraButton[4], C.Position.ExtraButton[5])
+-- else
 	anchor:SetPoint(unpack(C.Position.ExtraButton))
-end
+-- end
 anchor:SetSize(53, 53)
 Movers:RegisterFrame(anchor)
 

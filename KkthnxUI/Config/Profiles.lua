@@ -2,7 +2,7 @@ local K, C, L = select(2, ...):unpack()
 
 -- C["Tooltip"]["Cursor"] = true
 C["ActionBar"]["BottomBars"] = 2
--- C["ActionBar"]["ButtonSize"] = 40
+C["ActionBar"]["ButtonSize"] = 24 
 C["ActionBar"]["ButtonSpace"] = 2
 C["ActionBar"]["EquipBorder"] = true
 C["ActionBar"]["Grid"] = false
@@ -48,8 +48,10 @@ C["PulseCD"]["Enable"] = true
 C["Skins"]["Skada"] = true
 C["Skins"]["DBM"] = true
 C["Skins"]["ChatBubble"] = true
+C["Skins"]["WeakAuras"] = true
 C["Unitframe"]["CombatText"] = false
 -- C["Unitframe"]["Enable"] = false 
+C["Unitframe"]["ShowArena"] = false 
 -- C["Raidframe"]["Enable"] = false 
 C["Raidframe"]["MaxUnitPerColumn"] = 5
 C["Raidframe"]["ShowRolePrefix"] = true 
@@ -72,8 +74,14 @@ C["Position"]["PulseCD"] = {"CENTER", "UIParent", "CENTER", -200, 0}
 
 C["Position"]["UnitFrames"]["Player"] = {"BOTTOMRIGHT", "ActionBarAnchor", "TOPLEFT", 150, 75}
 C["Position"]["UnitFrames"]["Target"] = {"BOTTOMLEFT", "ActionBarAnchor", "TOPRIGHT", -150, 75}
-C["Position"]["UnitFrames"]["Raid"] = {"CENTER", "UIParent", "Center", 200, 0}
-C["Position"]["UnitFrames"]["Focus"] = {"CENTER", "UIParent", "Center", 320, 0}
+
+-- if K.Role == "SHAMAN" then
+	C["Position"]["UnitFrames"]["Raid"] = {"CENTER", "UIParent", "Center", 200, 0}
+	C["Position"]["UnitFrames"]["Focus"] = {"CENTER", "UIParent", "Center", 320, 0}
+-- end
+print(K.Role)
+print(K.Class)
+
 C["Position"]["ObjectiveTracker"] = {"TOPLEFT", "UIParent", "TOPLEFT", 90, -100}
 -- C["Position"]["Filger"]["Cooldown"] = {"BOTTOMRIGHT", "PlayerFrame", "TOPLEFT", 0, 100}
 -- C["Position"]["Filger"]["PlayerProcIcon"] = {"TOPRIGHT", "TargetFrame", "TOPRIGHT", -150, 173}
