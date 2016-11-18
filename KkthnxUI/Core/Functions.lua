@@ -164,12 +164,6 @@ K.CheckChat = function(warning)
 	return "SAY"
 end
 
--- Player role check
-local RoleUpdater = CreateFrame("Frame")
-RoleUpdater:RegisterEvent("PLAYER_ENTERING_WORLD")
-RoleUpdater:RegisterEvent("PLAYER_TALENT_UPDATE")
-RoleUpdater:SetScript("OnEvent", K.CheckRole)
-
 K.ShortenString = function(string, numChars, dots)
 	local bytes = string:len()
 	if (bytes <= numChars) then
