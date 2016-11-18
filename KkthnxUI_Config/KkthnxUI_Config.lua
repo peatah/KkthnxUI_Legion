@@ -566,7 +566,7 @@ function CreateUIConfig()
 	UIConfigMain:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 200)
 	UIConfigMain:SetSize(780, 482)
 	UIConfigMain:SetBackdrop(K.Backdrop)
-	UIConfigMain:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+	UIConfigMain:SetBackdropColor(.05, .05, .05)
 	UIConfigMain:SetBackdropBorderColor(K.Color.r, K.Color.g, K.Color.b)
 	UIConfigMain:SetFrameStrata("DIALOG")
 	UIConfigMain:SetFrameLevel(20)
@@ -867,7 +867,7 @@ function CreateUIConfig()
 	end
 
 	local reset = NormalButton(DEFAULT, UIConfigMain)
-	reset:SetPoint("TOPRIGHT", UIConfigBG, "TOPRIGHT", 126, 0)
+	reset:SetPoint("TOPRIGHT", UIConfigBG, "TOPRIGHT", 128, 0)
 	reset:SetScript("OnClick", function(self)
 		UIConfigCover:Show()
 		if KkthnxUIConfigAll[realm][name] == true then
@@ -878,7 +878,7 @@ function CreateUIConfig()
 	end)
 
 	local totalreset = NormalButton(L_GUI_BUTTON_RESET, UIConfigMain)
-	totalreset:SetPoint("TOPRIGHT", UIConfigBG, "TOPRIGHT", 126, -31)
+	totalreset:SetPoint("TOPRIGHT", UIConfigBG, "TOPRIGHT", 128, -31)
 	totalreset:SetScript("OnClick", function(self)
 		StaticPopup_Show("RESET_UI")
 		KkthnxUIConfigPrivate = {}
@@ -895,6 +895,13 @@ function CreateUIConfig()
 	local close = NormalButton("|cffFF0000" .. L_GUI_CLOSE .. "|r", UIConfigMain)
 	close:SetPoint("TOP", load, "BOTTOM", 0, -8)
 	close:SetScript("OnClick", function(self) PlaySound("igMainMenuOption") UIConfigMain:Hide() end)
+
+	local RightButtonsBG = CreateFrame("Frame", "RightButtonsBG", UIConfigMain)
+	RightButtonsBG:SetSize(116, 154)
+	RightButtonsBG:SetTemplate()
+	RightButtonsBG:SetBackdropColor(.05, .05, .05)
+	RightButtonsBG:SetFrameLevel(UIConfigMain:GetFrameLevel(- 1))
+	RightButtonsBG:SetPoint("TOPRIGHT", UIConfigBG, "TOPRIGHT", 136, 8)
 
 	if KkthnxUIConfigAll then
 		local button = CreateFrame("CheckButton", "KkthnxUIConfigAllCharacters", TitleBox, "InterfaceOptionsCheckButtonTemplate")
@@ -989,13 +996,13 @@ do
 
 		local title3 = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title3:SetPoint("TOPLEFT", subtitle2, "BOTTOMLEFT", 0, -16)
-		title3:SetText("Translation Needed:")
+		title3:SetText("Chinese Translation Needed:")
 
 		local subtitle3 = self:CreateFontString(nil, "ARTWORK", "GameFontHighlightSmall")
 		subtitle3:SetWidth(580)
 		subtitle3:SetPoint("TOPLEFT", title3, "BOTTOMLEFT", 0, -8)
 		subtitle3:SetJustifyH("LEFT")
-		subtitle3:SetText("|cff3c9bedKkthnxUI|r is looking for Russian translation. If you wanna translate for us, you can PM me or make pull requests on GitHub")
+		subtitle3:SetText("|cff3c9bedKkthnxUI|r is looking for Chinese (Simplified) and Chinese (Traditional) translation. If you wanna translate for us, you can PM me or make pull requests on GitHub")
 
 		local title4 = self:CreateFontString(nil, "ARTWORK", "GameFontNormalLarge")
 		title4:SetPoint("TOPLEFT", subtitle3, "BOTTOMLEFT", 0, -16)
@@ -1028,22 +1035,22 @@ function GameMenu:AddHooks()
 
 	Menu:SetHeight(Menu:GetHeight() + Logout:GetHeight())
 	local _, relTo, _, _, offY = Logout:GetPoint()
-	if relTo ~= GameMenu.KkthnxUI then
-		GameMenu.KkthnxUI:ClearAllPoints()
-		GameMenu.KkthnxUI:SetPoint("TOPLEFT", relTo, "BOTTOMLEFT", 0, -1)
+	if relTo ~= GameMenu.KkthnxUIButton then
+		GameMenu.KkthnxUIButton:ClearAllPoints()
+		GameMenu.KkthnxUIButton:SetPoint("TOPLEFT", relTo, "BOTTOMLEFT", 0, -1)
 		Logout:ClearAllPoints()
-		Logout:SetPoint("TOPLEFT", GameMenu.KkthnxUI, "BOTTOMLEFT", 0, offY)
+		Logout:SetPoint("TOPLEFT", GameMenu.KkthnxUIButton, "BOTTOMLEFT", 0, offY)
 	end
 end
 
 function GameMenu:EnableKkthnxUIConfig()
 	local Logout = GameMenuButtonLogout
 
-	local KkthnxUI = CreateFrame("Button", nil, Menu, "GameMenuButtonTemplate")
-	KkthnxUI:SetSize(Logout:GetWidth(), Logout:GetHeight())
-	KkthnxUI:SetPoint("TOPLEFT", GameMenuButtonAddons, "BOTTOMLEFT", 0, -1)
-	KkthnxUI:SetText("|cff3c9bedKkthnxUI|r")
-	KkthnxUI:SetScript("OnClick", function(self)
+	local KkthnxUIButton = CreateFrame("Button", nil, Menu, "GameMenuButtonTemplate")
+	KkthnxUIButton:SetSize(Logout:GetWidth(), Logout:GetHeight())
+	KkthnxUIButton:SetPoint("TOPLEFT", GameMenuButtonAddons, "BOTTOMLEFT", 0, -1)
+	KkthnxUIButton:SetText("|cff3c9bedKkthnxUI|r")
+	KkthnxUIButton:SetScript("OnClick", function(self)
 		if UIConfigMain and UIConfigMain:IsShown() then
 			UIConfigMain:Hide()
 		else
@@ -1053,7 +1060,7 @@ function GameMenu:EnableKkthnxUIConfig()
 	end)
 
 	hooksecurefunc("GameMenuFrame_UpdateVisibleButtons", self.AddHooks)
-	self.KkthnxUI = KkthnxUI
+	self.KkthnxUIButton = KkthnxUIButton
 end
 
 if IsAddOnLoaded("KkthnxUI_Config") and not IsAddOnLoaded("ConsolePort") then
