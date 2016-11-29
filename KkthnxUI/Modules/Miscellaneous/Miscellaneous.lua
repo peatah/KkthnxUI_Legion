@@ -188,3 +188,57 @@ strip:SetScript("OnEvent", function(self)
         self.model = DressUpModel
     end
 end)
+
+local TestCode = CreateFrame("Frame")
+
+function TestCode:Blizzard_Collections(event, addon)
+    if event == "PLAYER_ENTERING_WORLD" and IsAddOnLoaded("Blizzard_Collections") or addon == "Blizzard_Collections" then
+        WardrobeFrame:SetWidth(1200)
+        WardrobeTransmogFrame:SetWidth(535)
+        WardrobeTransmogFrame.Model:ClearAllPoints()
+        WardrobeTransmogFrame.Model:SetPoint("TOP", WardrobeTransmogFrame, "TOP", 0, -4)
+        WardrobeTransmogFrame.Model:SetWidth(420)
+        WardrobeTransmogFrame.Model:SetHeight(420)
+        WardrobeTransmogFrame.Inset.BG:SetWidth(529)
+        WardrobeTransmogFrame.Model.HeadButton:ClearAllPoints()
+        WardrobeTransmogFrame.Model.HeadButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", -238, -41)
+        WardrobeTransmogFrame.Model.HandsButton:ClearAllPoints()
+        WardrobeTransmogFrame.Model.HandsButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", 235, -118);
+        WardrobeTransmogFrame.Model.MainHandButton:ClearAllPoints()
+        WardrobeTransmogFrame.Model.MainHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", -26, -5)
+        WardrobeTransmogFrame.Model.SecondaryHandButton:ClearAllPoints()
+        WardrobeTransmogFrame.Model.SecondaryHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", 27, -5)
+        WardrobeTransmogFrame.Model.MainHandEnchantButton:ClearAllPoints()
+        WardrobeTransmogFrame.Model.MainHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.MainHandButton, "BOTTOM", 0, -20)
+        WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:ClearAllPoints()
+        WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.SecondaryHandButton, "BOTTOM", 0, -20)
+    end
+end
+
+TestCode:RegisterEvent("PLAYER_LOGIN")
+TestCode:SetScript("OnEvent", TestCode.Blizzard_Collections)
+
+-- local wdFrame = CreateFrame("Frame")
+-- wdFrame:RegisterEvent("ADDON_LOADED")
+-- wdFrame:SetScript("OnEvent", function(self, event)
+--     WardrobeFrame:SetWidth(1200)
+--     -- WardrobeFrame:SetScale(0.82)
+--     WardrobeTransmogFrame:SetWidth(535) 
+--     WardrobeTransmogFrame.Model:ClearAllPoints()
+--     WardrobeTransmogFrame.Model:SetPoint("TOP", WardrobeTransmogFrame, "TOP", 0, -4)
+--     WardrobeTransmogFrame.Model:SetWidth(420)
+--     WardrobeTransmogFrame.Model:SetHeight(420)
+--     WardrobeTransmogFrame.Inset.BG:SetWidth(529)
+--     WardrobeTransmogFrame.Model.HeadButton:ClearAllPoints()
+--     WardrobeTransmogFrame.Model.HeadButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", -238, -41)
+--     WardrobeTransmogFrame.Model.HandsButton:ClearAllPoints()
+--     WardrobeTransmogFrame.Model.HandsButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", 235, -118);
+--     WardrobeTransmogFrame.Model.MainHandButton:ClearAllPoints()
+--     WardrobeTransmogFrame.Model.MainHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", -26, -5)
+--     WardrobeTransmogFrame.Model.SecondaryHandButton:ClearAllPoints()
+--     WardrobeTransmogFrame.Model.SecondaryHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", 27, -5)
+--     WardrobeTransmogFrame.Model.MainHandEnchantButton:ClearAllPoints()
+--     WardrobeTransmogFrame.Model.MainHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.MainHandButton, "BOTTOM", 0, -20)
+--     WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:ClearAllPoints()
+--     WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.SecondaryHandButton, "BOTTOM", 0, -20)
+-- end)

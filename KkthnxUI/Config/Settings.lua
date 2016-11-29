@@ -228,6 +228,7 @@ C["Nameplates"] = {
     ["CastbarName"] = false,
     ["EnhancedThreat"] = true,
     ["ClassIcons"] = false,
+    ["ClassResource"] = true,
     ["NameAbbreviate"] = true,
     ["GoodColor"] = {0.2, 0.8, 0.2},
     ["NearColor"] = {1, 1, 0},

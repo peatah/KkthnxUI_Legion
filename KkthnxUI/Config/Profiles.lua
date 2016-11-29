@@ -2,7 +2,7 @@ local K, C, L = select(2, ...):unpack()
 
 -- C["Tooltip"]["Cursor"] = true
 C["ActionBar"]["BottomBars"] = 2
-C["ActionBar"]["ButtonSize"] = 24 
+-- C["ActionBar"]["ButtonSize"] = 24 
 C["ActionBar"]["ButtonSpace"] = 2
 C["ActionBar"]["EquipBorder"] = true
 C["ActionBar"]["Grid"] = false
@@ -21,6 +21,7 @@ C["Blizzard"]["EasyDelete"] = true
 C["Chat"]["DamageMeterSpam"] = true
 C["Chat"]["Spam"] = true
 C["Chat"]["WhispSound"] = false
+C["DataText"]["BottomBar"] = false
 -- C["Experience"]["XPWidth"] =243 
 -- C["Experience"]["ArtifactWidth"] =243 
 C["Filger"]["Enable"] = false 
@@ -44,11 +45,12 @@ C["Misc"]["MoveBlizzard"] = true
 -- C["Nameplate"]["ClassColor"] = true
 C["Nameplates"]["Height"] = 14
 C["Nameplates"]["HealerIcon"] = true
+-- C["Nameplates"]["TrackAuras"] = false
 C["PulseCD"]["Enable"] = true
 C["Skins"]["Skada"] = true
 C["Skins"]["DBM"] = true
 C["Skins"]["ChatBubble"] = true
-C["Skins"]["WeakAuras"] = true
+-- C["Skins"]["WeakAuras"] = true
 C["Unitframe"]["CombatText"] = false
 -- C["Unitframe"]["Enable"] = false 
 C["Unitframe"]["ShowArena"] = false 
@@ -75,14 +77,18 @@ C["Position"]["PulseCD"] = {"CENTER", "UIParent", "CENTER", -200, 0}
 C["Position"]["UnitFrames"]["Player"] = {"BOTTOMRIGHT", "ActionBarAnchor", "TOPLEFT", 150, 75}
 C["Position"]["UnitFrames"]["Target"] = {"BOTTOMLEFT", "ActionBarAnchor", "TOPRIGHT", -150, 75}
 
--- if K.Role == "SHAMAN" then
+if K.Role == "HEALER" then
 	C["Position"]["UnitFrames"]["Raid"] = {"CENTER", "UIParent", "Center", 200, 0}
 	C["Position"]["UnitFrames"]["Focus"] = {"CENTER", "UIParent", "Center", 320, 0}
--- end
-print(K.Role)
-print(K.Class)
+end
 
-C["Position"]["ObjectiveTracker"] = {"TOPLEFT", "UIParent", "TOPLEFT", 90, -100}
+-- if K.Role == "MELEE" then
+-- 	C["Position"]["UnitFrames"]["Player"] = {"CENTER", "UIParent", "CENTER", -320, 0}
+-- 	C["Position"]["UnitFrames"]["Target"] = {"CENTER", "UIParent", "CENTER", 320, 0}
+-- end
+
+C["Position"]["RaidCD"] = {"TOPLEFT", "UIParent", "TOPLEFT", -200, 0}
+-- C["Position"]["ObjectiveTracker"] = {"TOPLEFT", "UIParent", "TOPLEFT", 130, -100}
 -- C["Position"]["Filger"]["Cooldown"] = {"BOTTOMRIGHT", "PlayerFrame", "TOPLEFT", 0, 100}
 -- C["Position"]["Filger"]["PlayerProcIcon"] = {"TOPRIGHT", "TargetFrame", "TOPRIGHT", -150, 173}
 -- C["Position"]["Filger"]["PlayerBuffIcon"] = {"TOPRIGHT", "PlayerFrame", "TOPRIGHT", -50, 173}

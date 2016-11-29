@@ -1012,208 +1012,208 @@ local cpoints_colors = {	-- combat points
 	{1, 1, 0},
 }
 
-if(K.Class == "MONK") then
-	ClassPowerID = SPELL_POWER_CHI
-	ClassPowerType = "CHI"
-	RequireSpec = SPEC_MONK_WINDWALKER
-elseif(K.Class == "PALADIN") then
-	ClassPowerID = SPELL_POWER_HOLY_POWER
-	ClassPowerType = "HOLY_POWER"
-	RequireSpec = SPEC_PALADIN_RETRIBUTION
-elseif(K.Class == "MAGE") then
-	ClassPowerID = SPELL_POWER_ARCANE_CHARGES
-	ClassPowerType = "ARCANE_CHARGES"
-	RequireSpec = SPEC_MAGE_ARCANE
-elseif(K.Class == "WARLOCK") then
-	ClassPowerID = SPELL_POWER_SOUL_SHARDS
-	ClassPowerType = "SOUL_SHARDS"
-elseif(K.Class == "ROGUE" or K.Class == "DRUID") then
-	ClassPowerID = SPELL_POWER_COMBO_POINTS
-	ClassPowerType = "COMBO_POINTS"
-end
+-- if(K.Class == "MONK") then
+-- 	ClassPowerID = SPELL_POWER_CHI
+-- 	ClassPowerType = "CHI"
+-- 	RequireSpec = SPEC_MONK_WINDWALKER
+-- elseif(K.Class == "PALADIN") then
+-- 	ClassPowerID = SPELL_POWER_HOLY_POWER
+-- 	ClassPowerType = "HOLY_POWER"
+-- 	RequireSpec = SPEC_PALADIN_RETRIBUTION
+-- elseif(K.Class == "MAGE") then
+-- 	ClassPowerID = SPELL_POWER_ARCANE_CHARGES
+-- 	ClassPowerType = "ARCANE_CHARGES"
+-- 	RequireSpec = SPEC_MAGE_ARCANE
+-- elseif(K.Class == "WARLOCK") then
+-- 	ClassPowerID = SPELL_POWER_SOUL_SHARDS
+-- 	ClassPowerType = "SOUL_SHARDS"
+-- elseif(K.Class == "ROGUE" or K.Class == "DRUID") then
+-- 	ClassPowerID = SPELL_POWER_COMBO_POINTS
+-- 	ClassPowerType = "COMBO_POINTS"
+-- end
 
-local Resourcebar = CreateFrame("Frame", "Plateresource", UIParent)
-Resourcebar:SetWidth(100)	--(10+3)*6 - 3
-Resourcebar:SetHeight(3)
-Resourcebar.maxbar = 6
+-- local Resourcebar = CreateFrame("Frame", "Plateresource", UIParent)
+-- Resourcebar:SetWidth(100)	--(10+3)*6 - 3
+-- Resourcebar:SetHeight(3)
+-- Resourcebar.maxbar = 6
 
-for i = 1, 6 do
-	Resourcebar[i] = CreateFrame("Frame", "Plateresource"..i, Resourcebar)
-	Resourcebar[i]:SetFrameLevel(1)
-	Resourcebar[i]:SetSize(13.5, 3)
-	K.CreateShadowFrame(Resourcebar[i])
-	Resourcebar[i].tex = Resourcebar[i]:CreateTexture(nil, "OVERLAY")
-	Resourcebar[i].tex:SetAllPoints(Resourcebar[i])
-	if K.Class == "DEATHKNIGHT" then
-		Resourcebar[i].value = Resourcebar[i]:CreateFontString(nil, "OVERLAY")
-		Resourcebar[i].value:SetFont(C.Media.Font, C.Media.Font_Size * K.NoScaleMult, C.Media.Font_Style)
-		Resourcebar[i].value:SetShadowOffset(0, -0)
-		Resourcebar[i].value:SetPoint("CENTER")
-		Resourcebar[i].tex:SetColorTexture(.7, .7, 1)
-	end
+-- for i = 1, 6 do
+-- 	Resourcebar[i] = CreateFrame("Frame", "Plateresource"..i, Resourcebar)
+-- 	Resourcebar[i]:SetFrameLevel(1)
+-- 	Resourcebar[i]:SetSize(13.5, 3)
+-- 	K.CreateShadowFrame(Resourcebar[i])
+-- 	Resourcebar[i].tex = Resourcebar[i]:CreateTexture(nil, "OVERLAY")
+-- 	Resourcebar[i].tex:SetAllPoints(Resourcebar[i])
+-- 	if K.Class == "DEATHKNIGHT" then
+-- 		Resourcebar[i].value = Resourcebar[i]:CreateFontString(nil, "OVERLAY")
+-- 		Resourcebar[i].value:SetFont(C.Media.Font, C.Media.Font_Size * K.NoScaleMult, C.Media.Font_Style)
+-- 		Resourcebar[i].value:SetShadowOffset(0, -0)
+-- 		Resourcebar[i].value:SetPoint("CENTER")
+-- 		Resourcebar[i].tex:SetColorTexture(.7, .7, 1)
+-- 	end
 
-	if i == 1 then
-		Resourcebar[i]:SetPoint("BOTTOMLEFT", Resourcebar, "BOTTOMLEFT")
-	else
-		Resourcebar[i]:SetPoint("LEFT", Resourcebar[i-1], "RIGHT", 2, 0)
-	end
-end
+-- 	if i == 1 then
+-- 		Resourcebar[i]:SetPoint("BOTTOMLEFT", Resourcebar, "BOTTOMLEFT")
+-- 	else
+-- 		Resourcebar[i]:SetPoint("LEFT", Resourcebar[i-1], "RIGHT", 2, 0)
+-- 	end
+-- end
 
-Resourcebar:SetScript("OnEvent", function(self, event, unit, powerType)
-	if GetCVar("nameplateShowSelf") == 0 then return end
-	if event == "PLAYER_TALENT_UPDATE" then
-		if multicheck(K.Class, "WARLOCK", "PALADIN", "MONK", "MAGE", "ROGUE", "DRUID") and not RequireSpec or RequireSpec == GetSpecialization() then
-			self:RegisterEvent("UNIT_POWER_FREQUENT")
-			self:RegisterEvent("PLAYER_ENTERING_WORLD")
-			self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
-			self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
-			self:RegisterEvent("PLAYER_TARGET_CHANGED")
-			self:RegisterEvent("RUNE_POWER_UPDATE")
-			self:Show()
-		else
-			self:UnregisterEvent("UNIT_POWER_FREQUENT")
-			self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-			self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
-			self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
-			self:UnregisterEvent("PLAYER_TARGET_CHANGED")
-			self:UnregisterEvent("RUNE_POWER_UPDATE")
-			self:Hide()
-		end
-	elseif event == "PLAYER_ENTERING_WORLD" or (event == "UNIT_POWER_FREQUENT" and unit == "player" and powerType == ClassPowerType) then
-		if multicheck(K.Class, "WARLOCK", "PALADIN", "MONK", "MAGE", "ROGUE", "DRUID") then
-			local cur, max, oldMax
+-- Resourcebar:SetScript("OnEvent", function(self, event, unit, powerType)
+-- 	if GetCVar("nameplateShowSelf") == 0 then return end
+-- 	if event == "PLAYER_TALENT_UPDATE" then
+-- 		if multicheck(K.Class, "WARLOCK", "PALADIN", "MONK", "MAGE", "ROGUE", "DRUID") and not RequireSpec or RequireSpec == GetSpecialization() then
+-- 			self:RegisterEvent("UNIT_POWER_FREQUENT")
+-- 			self:RegisterEvent("PLAYER_ENTERING_WORLD")
+-- 			self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+-- 			self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+-- 			self:RegisterEvent("PLAYER_TARGET_CHANGED")
+-- 			self:RegisterEvent("RUNE_POWER_UPDATE")
+-- 			self:Show()
+-- 		else
+-- 			self:UnregisterEvent("UNIT_POWER_FREQUENT")
+-- 			self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+-- 			self:UnregisterEvent("NAME_PLATE_UNIT_ADDED")
+-- 			self:UnregisterEvent("NAME_PLATE_UNIT_REMOVED")
+-- 			self:UnregisterEvent("PLAYER_TARGET_CHANGED")
+-- 			self:UnregisterEvent("RUNE_POWER_UPDATE")
+-- 			self:Hide()
+-- 		end
+-- 	elseif event == "PLAYER_ENTERING_WORLD" or (event == "UNIT_POWER_FREQUENT" and unit == "player" and powerType == ClassPowerType) then
+-- 		if multicheck(K.Class, "WARLOCK", "PALADIN", "MONK", "MAGE", "ROGUE", "DRUID") then
+-- 			local cur, max, oldMax
 
-			cur = UnitPower("player", ClassPowerID)
-			max = UnitPowerMax("player", ClassPowerID)
+-- 			cur = UnitPower("player", ClassPowerID)
+-- 			max = UnitPowerMax("player", ClassPowerID)
 
-			if multicheck(K.Class, "WARLOCK", "PALADIN", "MONK", "MAGE") then
-				for i = 1, max do
-					if(i <= cur) then
-						self[i]:Show()
-					else
-						self[i]:Hide()
-					end
-					if cur == max then
-						self[i].tex:SetColorTexture(unpack(classicon_colors[max]))
-					else
-						self[i].tex:SetColorTexture(unpack(classicon_colors[i]))
-					end
-				end
+-- 			if multicheck(K.Class, "WARLOCK", "PALADIN", "MONK", "MAGE") then
+-- 				for i = 1, max do
+-- 					if(i <= cur) then
+-- 						self[i]:Show()
+-- 					else
+-- 						self[i]:Hide()
+-- 					end
+-- 					if cur == max then
+-- 						self[i].tex:SetColorTexture(unpack(classicon_colors[max]))
+-- 					else
+-- 						self[i].tex:SetColorTexture(unpack(classicon_colors[i]))
+-- 					end
+-- 				end
 
-				oldMax = self.maxbar
-				if(max ~= oldMax) then
-					if(max < oldMax) then
-						for i = max + 1, oldMax do
-							self[i]:Hide()
-						end
-					end
-					for i = 1, 6 do
-						self[i]:SetWidth(102/max-2)
-					end
-					self.maxbar = max
-				end
-			else
-				if max <= 6 then
-					for i = 1, max do
-						if(i <= cur) then
-							self[i]:Show()
-						else
-							self[i]:Hide()
-						end
-						self[i].tex:SetColorTexture(unpack(cpoints_colors[1]))
-					end
-				else
-					if cur <= 5 then
-						for i = 1, 5 do
-							if(i <= cur) then
-								self[i]:Show()
-							else
-								self[i]:Hide()
-							end
-							self[i].tex:SetColorTexture(unpack(cpoints_colors[1]))
-						end
-					else
-						for i = 1, 5 do
-							self[i]:Show()
-						end
-						for i = 1, cur - 5 do
-							self[i].tex:SetColorTexture(unpack(cpoints_colors[2]))
-						end
-						for i = cur - 4, 5 do
-							self[i].tex:SetColorTexture(unpack(cpoints_colors[1]))
-						end
-					end
-				end
+-- 				oldMax = self.maxbar
+-- 				if(max ~= oldMax) then
+-- 					if(max < oldMax) then
+-- 						for i = max + 1, oldMax do
+-- 							self[i]:Hide()
+-- 						end
+-- 					end
+-- 					for i = 1, 6 do
+-- 						self[i]:SetWidth(102/max-2)
+-- 					end
+-- 					self.maxbar = max
+-- 				end
+-- 			else
+-- 				if max <= 6 then
+-- 					for i = 1, max do
+-- 						if(i <= cur) then
+-- 							self[i]:Show()
+-- 						else
+-- 							self[i]:Hide()
+-- 						end
+-- 						self[i].tex:SetColorTexture(unpack(cpoints_colors[1]))
+-- 					end
+-- 				else
+-- 					if cur <= 5 then
+-- 						for i = 1, 5 do
+-- 							if(i <= cur) then
+-- 								self[i]:Show()
+-- 							else
+-- 								self[i]:Hide()
+-- 							end
+-- 							self[i].tex:SetColorTexture(unpack(cpoints_colors[1]))
+-- 						end
+-- 					else
+-- 						for i = 1, 5 do
+-- 							self[i]:Show()
+-- 						end
+-- 						for i = 1, cur - 5 do
+-- 							self[i].tex:SetColorTexture(unpack(cpoints_colors[2]))
+-- 						end
+-- 						for i = cur - 4, 5 do
+-- 							self[i].tex:SetColorTexture(unpack(cpoints_colors[1]))
+-- 						end
+-- 					end
+-- 				end
 
-				oldMax = self.maxbar
-				if(max ~= oldMax) then
-					if max == 5 or max == 8 then
-						self[6]:Hide()
-						for i = 1, 6 do
-							self[i]:SetWidth(102/5-2)
-						end
-					else
-						for i = 1, 6 do
-							self[i]:SetWidth(102/max-2)
-							if i > max then
-								self[i]:Hide()
-							end
-						end
-					end
-					self.maxbar = max
-				end
-			end
-		end
-	elseif K.Class == "DEATHKNIGHT" and event == "RUNE_POWER_UPDATE" then
-		local rid = unit
-		local start, duration, runeReady = GetRuneCooldown(rid)
-		if runeReady then
-			self[rid]:SetAlpha(1)
-			self[rid].tex:SetColorTexture(.7, .7, 1)
-			self[rid]:SetScript("OnUpdate", nil)
-			self[rid].value:SetText("")
-		elseif start then
-			self[rid]:SetAlpha(.7)
-			self[rid].tex:SetColorTexture(.3, .3, .3)
-			self[rid].max = duration
-			self[rid].duration = GetTime() - start
-			self[rid]:SetScript("OnUpdate", function(self, elapsed)
-				self.duration = self.duration + elapsed
-				if self.duration >= self.max or self.duration <= 0 then
-					self.value:SetText("")
-				else
-					self.value:SetText(K.FormatTime(self.max - self.duration))
-				end
-			end)
-		end
-	elseif tonumber(GetCVar("nameplateResourceOnTarget")) == 0 then
-		if event == "NAME_PLATE_UNIT_ADDED" and UnitIsUnit(unit, "player") then
-			local namePlatePlayer = C_NamePlate.GetNamePlateForUnit("player")
-			if namePlatePlayer then
-				self:SetParent(namePlatePlayer)
-				self:ClearAllPoints()
-				self:Show()
-				self:SetPoint("TOPLEFT", namePlatePlayer.UnitFrame.healthBar, "BOTTOMLEFT", 0, 15)
-				self:SetPoint("TOPRIGHT", namePlatePlayer.UnitFrame.healthBar, "BOTTOMRIGHT", 0, 15)
-			end
-		elseif event == "NAME_PLATE_UNIT_REMOVED" and UnitIsUnit(unit, "player") then
-			self:Hide()
-		end
-	elseif tonumber(GetCVar("nameplateResourceOnTarget")) == 1 and (event == "PLAYER_TARGET_CHANGED" or event == "NAME_PLATE_UNIT_ADDED") then
-		local namePlateTarget = C_NamePlate.GetNamePlateForUnit("target")
-		if namePlateTarget and UnitCanAttack("player", namePlateTarget.UnitFrame.displayedUnit) then
-			self:SetParent(namePlateTarget)
-			self:ClearAllPoints()
-			self:SetPoint("TOPLEFT", namePlateTarget.UnitFrame.healthBar, "BOTTOMLEFT", 0, 25)
-			self:SetPoint("TOPRIGHT", namePlateTarget.UnitFrame.healthBar, "BOTTOMRIGHT", 0, 25)
-			self:Show()
-		else
-			self:Hide()
-		end
-	end
-end)
+-- 				oldMax = self.maxbar
+-- 				if(max ~= oldMax) then
+-- 					if max == 5 or max == 8 then
+-- 						self[6]:Hide()
+-- 						for i = 1, 6 do
+-- 							self[i]:SetWidth(102/5-2)
+-- 						end
+-- 					else
+-- 						for i = 1, 6 do
+-- 							self[i]:SetWidth(102/max-2)
+-- 							if i > max then
+-- 								self[i]:Hide()
+-- 							end
+-- 						end
+-- 					end
+-- 					self.maxbar = max
+-- 				end
+-- 			end
+-- 		end
+-- 	elseif K.Class == "DEATHKNIGHT" and event == "RUNE_POWER_UPDATE" then
+-- 		local rid = unit
+-- 		local start, duration, runeReady = GetRuneCooldown(rid)
+-- 		if runeReady then
+-- 			self[rid]:SetAlpha(1)
+-- 			self[rid].tex:SetColorTexture(.7, .7, 1)
+-- 			self[rid]:SetScript("OnUpdate", nil)
+-- 			self[rid].value:SetText("")
+-- 		elseif start then
+-- 			self[rid]:SetAlpha(.7)
+-- 			self[rid].tex:SetColorTexture(.3, .3, .3)
+-- 			self[rid].max = duration
+-- 			self[rid].duration = GetTime() - start
+-- 			self[rid]:SetScript("OnUpdate", function(self, elapsed)
+-- 				self.duration = self.duration + elapsed
+-- 				if self.duration >= self.max or self.duration <= 0 then
+-- 					self.value:SetText("")
+-- 				else
+-- 					self.value:SetText(K.FormatTime(self.max - self.duration))
+-- 				end
+-- 			end)
+-- 		end
+-- 	elseif tonumber(GetCVar("nameplateResourceOnTarget")) == 0 then
+-- 		if event == "NAME_PLATE_UNIT_ADDED" and UnitIsUnit(unit, "player") then
+-- 			local namePlatePlayer = C_NamePlate.GetNamePlateForUnit("player")
+-- 			if namePlatePlayer then
+-- 				self:SetParent(namePlatePlayer)
+-- 				self:ClearAllPoints()
+-- 				self:Show()
+-- 				self:SetPoint("TOPLEFT", namePlatePlayer.UnitFrame.healthBar, "BOTTOMLEFT", 0, 15)
+-- 				self:SetPoint("TOPRIGHT", namePlatePlayer.UnitFrame.healthBar, "BOTTOMRIGHT", 0, 15)
+-- 			end
+-- 		elseif event == "NAME_PLATE_UNIT_REMOVED" and UnitIsUnit(unit, "player") then
+-- 			self:Hide()
+-- 		end
+-- 	elseif tonumber(GetCVar("nameplateResourceOnTarget")) == 1 and (event == "PLAYER_TARGET_CHANGED" or event == "NAME_PLATE_UNIT_ADDED") then
+-- 		local namePlateTarget = C_NamePlate.GetNamePlateForUnit("target")
+-- 		if namePlateTarget and UnitCanAttack("player", namePlateTarget.UnitFrame.displayedUnit) then
+-- 			self:SetParent(namePlateTarget)
+-- 			self:ClearAllPoints()
+-- 			self:SetPoint("TOPLEFT", namePlateTarget.UnitFrame.healthBar, "BOTTOMLEFT", 0, 25)
+-- 			self:SetPoint("TOPRIGHT", namePlateTarget.UnitFrame.healthBar, "BOTTOMRIGHT", 0, 25)
+-- 			self:Show()
+-- 		else
+-- 			self:Hide()
+-- 		end
+-- 	end
+-- end)
 
-Resourcebar:RegisterEvent("PLAYER_TALENT_UPDATE")
+-- Resourcebar:RegisterEvent("PLAYER_TALENT_UPDATE")
 -- end
 
 --[[ Unit frame ]]--
