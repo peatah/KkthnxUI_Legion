@@ -98,9 +98,9 @@ end
 
 local function UpdateHealth(Health, unit, cur, max)
 	if (not UnitIsPlayer(unit)) then
-		local r, g, b = 0, 0.82, 1
+		local r, g, b = K.ColorGradient(cur, max, 0, .8 ,0 ,.8 ,.8 ,0 ,.8 ,0 ,0)
 		Health:SetStatusBarColor(r, g, b)
-		Health.bg:SetVertexColor(r * 0.25, g * 0.25, b * 0.25)
+		Health.Background:SetVertexColor(r * 0.1, g * 0.1, b * 0.1)
 	end
 
 	-- Health.Value:SetText(GetHealthText(unit, cur, max))
@@ -125,19 +125,27 @@ local function CreateRaidLayout(self, unit)
 		end
 	end)
 
-	self:SetBackdrop({bgFile = C.Media.Blank})
+	self:SetBackdrop({
+		bgFile = C.Media.Blank,
+		insets = {top = -K.Mult, left = -K.Mult, bottom = -K.Mult, right = -K.Mult},
+	})
+	self:SetBackdropColor(0.019, 0.019, 0.019, 0.8)
 
 	K.CreateBorder(self, 10, 3)
 	self:SetBorderTexture("white")
-	self:SetBorderColor(0.38, 0.38, 0.38)
-
-	self:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+	self:SetBorderColor(unpack(C.Media.Border_Color))
 
 	-- Health bar
 	self.Health = CreateFrame("StatusBar", nil, self)
 	self.Health:SetStatusBarTexture(C.Media.Texture, "ARTWORK")
 	self.Health:SetAllPoints(self)
 	self.Health:SetOrientation(C.Raidframe.HorizontalHealthBars and "HORIZONTAL" or "VERTICAL")
+
+	-- Health background
+	self.Health.Background = self.Health:CreateTexture(nil, "BORDER")
+	self.Health.Background:SetAllPoints()
+	self.Health.Background:SetTexture(C.Media.Blank)
+	self.Health.Background:SetColorTexture(0.019, 0.019, 0.019, 0.8)
 
 	self.Health.PostUpdate = UpdateHealth
 	self.Health.frequentUpdates = true
@@ -148,18 +156,12 @@ local function CreateRaidLayout(self, unit)
 	self.Health.colorTapping = true
 	self.Health.colorReaction = true
 
-	-- Health background
-	self.Health.bg = self.Health:CreateTexture(nil, "BORDER")
-	self.Health.bg:SetAllPoints(self.Health)
-	self.Health.bg:SetTexture(C.Media.Blank)
-	self.Health.bg:SetColorTexture(unpack(C.Media.Backdrop_Color))
-	self.Health.bg.multiplier = 0.3
-
 	-- Health text
 	self.Health.Value = self.Health:CreateFontString(nil, "OVERLAY")
 	self.Health.Value:SetPoint("BOTTOM", self.Health, "CENTER", 0, 0)
+	-- self.Health.Value:SetPoint("TOP", self.Health, "CENTER", 0, 4)
 	self.Health.Value:SetFont(C.Media.Font, 11)
-	self.Health.Value:SetShadowOffset(K.Mult,-K.Mult)
+	self.Health.Value:SetShadowOffset(K.Mult, -K.Mult)
 
 	-- Name text
 	self.Name = self.Health:CreateFontString(nil, "OVERLAY")
@@ -200,25 +202,47 @@ local function CreateRaidLayout(self, unit)
 	end
 
 	-- Heal prediction
-	local mhpb = self.Health:CreateTexture(nil, "ARTWORK")
-	mhpb:SetTexture(C.Media.Texture)
-	mhpb:SetVertexColor(0, 0.827, 0.765, 1)
+	local mhpb = CreateFrame("StatusBar", "$parentMyHealPredictionBar", self)
+	mhpb:SetStatusBarTexture(C.Media.Texture, "OVERLAY")
+	mhpb:SetStatusBarColor(0, 0.827, 0.765, 1)
 
-	local ohpb = self.Health:CreateTexture(nil, "ARTWORK")
-	ohpb:SetTexture(C.Media.Texture)
-	ohpb:SetVertexColor(0.0, 0.631, 0.557, 1)
+	local ohpb = CreateFrame("StatusBar", "$parentOtherHealPredictionBar", self)
+	ohpb:SetStatusBarTexture(C.Media.Texture, "OVERLAY")
+	ohpb:SetStatusBarColor(0.0, 0.631, 0.557, 1)
 
-	local ahpb = self.Health:CreateTexture(nil, "ARTWORK")
-	ahpb:SetTexture("Interface\\RaidFrame\\Shield-Fill")
+	local ahpb = CreateFrame("StatusBar", "$parentTotalAbsorbBar", self)
+	ahpb:SetStatusBarTexture("Interface\\RaidFrame\\Shield-Fill", "OVERLAY")
 
 	if (C.Raidframe.HorizontalHealthBars) then
-		mhpb:SetWidth(self:GetWidth())
-		ohpb:SetWidth(self:GetWidth())
-		ahpb:SetWidth(self:GetWidth())
+		mhpb:SetOrientation("HORIZONTAL")
+		mhpb:SetPoint("TOPLEFT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
+		mhpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "BOTTOMRIGHT")
+		mhpb:SetWidth(self:GetWidth(true))
+
+		ohpb:SetOrientation("HORIZONTAL")
+		ohpb:SetPoint("TOPLEFT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
+		ohpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "BOTTOMRIGHT")
+		ohpb:SetWidth(self:GetWidth(true))
+
+		ahpb:SetOrientation("HORIZONTAL")
+		ahpb:SetPoint("TOPLEFT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
+		ahpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "BOTTOMRIGHT")
+		ahpb:SetWidth(self:GetWidth(true))
 	else
-		mhpb:SetWidth(self:GetHeight())
-		ohpb:SetWidth(self:GetHeight())
-		ahpb:SetWidth(self:GetHeight())
+		mhpb:SetOrientation("VERTICAL")
+		mhpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "TOPLEFT")
+		mhpb:SetPoint("BOTTOMRIGHT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
+		mhpb:SetWidth(self:GetHeight(true))
+
+		ohpb:SetOrientation("VERTICAL")
+		ohpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "TOPLEFT")
+		ohpb:SetPoint("BOTTOMRIGHT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
+		ohpb:SetWidth(self:GetHeight(true))
+
+		ahpb:SetOrientation("VERTICAL")
+		ahpb:SetPoint("BOTTOMLEFT", self.Health:GetStatusBarTexture(), "TOPLEFT")
+		ahpb:SetPoint("BOTTOMRIGHT", self.Health:GetStatusBarTexture(), "TOPRIGHT")
+		ahpb:SetWidth(self:GetHeight(true))
 	end
 
 	self.HealPrediction = {
@@ -251,8 +275,8 @@ local function CreateRaidLayout(self, unit)
 
 	-- Threat glow
 	self.ThreatGlow = CreateFrame("Frame", nil, self)
-	self.ThreatGlow:SetPoint("TOPLEFT", self, "TOPLEFT", -4, 4)
-	self.ThreatGlow:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 4, -4)
+	self.ThreatGlow:SetPoint("TOPLEFT", self, "TOPLEFT", -5, 5)
+	self.ThreatGlow:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT", 5, -5)
 	self.ThreatGlow:SetBackdrop({edgeFile = C.Media.Glow, edgeSize = 3})
 	self.ThreatGlow:SetBackdropBorderColor(0, 0, 0, 0)
 	self.ThreatGlow:SetFrameLevel(self:GetFrameLevel() - 1)
@@ -371,7 +395,7 @@ local function CreateRaidLayout(self, unit)
 	-- 		self:SetBorderColor(1, 1, 1)
 	-- 	else
 	-- 		self:SetBorderTexture("white")
-	-- 		self:SetBorderColor(0.38, 0.38, 0.38)
+	-- 		self:SetBorderColor(unpack(C.Media.Border_Color))
 	-- 	end
 	-- end)
 
@@ -409,7 +433,7 @@ if not C.Raidframe.UseHealLayout then
 	"groupFilter", "1, 2, 3, 4, 5, 6, 7, 8",
 	"groupingOrder", "1, 2, 3, 4, 5, 6, 7, 8",
 	"groupBy", "GROUP", -- C.Raid.GroupByValue
-	"maxColumns", math.ceil(40/5),
+	"maxColumns", math.ceil(40 / 5),
 	"unitsPerColumn", C.Raidframe.MaxUnitPerColumn,
 	"columnAnchorPoint", "LEFT",
 	"initial-width", C.Raidframe.Width,
@@ -440,7 +464,7 @@ else
 	"groupingOrder", "1, 2, 3, 4, 5, 6, 7, 8",
 	"groupBy", "GROUP", -- C.Raid.GroupByValue
 	"maxColumns", 8,
-	"unitsPerColumn", 5,
+	"unitsPerColumn", 10,
 	"columnAnchorPoint", "BOTTOM",
 	"initial-width", C.Raidframe.Width,
 	"initial-height", C.Raidframe.Height,
@@ -463,7 +487,7 @@ if C.Raidframe.MainTankFrames then
 	"oUF-initialConfigFunction", ([[
 	self:SetWidth(%d)
 	self:SetHeight(%d)
-	]]):format(K.Scale(70), K.Scale(30)),
+	]]):format(K.Scale(C.Raidframe.Width), K.Scale(C.Raidframe.Height)),
 	"showRaid", true,
 	"showParty", false,
 	"yOffset", -K.Scale(8),

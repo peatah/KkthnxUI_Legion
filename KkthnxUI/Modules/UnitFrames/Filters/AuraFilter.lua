@@ -6,22 +6,18 @@ local oUF = ns.oUF
 
 --[[
 Filters:
-
 General (both):	On Players:Show all
 "Blacklist" 0 = Show All (override default)
 1 = Show only mine
 2 = Hide on friendly
 3 = Hide all
-
 On NPC's: Show only mine
 0 = Show Always ( Even when not Mine )
 1 = Show only mine - no effect.
 2 = Hide on friendly
 3 = Hide Mine
-
 Arena (buff): true = whitelisted
 "Whitelist"
-
 Boss (debuff): 0 = Whitelisted
 "Whitelist" 1 = Only show own
 --]]

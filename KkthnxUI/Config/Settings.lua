@@ -218,24 +218,29 @@ C["Misc"] = {
 
 -- Nameplates
 C["Nameplates"] = {
-    ["Enable"] = true,
-    ["Height"] = 11,
-    ["Width"] = 120,
     ["AdditionalHeight"] = 0,
     ["AdditionalWidth"] = 0,
-    ["Combat"] = false,
-    ["HealthValue"] = true,
+    ["AurasSize"] = 26,
+    ["BadColor"] = {1, 0, 0},
     ["CastbarName"] = false,
-    ["EnhancedThreat"] = true,
+    ["Clamp"] = false,
     ["ClassIcons"] = false,
     ["ClassResource"] = true,
     ["NameAbbreviate"] = true,
+    ["Combat"] = false,
+    ["Distance"] = 40,
+    ["Enable"] = true,
+    ["EnhancedThreat"] = true,
     ["GoodColor"] = {0.2, 0.8, 0.2},
-    ["NearColor"] = {1, 1, 0},
-    ["BadColor"] = {1, 0, 0},
-    ["TrackAuras"] = true,
-    ["AurasSize"] = 18,
     ["HealerIcon"] = false,
+    ["HealthValue"] = true,
+    ["Height"] = 11,
+    ["NameAbbreviate"] = true,
+    ["NearColor"] = {1, 1, 0},
+    ["Spiral"] = true,
+    ["Timer"] = true,
+    ["TrackAuras"] = true,
+    ["Width"] = 120,
 }
 
 -- PulseCD
@@ -263,6 +268,7 @@ C["RaidCD"] = {
 
 -- Skins
 C["Skins"] = {
+    ["BigWigs"] = false,
     ["ChatBubble"] = true,
     ["DBM"] = false,
     ["DBMMove"] = false,
@@ -289,8 +295,8 @@ C["Tooltip"] = {
 
 -- Unitframe
 C["Unitframe"] = {
-    ["CastbarSafeZoneColor"] = {.8, 0.4, 0},
     ["Castbars"] = true,
+    ["CastbarSafeZoneColor"] = {.8, 0.4, 0},
     ["ClassColor"] = true,
     ["ClassPortraits"] = false,
     ["CombatText"] = true,
@@ -298,6 +304,8 @@ C["Unitframe"] = {
     ["FlatClassPortraits"] = false,
     ["FocusCastbarHeight"] = 20,
     ["FocusCastbarWidth"] = 180,
+    ["IconPlayer"] = "NONE",
+    ["IconTarget"] = "NONE",
     ["Party"] = true,
     ["PlayerCastbarHeight"] = 18,
     ["PlayerCastbarWidth"] = 200,
@@ -316,8 +324,6 @@ C["Unitframe"] = {
     ["TextPowerColor"] = {.9, .9, .9},
     ["ThreatGlow"] = true,
     ["ThreatValue"] = false,
-    ["IconPlayer"] = "NONE",
-    ["IconTarget"] = "NONE",
 }
 
 C["Partyframe"] = { -- Could add this as its own in the future.
@@ -339,7 +345,7 @@ C["Raidframe"] = {
     ["MainTankFrames"] = true,
     ["ManabarHorizontal"] = false,
     ["ManabarShow"] = true,
-    ["MaxUnitPerColumn"] = 8,
+    ["MaxUnitPerColumn"] = 10,
     ["RaidAsParty"] = false,
     ["Scale"] = 1,
     ["ShowMouseoverHighlight"] = true,
@@ -347,8 +353,7 @@ C["Raidframe"] = {
     ["ShowResurrectText"] = true,
     ["ShowRolePrefix"] = false,
     ["ShowThreatText"] = false,
-    ["UseHealLayout"] = false,
-    ["Width"] = 42,
+    ["Width"] = 56,
 }
 
 -- Worldmap

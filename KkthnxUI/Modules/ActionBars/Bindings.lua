@@ -1,4 +1,4 @@
-local K, C, L = unpack(select(2, ...))
+local K, C, L = select(2, ...):unpack()
 if C.ActionBar.Enable ~= true or IsAddOnLoaded("ncHoverBind") == true then return end
 
 local bind, localmacros = CreateFrame("Frame", "HoverBind", UIParent), 0
@@ -208,10 +208,10 @@ SlashCmdList.MOUSEOVERBIND = function()
 		function bind:Deactivate(save)
 			if save then
 				SaveBindings(2)
-				print("|cffffff00"..L_BIND_SAVED.."|r")
+				print("|cffffff00"..L.Bind.Saved.."|r")
 			else
 				LoadBindings(2)
-				print("|cffffff00"..L_BIND_DISCARD.."|r")
+				print("|cffffff00"..L.Bind.Discard.."|r")
 			end
 			self.enabled = false
 			self:HideFrame()
@@ -219,7 +219,7 @@ SlashCmdList.MOUSEOVERBIND = function()
 		end
 
 		StaticPopupDialogs["KEYBIND_MODE"] = {
-			text = L_BIND_INSTRUCT,
+			text = L.Bind.Instruct,
 			button1 = APPLY,
 			button2 = CANCEL,
 			OnAccept = function() bind:Deactivate(true) ReloadUI() end,

@@ -26,7 +26,7 @@ function oUFKkthnx:ADDON_LOADED(event, addon)
 	end
 
 	self:UnregisterEvent(event)
-	self:RegisterEvent("MODIFIER_STATE_CHANGED") -- Showing auras
+	self:RegisterEvent("MODIFIER_STATE_CHANGED")
 
 	-- Skin the Countdown/BG timers
 	self:RegisterEvent("START_TIMER")
@@ -73,8 +73,10 @@ function oUFKkthnx:START_TIMER(event)
 	end
 end
 
+-- View Auras
 function oUFKkthnx:MODIFIER_STATE_CHANGED(event, key, state)
-	if (IsControlKeyDown() and (key == "LALT" or key == "RALT")) or
+	if
+	(IsControlKeyDown() and (key == "LALT" or key == "RALT")) or
 	(IsAltKeyDown() and (key == "LCTRL" or key == "RCTRL"))
 	then
 		local a, b

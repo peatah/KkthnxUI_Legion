@@ -88,8 +88,6 @@ ns.config = {
 	},
 
 	pet = {
-		-- style = "fat",
-		-- scale = 1,
 		HealthTag = "MINIMAL",
 		PowerTag = "DISABLE",
 		cbshow = true,
@@ -138,7 +136,6 @@ ns.config = {
 	},
 
 	boss = {
-		-- scale = 1,
 		HealthTag = "PERCENT",
 		PowerTag = "PERCENT",
 		cbshow = true,
