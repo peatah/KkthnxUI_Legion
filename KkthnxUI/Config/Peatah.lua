@@ -190,3 +190,5 @@ function SlashCmdList.K_SWQ_MAIN(cmd)
 			end
 		end
 end
+
+/console TargetNearestUseOld 0
