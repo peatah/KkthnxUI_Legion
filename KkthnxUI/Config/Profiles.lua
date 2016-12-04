@@ -24,7 +24,7 @@ C["Chat"]["WhispSound"] = false
 C["DataText"]["BottomBar"] = false
 -- C["Experience"]["XPWidth"] =243 
 -- C["Experience"]["ArtifactWidth"] =243 
-C["Filger"]["Enable"] = false 
+-- C["Filger"]["Enable"] = false 
 C["General"]["AutoScale"] = false 
 C["General"]["CustomLagTolerance"] = true
 C["General"]["UIScale"] = 0.70 
@@ -74,11 +74,11 @@ C["Position"]["PulseCD"] = {"CENTER", "UIParent", "CENTER", -200, 0}
 -- C["Position"]["PlayerBuffs"] = {"TOPRIGHT", "UIParent", "TOPRIGHT", -5, -5}
 -- C["Position"]["Tooltip"] = {"BOTTOMRIGHT", "UIParent", "BOTTOMRIGHT", -2, 2}
 
-C["Position"]["UnitFrames"]["Player"] = {"BOTTOMRIGHT", "ActionBarAnchor", "TOPLEFT", 150, 75}
-C["Position"]["UnitFrames"]["Target"] = {"BOTTOMLEFT", "ActionBarAnchor", "TOPRIGHT", -150, 75}
+-- C["Position"]["UnitFrames"]["Player"] = {"BOTTOMRIGHT", "ActionBarAnchor", "TOPLEFT", 150, 75}
+-- C["Position"]["UnitFrames"]["Target"] = {"BOTTOMLEFT", "ActionBarAnchor", "TOPRIGHT", -150, 75}
 
 if K.Role == "HEALER" then
-	C["Position"]["UnitFrames"]["Raid"] = {"CENTER", "UIParent", "Center", 200, 0}
+	C["Position"]["UnitFrames"]["Raid"] = {"CENTER", "UIParent", "Center", 200, -30}
 	C["Position"]["UnitFrames"]["Focus"] = {"CENTER", "UIParent", "Center", 320, 0}
 end
 

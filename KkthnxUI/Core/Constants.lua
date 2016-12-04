@@ -78,6 +78,7 @@ K.IsAddOnEnabled = function(addon_name)
 	end
 end
 
+RoleUpdater:RegisterEvent("ADDON_LOADED")
 RoleUpdater:RegisterEvent("PLAYER_ENTERING_WORLD")
 RoleUpdater:RegisterEvent("PLAYER_TALENT_UPDATE")
 RoleUpdater:SetScript("OnEvent", K.CheckRole)
