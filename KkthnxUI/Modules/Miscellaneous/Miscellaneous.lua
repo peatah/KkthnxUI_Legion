@@ -40,14 +40,14 @@ end)
 
 -- Move some frames (Elvui)
 local GMMover = CreateFrame("Frame", "GMMoverAnchor", UIParent)
-GMMover:SetPoint("TOPLEFT", K.UIParent, "TOPLEFT", 250, -50)
+GMMover:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 250, -50)
 Movers:RegisterFrame(GMMover)
 
 local TicketFrame = CreateFrame("Frame")
 TicketFrame:RegisterEvent("PLAYER_LOGIN")
 TicketFrame:SetScript("OnEvent", function(self, event)
 	TicketStatusFrame:ClearAllPoints()
-	TicketStatusFrame:SetPoint("TOPLEFT", K.UIParent, "TOPLEFT", 250, -5)
+	TicketStatusFrame:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 250, -5)
 	-- Blizzard repositions this frame now in UIParent_UpdateTopFramePositions
 	hooksecurefunc(TicketStatusFrame, "SetPoint", function(self, _, anchor)
 		if anchor == UIParent then
@@ -60,7 +60,7 @@ end)
 -- LevelUp + BossBanner Mover
 local LBBMover = CreateFrame("Frame", "LevelUpBossBannerHolder", UIParent)
 LBBMover:SetSize(200, 20)
-LBBMover:SetPoint("TOP", K.UIParent, "TOP", 0, -120)
+LBBMover:SetPoint("TOP", UIParent, "TOP", 0, -120)
 
 local LevelUpBossBanner = CreateFrame("Frame")
 LevelUpBossBanner:RegisterEvent("PLAYER_LOGIN")
@@ -86,7 +86,6 @@ LevelUpBossBanner:SetScript("OnEvent", function(self, event)
 end)
 
 local PVPMessageEnhancement = CreateFrame("Frame")
-PVPMessageEnhancement:RegisterEvent("PLAYER_LOGIN")
 PVPMessageEnhancement:RegisterEvent("CHAT_MSG_BG_SYSTEM_HORDE")
 PVPMessageEnhancement:RegisterEvent("CHAT_MSG_BG_SYSTEM_ALLIANCE")
 PVPMessageEnhancement:RegisterEvent("CHAT_MSG_BG_SYSTEM_NEUTRAL")
@@ -174,23 +173,16 @@ LFDParentFrame:HookScript("OnShow", function()
 	end
 end)
 
--- Custom lag tolerance(By Elv22)
+-- Custom lag tolerance
 if C.General.CustomLagTolerance == true then
-	local customlag = CreateFrame("Frame")
-	local int = 5
-	local _, _, _, lag = GetNetStats()
-	local LatencyUpdate = function(self, elapsed)
-		int = int - elapsed
-		if int < 0 then
-			if GetCVar("reducedLagTolerance") ~= tostring(1) then SetCVar("reducedLagTolerance", tostring(1)) end
-			if lag ~= 0 and lag <= 400 then
-				SetCVar("maxSpellStartRecoveryOffset", tostring(lag))
-			end
-			int = 5
-		end
-	end
-	customlag:SetScript("OnUpdate", LatencyUpdate)
-	LatencyUpdate(customlag, 10)
+	local CustomLagTolerance = CreateFrame("Frame")
+	CustomLagTolerance:SetScript("OnEvent", function(self, event)
+		local down, up, lagHome, lagWorld = GetNetStats()
+		SetCVar("ReducedLagTolerance", 1)
+		SetCVar("MaxSpellStartRecoveryOffset", lagWorld)
+	end)
+	CustomLagTolerance:RegisterEvent("ZONE_CHANGED")
+	CustomLagTolerance:RegisterEvent("ADDON_LOADED")
 end
 
 -- Remove boss emote spam during bg(ArathiBasin SpamFix by Partha)

@@ -51,12 +51,12 @@ C["Automation"] = {
 -- Bag
 C["Bags"] = {
     ["BagFilter"] = false,
-    ["SortRightToLeft"] = false,
     ["ButtonSize"] = 32,
     ["Enable"] = true,
     ["InsertLeftToRight"] = true,
     ["ItemsPerRow"] = 11,
     ["PulseNewItem"] = true,
+    ["SortRightToLeft"] = false,
     ["Spacing"] = 4,
 }
 
@@ -170,10 +170,11 @@ C["General"] = {
     ["BubbleBackdrop"] = false,
     ["BubbleFontSize"] = 12,
     ["CustomLagTolerance"] = false,
+    ["DisableTutorialButtons"] = false,
+    ["ShowConfigButton"] = true,
     ["TranslateMessage"] = true,
     ["UIScale"] = 0.71,
     ["WelcomeMessage"] = true,
-    ["ShowConfigButton"] = true,
 }
 
 -- Loot
