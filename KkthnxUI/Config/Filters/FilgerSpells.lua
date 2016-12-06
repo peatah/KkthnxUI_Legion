@@ -2482,13 +2482,10 @@ C["filger_spells"] = {
 			-- Elemental Blast
 			-- {spellID = 118522, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Tidal Waves
-<<<<<<< HEAD
 			-- {spellID = 53390, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Elemental Fusion
 			--BETA {spellID = 157174, unitID = "player", caster = "player", filter = "BUFF"},
-=======
 			{spellID = 53390, unitID = "player", caster = "player", filter = "BUFF"},
->>>>>>> upstream/6.10
 
 			-- Trinkets
 			-- Alchemy Stones
