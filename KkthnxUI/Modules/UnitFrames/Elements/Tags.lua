@@ -91,7 +91,7 @@ end
 oUF.Tags.Events["KkthnxUI:NameShort"] = "UNIT_NAME_UPDATE"
 oUF.Tags.Methods["KkthnxUI:NameShort"] = function(unit)
 	local Name = UnitName(unit) or UNKNOWN
-	return K.UTF8Sub(Name, 3, false)
+	return K.UTF8Sub(Name, 3, true)
 end
 
 oUF.Tags.Events["KkthnxUI:NameMedium"] = "UNIT_NAME_UPDATE"
@@ -126,26 +126,7 @@ end
 
 oUF.Tags.Events["KkthnxUI:RaidRole"] = "GROUP_ROSTER_UPDATE PLAYER_ROLES_ASSIGNED"
 if (not oUF.Tags["KkthnxUI:RaidRole"]) then
-<<<<<<< HEAD
-    oUF.Tags.Methods["KkthnxUI:RaidRole"] = function(unit)
-        local Role = UnitGroupRolesAssigned(unit)
-        if (Role) then
-            if (Role == "TANK") then
-                Role = ">"
-            elseif (Role == "HEALER") then
-                Role = "+"
-            elseif (Role == "DAMAGER") then
-                Role = ""
-            elseif (Role == "NONE") then
-                Role = ""
-            end
-            return Role
-        else
-            return ""
-        end
-    end
-end
-=======
+
 	oUF.Tags.Methods["KkthnxUI:RaidRole"] = function(unit)
 		local Role = UnitGroupRolesAssigned(unit)
 		if (Role) then
@@ -165,4 +146,3 @@ end
 		end
 	end
 end
->>>>>>> upstream/master
