@@ -9,24 +9,27 @@ Anchor:SetSize(C.DataBars.ExperienceWidth, C.DataBars.ExperienceHeight)
 Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, -33)
 Movers:RegisterFrame(Anchor)
 
-local ExperienceBar = CreateFrame("StatusBar",  nil, UIParent)
+local ExperienceBar = CreateFrame("StatusBar", nil, UIParent)
+K.CreateBorder(ExperienceBar, 10, 2.8)
 ExperienceBar:SetOrientation("HORIZONTAL")
 ExperienceBar:SetSize(C.DataBars.ExperienceWidth, C.DataBars.ExperienceHeight)
 ExperienceBar:SetPoint("CENTER", ExperienceAnchor, "CENTER", 0, 0)
 ExperienceBar:SetStatusBarTexture(C.Media.Texture)
 ExperienceBar:SetStatusBarColor(unpack(C.DataBars.ExperienceColor))
 
-K.CreateBorder(ExperienceBar, 10, 2.8)
+local ExperienceBarBG = ExperienceBar:CreateTexture(nil, "BORDER")
+ExperienceBarBG:SetAllPoints()
+ExperienceBarBG:SetTexture(C.Media.Texture)
+ExperienceBarBG:SetVertexColor(unpack(C.Media.Backdrop_Color))
 
 local ExperienceBarRested = CreateFrame("StatusBar", nil, ExperienceBar)
 ExperienceBarRested:SetOrientation("HORIZONTAL")
 ExperienceBarRested:SetSize(C.DataBars.ExperienceWidth, C.DataBars.ExperienceHeight)
-ExperienceBarRested:SetPoint("BOTTOM", ExperienceBar, "BOTTOM", 0, 0)
+ExperienceBarRested:SetParent(ExperienceBar)
+ExperienceBarRested:SetAllPoints()
 ExperienceBarRested:SetStatusBarTexture(C.Media.Texture)
 ExperienceBarRested:SetStatusBarColor(unpack(C.DataBars.ExperienceRestedColor))
-
-ExperienceBarRested:SetBackdrop({bgFile = C.Media.Blank,insets = {left = -1, right = -1, top = -1, bottom = -1}})
-ExperienceBarRested:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+ExperienceBarRested:SetAlpha(.5)
 
 if C.Blizzard.ColorTextures == true then
 	ExperienceBar:SetBorderTexture("white")
@@ -34,37 +37,41 @@ if C.Blizzard.ColorTextures == true then
 end
 
 local function UpdateExperienceBar()
-    local Current, Max = UnitXP("player"), UnitXPMax("player")
-    local Rested = GetXPExhaustion()
-    local IsRested = GetRestState()
+	local Current, Max = UnitXP("player"), UnitXPMax("player")
+	local Rested = GetXPExhaustion()
+	local IsRested = GetRestState()
 
-    ExperienceBar:SetMinMaxValues(0, Max)
-    ExperienceBar:SetValue(Current)
+	ExperienceBar:SetMinMaxValues(0, Max)
+	ExperienceBar:SetValue(Current)
 
-    if (IsRested == 1 and Rested) then
-	    ExperienceBarRested:SetFrameLevel(ExperienceBar:GetFrameLevel() - 1)
-        ExperienceBarRested:SetMinMaxValues(0, Max)
-        ExperienceBarRested:SetValue(Rested + Current)
-    end
+	if (IsRested == 1 and Rested) then
+		self:RegisterEvent("UPDATE_EXHAUSTION", UpdateExperienceBar)
+		ExperienceBarRested:SetFrameLevel(ExperienceBar:GetFrameLevel() - 1)
+		ExperienceBarRested:SetMinMaxValues(0, Max)
+		ExperienceBarRested:SetValue(Rested + Current)
+	else
+		self:UnregisterEvent("UPDATE_EXHAUSTION", UpdateExperienceBar)
+		ExperienceBarRested:Hide()
+	end
 end
 
 ExperienceBar:SetScript("OnEnter", function(self)
-    local Current, Max = UnitXP("player"), UnitXPMax("player")
-    local Rested = GetXPExhaustion()
-    local IsRested = GetRestState()
+	local Current, Max = UnitXP("player"), UnitXPMax("player")
+	local Rested = GetXPExhaustion()
+	local IsRested = GetRestState()
 
 	if Max == 0 then
 		return
 	end
 
 	GameTooltip:ClearLines()
-    GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0, -4)
+	GameTooltip:SetOwner(self, "ANCHOR_CURSOR", 0, -4)
 
 	GameTooltip:AddLine(string.format("|cff0090FF"..XP..": %d / %d (%d%% - %d/%d)|r", Current, Max, Current / Max * 100, Bars - (Bars * (Max - Current) / Max), Bars))
 
-    if (IsRested == 1 and Rested) then
-        GameTooltip:AddLine(string.format("|cff4BAF4C"..TUTORIAL_TITLE26..": +%d (%d%%)|r", Rested, Rested / Max * 100))
-    end
+	if (IsRested == 1 and Rested) then
+		GameTooltip:AddLine(string.format("|cff4BAF4C"..TUTORIAL_TITLE26..": +%d (%d%%)|r", Rested, Rested / Max * 100))
+	end
 
 	GameTooltip:Show()
 end)
@@ -78,10 +85,10 @@ if C.DataBars.ExperienceFade then
 	ExperienceBar.Tooltip = true
 end
 
+ExperienceBar:RegisterEvent("DISABLE_XP_GAIN", true)
+ExperienceBar:RegisterEvent("ENABLE_XP_GAIN", true)
 ExperienceBar:RegisterEvent("PLAYER_ENTERING_WORLD")
-ExperienceBar:RegisterEvent("PLAYER_XP_UPDATE")
 ExperienceBar:RegisterEvent("PLAYER_LEVEL_UP")
-ExperienceBar:RegisterEvent("UPDATE_EXHAUSTION")
-ExperienceBar:RegisterEvent("PLAYER_UPDATE_RESTING")
+ExperienceBar:RegisterEvent("PLAYER_XP_UPDATE")
 
 ExperienceBar:SetScript("OnEvent", UpdateExperienceBar)
