@@ -14,7 +14,7 @@ local GetNumSpecializations = GetNumSpecializations
 local GetSpecialization = GetSpecialization
 local GetSpecializationInfo = GetSpecializationInfo
 local InCombatLockdown = InCombatLockdown
-local IsAddOnLoaded = IsAddOnLoaded
+
 local IsShiftKeyDown = IsShiftKeyDown
 local SetSpecialization = SetSpecialization
 local UIParent = UIParent
@@ -245,14 +245,14 @@ if C.General.ShowConfigButton == true then
 		end
 
 		if btn == "RightButton" then
-			if IsAddOnLoaded("Recount") then
+			if K.CheckAddOn("Recount") then
 				if Recount_MainWindow:IsShown() then
 					Recount_MainWindow:Hide()
 				else
 					Recount_MainWindow:Show()
 				end
 			end
-			if IsAddOnLoaded("Skada") then
+			if K.CheckAddOn("Skada") then
 				Skada:ToggleWindow()
 			end
 		end
@@ -273,10 +273,10 @@ if C.General.ShowConfigButton == true then
 		GameTooltip:ClearLines()
 		GameTooltip:AddLine(L.ConfigButton.Functions)
 		GameTooltip:AddDoubleLine(L.ConfigButton.LeftClick, L.ConfigButton.MoveUI, 1, 1, 1)
-		if IsAddOnLoaded("Recount") then
+		if K.CheckAddOn("Recount") then
 			GameTooltip:AddDoubleLine(L.ConfigButton.RightClick, L.ConfigButton.Recount, 1, 1, 1)
 		end
-		if IsAddOnLoaded("Skada") then
+		if K.CheckAddOn("Skada") then
 			GameTooltip:AddDoubleLine(L.ConfigButton.RightClick, L.ConfigButton.Skada, 1, 1, 1)
 		end
 		GameTooltip:AddDoubleLine(L.ConfigButton.MiddleClick, L.ConfigButton.Config, 1, 1, 1)

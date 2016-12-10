@@ -1,31 +1,39 @@
-﻿local K, C, L = select(2, ...):unpack()
-if C.Chat.Enable ~= true or C.Chat.Spam ~= true then return end
+local K, C, L = select(2, ...):unpack()
+if C.Chat.SpamFilter ~= true then return end
 
-K.ChatSpamList = {
-	-- real spam
+-- Lua API
+local pairs = pairs
+
+-- Wow API
+local UnitName = UnitName
+local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
+
+-- Spam keywords
+local SpamList = {
+  -- real spam
 	"%.c0m%f[%A]",
-	"%S+#%d+", -- BattleTag
 	"%d/%d cm gold",
 	"%d%s?eur%f[%A]",
 	"%d%s?usd%f[%A]",
+	"%S+#%d+", -- BattleTag
 	"account",
 	"boost",
 	"cs[:;]go%f[%A]", -- seems to be the new hype
 	"delivery",
 	"diablo",
 	"elite gear",
-	"game ?time",
 	"g0ld",
+	"game ?time",
 	"name change",
 	"paypal",
 	"professional",
 	"qq", -- Chinese IM network, also catches junk as a bonus!
 	"ranking",
 	"realm",
+	"s%A*k%A*y%A*p%Ae", -- spammers love to obfuscate "skype"
 	"self ?play",
 	"server",
 	"share",
-	"s%A*k%A*y%A*p%Ae", -- spammers love to obfuscate "skype"
 	"transfer",
 	"wow gold",
 	-- pvp
@@ -77,12 +85,27 @@ K.ChatSpamList = {
 	"webcam",
 	"wts.+guild",
 	"xbox",
-	"youtu%.?be",
 	"y?o?ur? m[ao]mm?a",
 	"y?o?ur? m[ou]th[ae]r",
+	"youtu%.?be",
 	"youtube",
 	-- TCG codes
 	"hippogryph hatchling",
 	"mottled drake",
 	"rocket chicken",
 }
+
+-- Trade channel spam
+local function TradeFilter(self, event, text, sender)
+	if (SpamList and SpamList[1]) then
+		for i, SpamList in pairs(SpamList) do
+			if sender == K.Name or UnitIsInMyGuild(sender) then return end
+			if (text:find(SpamList)) then
+				return true
+			end
+		end
+	end
+end
+
+ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", TradeFilter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", TradeFilter)
