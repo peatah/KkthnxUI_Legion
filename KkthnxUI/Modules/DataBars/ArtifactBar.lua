@@ -18,7 +18,11 @@ if K.Level ~= MAX_PLAYER_LEVEL then
 	AnchorY = -48
 end
 Anchor:SetSize(C.DataBars.ArtifactWidth, C.DataBars.ArtifactHeight)
-Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, AnchorY)
+if C.Minimap.InvertDataBars then
+	Anchor:SetPoint("TOP", Minimap, "TOP", 0, -AnchorY + 8)
+else
+	Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, AnchorY)
+end
 Movers:RegisterFrame(Anchor)
 
 local ArtifactBar = CreateFrame("StatusBar", nil, UIParent)

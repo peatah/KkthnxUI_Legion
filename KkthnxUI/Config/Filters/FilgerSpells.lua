@@ -2487,7 +2487,7 @@ C["filger_spells"] = {
 			-- {spellID = 53390, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Elemental Fusion
 			--BETA {spellID = 157174, unitID = "player", caster = "player", filter = "BUFF"},
-			{spellID = 53390, unitID = "player", caster = "player", filter = "BUFF"},
+			-- {spellID = 53390, unitID = "player", caster = "player", filter = "BUFF"},
 
 			-- Trinkets
 			-- Alchemy Stones

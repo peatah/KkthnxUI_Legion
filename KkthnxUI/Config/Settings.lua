@@ -190,6 +190,7 @@ C["Loot"] = {
 
 -- Minimap
 C["Minimap"] = {
+    ["InvertDataBars"] = false,
     ["CollectButtons"] = true,
     ["Enable"] = true,
     ["FadeButtons"] = true,

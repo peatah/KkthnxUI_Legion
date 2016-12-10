@@ -9,7 +9,11 @@ local Movers = K.Movers
 
 local Anchor = CreateFrame("Frame", "ReputationAnchor", UIParent)
 Anchor:SetSize(C.DataBars.ReputationWidth, C.DataBars.ReputationHeight)
-Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, -63)
+if C.Minimap.InvertDataBars then
+	Anchor:SetPoint("TOP", Minimap, "TOP", 0, 63 + 8)
+else
+	Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, -63)
+end
 Movers:RegisterFrame(Anchor)
 
 local ReputationBar = CreateFrame("StatusBar", nil, UIParent)

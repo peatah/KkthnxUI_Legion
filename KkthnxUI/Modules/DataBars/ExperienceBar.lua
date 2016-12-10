@@ -25,7 +25,11 @@ end
 
 local Anchor = CreateFrame("Frame", "ExperienceAnchor", UIParent)
 Anchor:SetSize(C.DataBars.ExperienceWidth, C.DataBars.ExperienceHeight)
-Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, -33)
+if C.Minimap.InvertDataBars then
+	Anchor:SetPoint("TOP", Minimap, "TOP", 0, 33 + 8)
+else
+	Anchor:SetPoint("TOP", Minimap, "BOTTOM", 0, -33)
+end
 Movers:RegisterFrame(Anchor)
 
 local ExperienceBar = CreateFrame("StatusBar", nil, UIParent)

@@ -149,6 +149,9 @@ if Minimap and C.Minimap.Enable then
 		MinimapStats:SetSize(((Minimap:GetWidth() + 10)), 28)
 		MinimapStats:SetPoint("TOP", Minimap, "BOTTOM", 0, -2)
 	end
+	if C.Minimap.InvertDataBars then
+		MinimapStats:SetPoint("TOP", Minimap, "TOP", -13, 30)
+	end
 	MinimapStats:SetFrameStrata("LOW")
 	Movers:RegisterFrame(MinimapStats)
 
