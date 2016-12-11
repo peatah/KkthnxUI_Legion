@@ -12,6 +12,7 @@
 -- @release $Id: AceHook-3.0.lua 1118 2014-10-12 08:21:54Z nevcairiel $
 local ACEHOOK_MAJOR, ACEHOOK_MINOR = "AceHook-3.0", 8
 local AceHook, oldminor = LibStub:NewLibrary(ACEHOOK_MAJOR, ACEHOOK_MINOR)
+
 if not AceHook then return end -- No upgrade needed
 
 AceHook.embeded = AceHook.embeded or {}
@@ -34,7 +35,7 @@ local pairs, next, type = pairs, next, type
 local format = string.format
 local assert, error = assert, error
 
--- Wow APIs
+-- WoW APIs
 local issecurevariable, hooksecurefunc = issecurevariable, hooksecurefunc
 local _G = _G
 

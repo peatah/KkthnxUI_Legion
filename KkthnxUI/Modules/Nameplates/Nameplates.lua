@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 if C.Nameplates.Enable ~= true then return end
 
 -- Lua API
@@ -467,7 +467,7 @@ local function style(self, unit)
 	if C.Nameplates.NameAbbreviate == true then
 		self:Tag(self.Name, "[NameplateNameColor][NameplateNameLongAbbrev]")
 	else
-		self:Tag(self.Name, "[NameplateNameColor][NameLong]")
+		self:Tag(self.Name, "[NameplateNameColor][NameplateNameLong]")
 	end
 
 	-- Create Level
@@ -475,7 +475,7 @@ local function style(self, unit)
 	self.Level:SetFont(C.Media.Font, C.Media.Font_Size * K.NoScaleMult, C.Media.Font_Style)
 	-- self.Level:SetShadowOffset(C.Media.Font_shadow and 1 or 0, C.Media.Font_shadow and -1 or 0)
 	self.Level:SetPoint("RIGHT", self.Health, "LEFT", -2, 0)
-	self:Tag(self.Level, "[NameplateDiffColor][NameplateLevel][shortclassification]")
+	self:Tag(self.Level, "[NameplateLevelDiffColor][NameplateLevel][shortclassification]")
 
 	-- Create Cast Bar
 	self.Castbar = CreateFrame("StatusBar", nil, self)

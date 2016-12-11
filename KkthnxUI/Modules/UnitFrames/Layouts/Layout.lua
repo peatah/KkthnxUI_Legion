@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 if C.Unitframe.Enable ~= true then return end
 
 local _, ns = ...
@@ -716,7 +716,7 @@ local function CreateUnitLayout(self, unit)
 		ComboPointPlayerFrame.SetPoint = K.Noop
 
 		if C.Blizzard.ColorTextures == true then
-			ComboPointPlayerFrame.Background:SetVertexColor(unpack(C.Blizzard.TexturesColor, 0.1))
+			ComboPointPlayerFrame.Background:SetVertexColor(unpack(C.Blizzard.TexturesColor))
 		end
 
 		-- Totems

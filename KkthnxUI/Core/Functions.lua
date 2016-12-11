@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 
 -- Lua API
 local abs = math.abs
@@ -215,11 +215,6 @@ K.UTF8Sub = function(self, i, dots)
 			return self
 		end
 	end
-end
-
-K.Abbreviate = function(name)
-	local newname = (len(name) > 18) and gsub(name, "%s?(.[\128-\191]*)%S+%s", "%1. ") or name
-	return K.UTF8Sub(newname, 18, false)
 end
 
 K.FormatMoney = function(value)

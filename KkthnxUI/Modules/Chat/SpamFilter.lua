@@ -1,16 +1,18 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 if C.Chat.SpamFilter ~= true then return end
 
 -- Lua API
 local pairs = pairs
+local print = print
 
 -- Wow API
-local UnitName = UnitName
 local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
+local UnitIsInMyGuild = UnitIsInMyGuild
+local UnitName = UnitName
 
 -- Spam keywords
 local SpamList = {
-  -- real spam
+	-- real spam
 	"%.c0m%f[%A]",
 	"%d/%d cm gold",
 	"%d%s?eur%f[%A]",
@@ -32,7 +34,6 @@ local SpamList = {
 	"realm",
 	"s%A*k%A*y%A*p%Ae", -- spammers love to obfuscate "skype"
 	"self ?play",
-	"server",
 	"share",
 	"transfer",
 	"wow gold",
@@ -93,14 +94,25 @@ local SpamList = {
 	"hippogryph hatchling",
 	"mottled drake",
 	"rocket chicken",
+	-- Taken from Badboy
+	"%d+k.*giveaway.*guild.*selling.*karazhan.*mount.*mythic.*dungeon.*nightmare.*raid",
+	"^wtskarazhan.*,mythic.*mythicdungeons?boost$",
+	"^wtskarazhan[,.]mythic.*mythic+dungeon$",
+	"^wtsmythickarazhandungeons[,.]*whispme",
+	"dving[%.,]net",
+	"dving[%.,]ru.*уcлуги",
+	"selling.*professional.*team.*mount.*loot",
+	"wtsfast.*smooth.*karazhan.*mount.*valor.*nightmare.*wisp",
+	"цeн[ae].*lootkeeper[%.,]com",
 }
 
 -- Trade channel spam
 local function TradeFilter(self, event, text, sender)
 	if (SpamList and SpamList[1]) then
-		for i, SpamList in pairs(SpamList) do
+		for _, value in pairs(SpamList) do
 			if sender == K.Name or UnitIsInMyGuild(sender) then return end
-			if (text:find(SpamList)) then
+			if (text:find(value)) or text:lower():match(value) then
+				-- print(text, value)
 				return true
 			end
 		end
@@ -108,4 +120,5 @@ local function TradeFilter(self, event, text, sender)
 end
 
 ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", TradeFilter)
+ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", TradeFilter)
 ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", TradeFilter)

@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 
 local _G = _G
 local print, tostring, select = print, tostring, select
@@ -13,16 +13,17 @@ local FrameStackTooltip_Toggle = FrameStackTooltip_Toggle
 -- GLOBALS: CopyFrame, SlashCmdList
 
 --[[
-	Command to grab frame information when mouseing over a frame
+Command to grab frame information when mouseing over a frame
 
-	Frame Name
-	Width
-	Height
-	Strata
-	Level
-	X Offset
-	Y Offset
-	Point
+Frame Name
+Width
+Height
+Strata
+Level
+X Offset
+Y Offset
+Point
+
 --]]
 
 SLASH_FRAME1 = "/frame"
@@ -35,25 +36,25 @@ SlashCmdList["FRAME"] = function(arg)
 	if arg ~= nil then FRAME = arg end -- Set the global variable frame to = whatever we are mousing over to simplify messing with frames that have no name.
 	if arg ~= nil and arg:GetName() ~= nil then
 		local point, relativeTo, relativePoint, xOfs, yOfs = arg:GetPoint()
-		ChatFrame1:AddMessage("|cffCC0000----------------------------")
-		ChatFrame1:AddMessage("Name: |cffffff00"..arg:GetName())
+		ChatFrame1:AddMessage("|cffCC0000----------------------------|r")
+		ChatFrame1:AddMessage("Name: |cffffff00"..arg:GetName().."|r")
 		if arg:GetParent() and arg:GetParent():GetName() then
-			ChatFrame1:AddMessage("Parent: |cffffff00"..arg:GetParent():GetName())
+			ChatFrame1:AddMessage("Parent: |cffffff00"..arg:GetParent():GetName().."|r")
 		end
 
-		ChatFrame1:AddMessage("Width: |cffffff00"..format("%.2f", arg:GetWidth()))
-		ChatFrame1:AddMessage("Height: |cffffff00"..format("%.2f", arg:GetHeight()))
-		ChatFrame1:AddMessage("Strata: |cffffff00"..arg:GetFrameStrata())
-		ChatFrame1:AddMessage("Level: |cffffff00"..arg:GetFrameLevel())
+		ChatFrame1:AddMessage("Width: |cffffff00"..format("%.2f", arg:GetWidth()).."|r")
+		ChatFrame1:AddMessage("Height: |cffffff00"..format("%.2f", arg:GetHeight()).."|r")
+		ChatFrame1:AddMessage("Strata: |cffffff00"..arg:GetFrameStrata().."|r")
+		ChatFrame1:AddMessage("Level: |cffffff00"..arg:GetFrameLevel().."|r")
 
 		if xOfs then
-			ChatFrame1:AddMessage("X: |cffffff00"..format("%.2f", xOfs))
+			ChatFrame1:AddMessage("X: |cffffff00"..format("%.2f", xOfs).."|r")
 		end
 		if yOfs then
-			ChatFrame1:AddMessage("Y: |cffffff00"..format("%.2f", yOfs))
+			ChatFrame1:AddMessage("Y: |cffffff00"..format("%.2f", yOfs).."|r")
 		end
 		if relativeTo and relativeTo:GetName() then
-			ChatFrame1:AddMessage("Point: |cffffff00"..point.."|r anchored to "..relativeTo:GetName().."'s |cffffff00"..relativePoint)
+			ChatFrame1:AddMessage("Point: |cffffff00"..point.."|r anchored to "..relativeTo:GetName().."'s |cffffff00"..relativePoint..'"'.."|r")
 		end
 		ChatFrame1:AddMessage("|cffCC0000----------------------------|r")
 	elseif arg == nil then
@@ -78,14 +79,14 @@ SlashCmdList["FRAMELIST"] = function(msg)
 		end
 	end
 
-	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print("|cffCC0000~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|r")
 	for i = 2, FrameStackTooltip:NumLines() do
 		local text = _G["FrameStackTooltipTextLeft"..i]:GetText()
 		if(text and text ~= "") then
-			print(text)
+			print("|cffFFD100"..text)
 		end
 	end
-	print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+	print("|cffCC0000~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|r")
 
 
 	if CopyFrame then
@@ -110,6 +111,23 @@ local function TextureList(frame)
 end
 SLASH_TEXLIST1 = "/texlist"
 SlashCmdList["TEXLIST"] = TextureList
+
+local function GetPoint(frame)
+	if frame ~= "" then
+		frame = _G[frame]
+	else
+		frame = GetMouseFocus()
+	end
+
+	local point, relativeTo, relativePoint, xOffset, yOffset = frame:GetPoint()
+	local frameName = frame.GetName and frame:GetName() or "nil"
+	local relativeToName = relativeTo.GetName and relativeTo:GetName() or "nil"
+
+	print("|cffFFD100"..frameName, point, relativeToName, relativePoint, xOffset, yOffset.."|r")
+end
+
+SLASH_GETPOINT1 = "/getpoint"
+SlashCmdList["GETPOINT"] = GetPoint
 
 -- Frame stack on cyrillic
 SLASH_FSTACK1 = "/fs"

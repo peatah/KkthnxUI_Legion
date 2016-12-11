@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 if C.Nameplates.Enable ~= true then return end
 
 --[[
@@ -12,7 +12,7 @@ local function SpellName(id)
 	if name then
 		return name
 	else
-		print("|cffff0000WARNING: spell ID ["..tostring(id).."] no longer exists! Report this to Kkthnx.|r")
+		print("|cffff0000WARNING: Nameplates debuff whitelist spell ID ["..tostring(id).."] no longer exists! Report this to Kkthnx.|r")
 		return "Empty"
 	end
 end
@@ -63,6 +63,7 @@ K.DebuffWhiteList = {
 	[SpellName(1079)] = true,	-- Rip
 	[SpellName(1822)] = true, -- rake
 	[SpellName(8921)] = true, -- moonfire
+	[SpellName(155625)] = true, -- moonfire cat
 	[SpellName(77758)] = true, -- bear thrash
 	[SpellName(192090)] = true, -- bear thrash 7.0
 	[SpellName(106830)] = true, -- cat thrash
@@ -292,10 +293,6 @@ K.DebuffWhiteList = {
 }
 
 K.DebuffBlackList = {
-	-- [SpellName(spellID)] = true,	-- Spell Name
-}
-
-K.ArenaBuffList = {
 	-- [SpellName(spellID)] = true,	-- Spell Name
 }
 

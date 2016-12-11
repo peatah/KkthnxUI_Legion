@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 if C.Unitframe.Enable ~= true or C.Filger.Enable ~= true then return end
 
 --[[
@@ -1143,6 +1143,8 @@ C["filger_spells"] = {
 			{spellID = 190319, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Rune of Power
 			{spellID = 116014, filter = "ICD", trigger = "NONE", duration = 10},
+			-- Pyretic Incantation
+			{spellID = 194329, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Ice Barrier
 			{spellID = 11426, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Heating Up
@@ -1893,6 +1895,8 @@ C["filger_spells"] = {
 			{spellID = 10060, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Apotheosis
 			{spellID = 200183, unitID = "player", caster = "player", filter = "BUFF"},
+			-- Blessing of T'uure
+			{spellID = 196644, unitID = "player", caster = "player", filter = "BUFF"},
 			-- Spirit of Redemption
 			{spellID = 20711, unitID = "player", caster = "all", filter = "BUFF"},
 			-- Divinity
@@ -2103,6 +2107,10 @@ C["filger_spells"] = {
 			{spellID = 47788, filter = "CD"},
 			-- Power Word: Barrier
 			{spellID = 62618, filter = "CD"},
+			-- Divine Hymn
+			{spellID = 64843, filter = "CD"},
+			-- Symbol of Hope
+			{spellID = 64901, filter = "CD"},
 			-- Apotheosis
 			{spellID = 200183, filter = "CD"},
 			-- Shadowfiend
@@ -3313,6 +3321,8 @@ C["filger_spells"] = {
 			-- Other
 			-- Symbol of Hope
 			{spellID = 64901, unitID = "player", caster = "all", filter = "BUFF"},
+			-- Innervate
+			{spellID = 29166, unitID = "player", caster = "all", filter = "BUFF"},
 			-- Grounding Totem
 			{spellID = 8178, unitID = "player", caster = "all", filter = "BUFF"},
 			-- Mass Spell Reflection

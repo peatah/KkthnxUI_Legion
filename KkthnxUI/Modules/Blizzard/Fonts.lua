@@ -1,4 +1,4 @@
-local K, C, L = select(2, ...):unpack()
+local K, C, L = unpack(select(2, ...))
 if C.Blizzard.ReplaceBlizzardFonts ~= true or K.CheckAddOn("tekticles") then return end
 
 -- Lua API
@@ -71,7 +71,7 @@ KkthnxUIFonts:SetScript("OnEvent", function(self, event)
 	SetFont(NumberFont_OutlineThick_Mono_Small, NORMAL, 12, "OUTLINE")
 	SetFont(NumberFont_Shadow_Med, NORMAL, 12)
 	SetFont(NumberFont_Shadow_Small, NORMAL, 12)
-	SetFont(NumberFontNormalSmall, NORMAL, 11, "OUTLINE", 1, 1, 1, 0, 0, 0)
+	SetFont(NumberFontNormalSmall, NORMAL, 11, "OUTLINE")
 	SetFont(PVPArenaTextString, NORMAL, 22, "THINOUTLINE")
 	SetFont(PVPInfoTextString, NORMAL, 22, "THINOUTLINE")
 	SetFont(QuestFont_Huge, NORMAL, 17)

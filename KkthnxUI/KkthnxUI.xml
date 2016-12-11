@@ -1,4 +1,17 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Libraries -->
+	<Include file="Libraries\oUF\oUF.xml"/>
+	<Script file="Libraries\LibStub\LibStub.lua"/>
+	<Script file="Libraries\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
+	<Script file="Libraries\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
+	<Script file="Libraries\LibChatAnims\LibChatAnims.lua"/>
+	<Script file="Libraries\AceAddon-3.0\AceAddon-3.0.lua"/>
+	<Script file="Libraries\AceEvent-3.0\AceEvent-3.0.lua"/>
+	<Script file="Libraries\AceConsole-3.0\AceConsole-3.0.lua"/>
+	<Script file="Libraries\AceTimer-3.0\AceTimer-3.0.lua"/>
+	<Script file="Libraries\AceHook-3.0\AceHook-3.0.lua"/>
+	<Include file="Libraries\DropDownMenu\DropDownMenu.xml"/>
+
 	<!-- Engine -->
 	<Script file="Core\Engine.lua"/>
 	<Script file="Core\Constants.lua"/>
@@ -19,21 +32,6 @@
 	<!-- GUI -->
 	<Script file="Core\GUI.lua"/>
 	<Script file="Core\PixelPerfect.lua"/>
-
-	<!-- Libraries -->
-	<Include file="Libraries\oUF\oUF.xml"/>
-	<Script file="Libraries\LibStub\LibStub.lua"/>
-	<Script file="Libraries\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
-	<Script file="Libraries\LibSharedMedia-3.0\LibSharedMedia-3.0.lua"/>
-	<Script file="Libraries\LibChatAnims\LibChatAnims.lua"/>
-	<Script file="Libraries\AceAddon-3.0\AceAddon-3.0.lua"/>
-	<Script file="Libraries\AceEvent-3.0\AceEvent-3.0.lua"/>
-	<Script file="Libraries\AceConsole-3.0\AceConsole-3.0.lua"/>
-	<Script file="Libraries\AceTimer-3.0\AceTimer-3.0.lua"/>
-	<Script file="Libraries\AceHook-3.0\AceHook-3.0.lua"/>
-	<Include file="Libraries\DropDownMenu\UIDropDownMenuTemplates.xml"/>
-	<Script file="Libraries\DropDownMenu\EasyMenu.lua"/>
-	<Script file="Libraries\DropDownMenu\UIDropDownMenu.lua"/>
 
 	<!-- Media -->
 	<Script file="Media\Media.lua"/>
@@ -62,7 +60,6 @@
 	<Script file="Core\Movers.lua"/>
 	<Script file="Core\Temp.lua"/>
 	<Script file="Core\Tutorials.lua"/>
-	<Script file="Core\Faq.lua"/>
 
 	<!-- Panels -->
 	<Script file="Modules\Panels\Panels.lua"/>
@@ -235,7 +232,6 @@
 	<!-- Skins Blizzard -->
 	<Include file="Modules\Skins\Blizzard\Bubbles.lua"/>
 	<Include file="Modules\Skins\Blizzard\MinimapButtons.lua"/>
-	<Include file="Modules\Skins\Blizzard\ObjectiveTracker.lua"/>
 	<Include file="Modules\Skins\Blizzard\OrderHall.lua"/>
 
 	<!-- Tooltip -->
