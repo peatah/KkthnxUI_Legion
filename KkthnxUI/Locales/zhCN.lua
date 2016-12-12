@@ -31,6 +31,14 @@ L.Merchant = {
 	SoldTrash = "Your vendor trash has been sold and you earned"
 }
 
+-- Bags Localization
+L.Bags = {
+	RightClickClose = "Right-click to open menu",
+	RightClickSearch = "Right-click to search",
+	ShowBags = "Show Bags",
+	StackMenu = "Stack"
+}
+
 -- Bindings Localization
 L.Bind = {
 	Binding = "Binding",
@@ -39,7 +47,8 @@ L.Bind = {
 	Instruct = "Hover, your mouse over any action button, to bind it. Press the escape key or right click to clear the current action button's keybinding.",
 	Key = "Key",
 	NoSet = "No bindings set",
-	Saved = "All keybindings have been saved."
+	Saved = "All keybindings have been saved.",
+	Trigger = "Trigger"
 }
 
 -- Chat Localization
@@ -332,8 +341,11 @@ L.Tooltip = {
 	AchievementComplete = "Your Status: Completed on ",
 	AchievementIncomplete = "Your Status: Incomplete",
 	AchievementStatus = "Your Status:",
+	InspectOpen = "Inspect Frame is open",
 	ItemCount = "Item count:",
 	ItemID = "Item ID:",
+	Loading = "Loading...",
+	NoTalents = "No Talents",
 	SpellID = "Spell ID:"
 }
 

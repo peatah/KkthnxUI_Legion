@@ -130,7 +130,6 @@
 	<Script file="Modules\Blizzard\ClassColor.lua"/>
 	<Script file="Modules\Blizzard\ColorPicker.lua"/>
 	<Script file="Modules\Blizzard\ColorTextures.lua"/>
-	<Script file="Modules\Blizzard\EasyDelete.lua"/>
 	<Script file="Modules\Blizzard\Errors.lua"/>
 	<Script file="Modules\Blizzard\ExtraActionBar.lua"/>
 	<Script file="Modules\Blizzard\Fixes.lua"/>
@@ -170,7 +169,6 @@
 
 	<!-- Inventory -->
 	<Script file="Modules\Inventory\Bags.lua"/>
-	<Script file="Modules\Inventory\BagFilter.lua"/>
 
 	<!-- Loot -->
 	<Script file="Modules\Loot\AutoConfirm.lua"/>
@@ -241,8 +239,9 @@
 	<Script file="Modules\Tooltip\InstanceLockCompare.lua"/>
 	<Script file="Modules\Tooltip\ItemCount.lua"/>
 	<Script file="Modules\Tooltip\ItemIcons.lua"/>
-	<Script file="Modules\Tooltip\Specialization.lua"/>
+	<Script file="Modules\Tooltip\ItemLevel.lua"/>
 	<Script file="Modules\Tooltip\SpellID.lua"/>
-
+	<Script file="Modules\Tooltip\Talents.lua"/>
+	
 	<Script file="Config\Peatuh.lua"/>
 </Ui>

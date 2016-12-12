@@ -31,6 +31,13 @@ L.Merchant = {
 	SoldTrash = "Dein Müll aus den Taschen wurde beim Händler verkauft und Du erhälst"
 }
 
+L.Bags = {
+	RightClickClose = "Rechtsklick öffnet Menü",
+	RightClickSearch = "Rechtsklick um zu suchen",
+	ShowBags = "Zeige Taschen",
+	StackMenu = "Stapeln"
+}
+
 -- Bindings Localization
 L.Bind = {
 	Binding = "Tastenbelegungen",
@@ -39,7 +46,8 @@ L.Bind = {
 	Instruct = "Bewege die Maus über jeden beliebigen Aktionsbutton um ihn zu belegen. Drücke ESC, oder die rechte Maustaste, um die Belegung zu verwerfen.",
 	Key = "Taste",
 	NoSet = "Keine Tastenbelegungen gesetzt",
-	Saved = "Alle Tastenbelegungen wurden gespeichert."
+	Saved = "Alle Tastenbelegungen wurden gespeichert.",
+	Trigger = "Auslöser"
 }
 
 -- Chat Localization
@@ -332,8 +340,11 @@ L.Tooltip = {
 	AchievementComplete = "Dein Status: Abgeschlossen am ",
 	AchievementIncomplete = "Dein Status: Unvollständig",
 	AchievementStatus = "Dein Status:",
+	InspectOpen = "Betrachtungsfenster offen",
 	ItemCount = "Gegenstandsanzahl:",
 	ItemID = "Gegenstands-ID:",
+	Loading = "Lade...",
+	NoTalents = "Keine Talente",
 	SpellID = "Zauber-ID:"
 }
 
