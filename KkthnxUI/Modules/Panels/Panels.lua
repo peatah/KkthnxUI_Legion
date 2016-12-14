@@ -111,13 +111,13 @@ end)
 -- Chat background
 if C.Chat.Background == true and C.Chat.Enable == true then
 	local chatbd = CreateFrame("Frame", "ChatBackground", UIParent)
-	chatbd:CreatePanel("Transparent", C.Chat.Width + 7, C.Chat.Height + 4, "TOPLEFT", ChatFrame1, "TOPLEFT", -3, 1)
+	chatbd:CreatePanel("Invisible", C.Chat.Width + 7, C.Chat.Height + 4, "TOPLEFT", ChatFrame1, "TOPLEFT", -3, 1)
 	chatbd:SetBackdrop(K.BorderBackdrop)
 	chatbd:SetBackdropColor(unpack(C.Media.Backdrop_Color))
 
 	if C.Chat.TabsMouseover ~= true then
 		local chattabs = CreateFrame("Frame", "ChatTabsPanel", UIParent)
-		chattabs:CreatePanel("Transparent", chatbd:GetWidth(), 20, "BOTTOM", chatbd, "TOP", 0, 3)
+		chattabs:CreatePanel("Invisible", chatbd:GetWidth(), 20, "BOTTOM", chatbd, "TOP", 0, 3)
 		chattabs:SetBackdrop(K.BorderBackdrop)
 		chattabs:SetBackdropColor(unpack(C.Media.Backdrop_Color))
 	end
@@ -132,7 +132,7 @@ local function ActiveTalents()
 	return Tree
 end
 
-local KkthnxUISpecSwap = CreateFrame("Frame", "KkthnxUISpecSwap", UIParent, "UIDropDownMenuTemplate")
+local KkthnxUISpecSwap = CreateFrame("Frame", "KkthnxUISpecSwap", UIParent, "Lib_UIDropDownMenuTemplate")
 KkthnxUISpecSwap:SetTemplate()
 KkthnxUISpecSwap:RegisterEvent("PLAYER_LOGIN")
 KkthnxUISpecSwap:SetScript("OnEvent", function(...)
@@ -211,15 +211,14 @@ end
 -- Battleground stats frame
 if C.DataText.Battleground == true and C.DataText.BottomBar == true then
 	local BattleGroundFrame = CreateFrame("Frame", "KkthnxUIInfoBottomBattleGround", UIParent)
-	BattleGroundFrame:SetTemplate()
-	BattleGroundFrame:SetAllPoints(KkthnxUIDataTextBottomBar)
+	BattleGroundFrame:SetBackdrop(K.BorderBackdrop)
+	BattleGroundFrame:SetInside(KkthnxUIDataTextBottomBar, 4, 4)
 	BattleGroundFrame:SetFrameStrata("LOW")
 	BattleGroundFrame:SetFrameLevel(0)
 	BattleGroundFrame:EnableMouse(true)
 
 	BattleGroundFrame.Background = BattleGroundFrame:CreateTexture(nil, "BORDER")
-	BattleGroundFrame.Background:SetPoint("TOPLEFT", BattleGroundFrame, 4, -4)
-	BattleGroundFrame.Background:SetPoint("BOTTOMRIGHT", BattleGroundFrame, -4, 4)
+	BattleGroundFrame.Background:SetAllPoints(BattleGroundFrame)
 	BattleGroundFrame.Background:SetColorTexture(0.019, 0.019, 0.019, 0.9)
 end
 

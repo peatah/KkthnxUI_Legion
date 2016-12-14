@@ -256,14 +256,15 @@ L.Invite = {
 L.Info = {
 	Disabnd = "Disbanding group...",
 	Duel = "Declined duel request from ",
-	PetDuel = "Declined pet duel request from ",
+	Errors = "No error yet.",
 	Invite = "Accepted invite from ",
+	NotInstalled = " is not installed.",
+	PetDuel = "Declined pet duel request from ",
+	SettingsAbu = "Type /settings abu, to apply the settings oUF_Abu.",
+	SettingsALL = "Type /settings all, to apply the settings for all modifications.",
 	SettingsDBM = "Type /settings dbm, to apply the settings DBM.",
 	SettingsMSBT = "Type /settings msbt, to apply the settings MSBT.",
 	SettingsSKADA = "Type /settings skada, to apply the settings Skada.",
-	SettingsAbu = "Type /settings abu, to apply the settings oUF_Abu.",
-	SettingsALL = "Type /settings all, to apply the settings for all modifications.",
-	NotInstalled = " is not installed.",
 	SkinDisabled1 = "Skin for ",
 	SkinDisabled2 = " is disabled."
 }
@@ -306,6 +307,7 @@ L.Minimap = {
 
 -- Misc Localization
 L.Misc = {
+	BuyStack = "Alt-Click to buy a stack",
 	CopperShort = "|cffeda55fc|r",
 	GoldShort = "|cffffd700g|r",
 	SilverShort = "|cffc7c7cfs|r",
@@ -358,7 +360,7 @@ L.Welcome = {
 	Line2 = "",
 	Line3 = "Type /cfg to config interface, or visit www.github.com/kkthnx|r",
 	Line4 = "",
-	Line5 = "Some of your questions can be answered by typing /uihelp or /faq"
+	Line5 = "Some of your questions can be answered by typing /uihelp"
 }
 
 L.SlashCommand = {

@@ -38,11 +38,11 @@ C["Announcements"] = {
 
 -- Automation
 C["Automation"] = {
+	["AcceptQuest"] = false,
 	["AutoCollapse"] = true,
 	["AutoInvite"] = false,
 	["DeclineDuel"] = false,
 	["LoggingCombat"] = false,
-	["NoBanner"] = false,
 	["Resurrection"] = false,
 	["ScreenShot"] = false,
 	["TabBinder"] = false,
@@ -62,6 +62,7 @@ C["Bags"] = {
 C["Blizzard"] = {
 	["ClassColor"] = true,
 	["ColorTextures"] = false,
+	["RaidTools"] = true,
 	["ReplaceBlizzardFonts"] = true,
 	["ReputationGain"] = false,
 	["TexturesColor"] = {K.Color.r, K.Color.g, K.Color.b},
@@ -141,13 +142,20 @@ C["Plugins"] = {
 
 -- Datatext
 C["DataText"] = {
-	["Location"] = true,
-	["System"] = true,
-	["Time"] = true,
-	["Time24Hr"] = false,
-	["LocalTime"] = true,
 	["Battleground"] = true,
 	["BottomBar"] = true,
+	["LocalTime"] = true,
+	["System"] = true,
+	["ThreatBar"] = false,
+	["Time"] = true,
+	["Time24Hr"] = false,
+}
+
+-- Errors
+C["Error"] = {
+	["Black"] = true,
+	["Combat"] = false,
+	["White"] = false,
 }
 
 -- Filger
@@ -207,10 +215,12 @@ C["Misc"] = {
 	["BGSpam"] = false,
 	["ColorPicker"] = false,
 	["EnhancedMail"] = true,
-	["Errors"] = true,
+	["HideTalkingHead"] = false,
 	["InviteKeyword"] = "inv",
 	["ItemLevel"] = true,
+	["MerchantItemLevel"] = false,
 	["MoveBlizzard"] = false,
+	["NoBanner"] = false,
 	["SellMisc"] = true,
 	["SlotDurability"] = false,
 	["UseGuildRepair"] = false,
@@ -302,7 +312,6 @@ C["Unitframe"] = {
 	["ClassPortraits"] = false,
 	["CombatText"] = true,
 	["Enable"] = true,
-	["FlatClassPortraits"] = false,
 	["FocusCastbarHeight"] = 20,
 	["FocusCastbarWidth"] = 180,
 	["GCDBar"] = false,

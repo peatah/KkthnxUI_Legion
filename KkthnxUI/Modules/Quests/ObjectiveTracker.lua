@@ -1,6 +1,9 @@
 local K, C, L = unpack(select(2, ...))
 if K.CheckAddOn("DugisGuideViewerZ") then return end
 
+-- Wow Lua
+local unpack = unpack
+
 -- Wow API
 local GetNumQuestWatches = GetNumQuestWatches
 local GetQuestDifficultyColor = GetQuestDifficultyColor
@@ -10,10 +13,25 @@ local GetScreenHeight = GetScreenHeight
 local GetScreenWidth = GetScreenWidth
 
 -- Global variables that we don't cache, list them here for mikk's FindGlobals script
--- GLOBALS: OBJECTIVE_TRACKER_DOUBLE_LINE_HEIGHT, ObjectiveTrackerFrame, GameTooltip
+-- GLOBALS: OBJECTIVE_TRACKER_DOUBLE_LINE_HEIGHT, ObjectiveTrackerFrame, GameTooltip, UIParent
 -- GLOBALS: ObjectiveTrackerBonusRewardsFrame, QUEST_TRACKER_MODULE, ACHIEVEMENT_TRACKER_MODULE
 
 local Movers = K.Movers
+local SetModifiedBackdrop = function(self)
+	if self:GetButtonState() == "DISABLED" then return end
+	self:SetBackdropColor(K.Color.r, K.Color.g, K.Color.b)
+	if self.overlay then
+		self.overlay:SetVertexColor(K.Color.r * 0.3, K.Color.g * 0.3, K.Color.b * 0.3, 1)
+	end
+end
+
+local SetOriginalBackdrop = function(self)
+	if self:GetButtonState() == "DISABLED" then return end
+	self:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+	if self.overlay then
+		self.overlay:SetVertexColor(0.1, 0.1, 0.1, 1)
+	end
+end
 
 -- Move ObjectiveTrackerFrame
 local ObjectiveFrameHolder = CreateFrame("Frame", "ObjectiveFrameHolder", UIParent)
@@ -41,6 +59,60 @@ WORLD_QUEST_TRACKER_MODULE.Header.Background:Hide()
 
 ObjectiveTrackerFrame.HeaderMenu.Title:SetAlpha(0)
 OBJECTIVE_TRACKER_DOUBLE_LINE_HEIGHT = 30
+
+-- Skin ObjectiveTrackerFrame item buttons
+hooksecurefunc(QUEST_TRACKER_MODULE, "SetBlockHeader", function(_, block)
+	local item = block.itemButton
+
+	if item and not item.skinned then
+		item:SetSize(C.ActionBar.ButtonSize - 5, C.ActionBar.ButtonSize - 5)
+		item:SetBackdrop(K.BorderBackdrop)
+		item:SetBackdropColor(0.65, 0.63, 0.35)
+		item:StyleButton()
+
+		item:SetNormalTexture(nil)
+
+		item.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+		item.icon:SetPoint("TOPLEFT", item, 2, -2)
+		item.icon:SetPoint("BOTTOMRIGHT", item, -2, 2)
+
+		item.Cooldown:SetAllPoints(item.icon)
+
+		item.Count:ClearAllPoints()
+		item.Count:SetPoint("TOPLEFT", 1, -1)
+		item.Count:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
+		item.Count:SetShadowOffset(0, 0)
+
+		item.skinned = true
+	end
+end)
+
+hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", function(_, block)
+	local item = block.itemButton
+
+	if item and not item.skinned then
+		item:SetSize(C.ActionBar.ButtonSize - 5, C.ActionBar.ButtonSize - 5)
+		item:SetBackdrop(K.BorderBackdrop)
+		item:SetBackdropColor(0.65, 0.63, 0.35)
+		item:StyleButton()
+
+		item:SetNormalTexture(nil)
+
+		item.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+		item.icon:SetPoint("TOPLEFT", item, 2, -2)
+		item.icon:SetPoint("BOTTOMRIGHT", item, -2, 2)
+
+		item.Cooldown:SetAllPoints(item.icon)
+
+		item.Count:ClearAllPoints()
+		item.Count:SetPoint("TOPLEFT", 1, -1)
+		item.Count:SetFont(C.font.action_bars_font, C.font.action_bars_font_size, C.font.action_bars_font_style)
+		item.Count:SetShadowOffset(C.font.action_bars_font_shadow and 1 or 0, C.font.action_bars_font_shadow and -1 or 0)
+
+		item.skinned = true
+	end
+end)
+
 
 -- Difficulty color for ObjectiveTrackerFrame lines
 hooksecurefunc(QUEST_TRACKER_MODULE, "Update", function()
@@ -72,6 +144,34 @@ hooksecurefunc("ObjectiveTrackerBlockHeader_OnLeave", function(self)
 		block.HeaderText:SetTextColor(block.HeaderText.col.r, block.HeaderText.col.g, block.HeaderText.col.b)
 	end
 end)
+
+local button = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
+	button:SetSize(17, 17)
+	button:StripTextures()
+	button:SetBackdrop(K.BorderBackdrop)
+	button:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+
+	button.minus = button:CreateTexture(nil, "OVERLAY")
+	button.minus:SetSize(10, 2)
+	button.minus:SetPoint("CENTER")
+	button.minus:SetTexture(C.Media.Blank)
+
+	button.plus = button:CreateTexture(nil, "OVERLAY")
+	button.plus:SetSize(2, 10)
+	button.plus:SetPoint("CENTER")
+	button.plus:SetTexture(C.Media.Blank)
+
+	button:HookScript("OnEnter", SetModifiedBackdrop)
+	button:HookScript("OnLeave", SetOriginalBackdrop)
+
+	button.plus:Hide()
+	hooksecurefunc("ObjectiveTracker_Collapse", function()
+		button.plus:Show()
+	end)
+
+	hooksecurefunc("ObjectiveTracker_Expand", function()
+		button.plus:Hide()
+	end)
 
 -- Set tooltip depending on position
 local function IsFramePositionedLeft(frame)

@@ -3,6 +3,8 @@ local K, C, L = unpack(select(2, ...))
 local CheckAddOn = K.CheckAddOn
 
 -- Prevent users config errors
+
+-- Actionbars
 if C.ActionBar.RightBars > 3 then
 	C.ActionBar.RightBars = 3
 end
@@ -29,16 +31,23 @@ if C.ActionBar.PetBarHorizontal == true then
 	C.ActionBar.StanceBarHorizontal = false
 end
 
+-- Errors
+if C.Error.Black == true and C.Error.White == true then
+	C.Error.White = false
+end
+
+if C.Error.Combat == true then
+	C.Error.Black = false
+	C.Error.White = false
+end
+
+-- Unitframes
 if C.Unitframe.Enable == false then
 	C.Filger.Enable = false
 end
 
-if C.Unitframe.FlatClassPortraits == true then
-	C.Unitframe.ClassPortraits = false
-end
-
 -- Auto-overwrite script config is X addon is found
--- Here we use our own function to check.
+-- Here we use our own functions to check for addons.
 if CheckAddOn("SexyMap") or CheckAddOn("bdMinimap") or CheckAddOn("BasicMinimap") or CheckAddOn("RicoMiniMap") or CheckAddOn("Chinchilla") then
 	C.Minimap.Enable = false
 end
@@ -53,6 +62,10 @@ end
 
 if CheckAddOn("WorldQuestTracker") or CheckAddOn("Mapster") or CheckAddOn("WorldQuestsList") then
 	C.WorldMap.SmallWorldMap = false
+end
+
+if CheckAddOn("BadBoy") then
+	C.Chat.SpamFilter = false
 end
 
 if CheckAddOn("AdiBags") or CheckAddOn("ArkInventory") or CheckAddOn("cargBags_Nivaya") or CheckAddOn("cargBags") or CheckAddOn("Bagnon") or CheckAddOn("Combuctor") or CheckAddOn("TBag") or CheckAddOn("BaudBag") then

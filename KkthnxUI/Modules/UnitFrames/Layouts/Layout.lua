@@ -494,17 +494,14 @@ local function CreateUnitLayout(self, unit)
 
 	-- Portrait
 	if data.por then
-		self.Portrait = self.Health:CreateTexture(nil, "BACKGROUND")
+		self.Portrait = self.Health:CreateTexture(nil, 'BACKGROUND')
 		self.Portrait.Override = function(self, event, unit)
-			if (not unit or not UnitIsUnit(self.unit, unit)) then return end
+			if (not unit or not UnitIsUnit(self.unit, unit)) then return; end
 			local portrait = self.Portrait
 			local _, class = UnitClass(self.unit)
 			if C.Unitframe.ClassPortraits and UnitIsPlayer(unit) and class then
+				portrait:SetTexCoord(unpack(CLASS_ICON_TCOORDS[class]))
 				portrait:SetTexture[[Interface\TargetingFrame\UI-Classes-Circles]]
-				portrait:SetTexCoord(unpack(CLASS_ICON_TCOORDS[class]))
-			elseif C.Unitframe.FlatClassPortraits and UnitIsPlayer(unit) and class and C.Unitframe.ClassPortraits == false then
-				portrait:SetTexture[[Interface\AddOns\KkthnxUI\Media\Unitframes\DarkClassIcons]]
-				portrait:SetTexCoord(unpack(CLASS_ICON_TCOORDS[class]))
 			else
 				portrait:SetTexCoord(0, 1, 0, 1)
 				SetPortraitTexture(portrait, unit)
@@ -832,8 +829,8 @@ local function CreateUnitLayout(self, unit)
 	if (self.cUnit == "target" or self.cUnit == "focus") then
 		-- Questmob Icon
 		self.QuestIcon = self:CreateTexture(nil, "OVERLAY")
-		self.QuestIcon:SetSize(32, 32)
-		self.QuestIcon:SetPoint("CENTER", self.Health, "TOPRIGHT", 1, 10)
+		self.QuestIcon:SetSize(22, 22)
+		self.QuestIcon:SetPoint("CENTER", self.Health, "TOPRIGHT", 2, 0)
 
 		tinsert(self.__elements, function(self, _, unit)
 			self.Texture:SetTexture(GetTargetTexture(self.cUnit, UnitClassification(unit)))

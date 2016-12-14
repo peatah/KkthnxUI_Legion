@@ -5,9 +5,10 @@ local _G = _G
 
 -- Wow API
 local FCF_StartAlertFlash = FCF_StartAlertFlash
-local InCombatLockdown = InCombatLockdown
-local ShowUIPanel = ShowUIPanel
 local HideUIPanel = HideUIPanel
+local InCombatLockdown = InCombatLockdown
+local IsAddOnLoaded = IsAddOnLoaded
+local ShowUIPanel = ShowUIPanel
 local WorldMapFrame = WorldMapFrame
 local WorldMapFrame_OnHide = WorldMapFrame_OnHide
 local WorldMapLevelButton_OnClick = WorldMapLevelButton_OnClick
@@ -19,10 +20,12 @@ local WorldMapLevelButton_OnClick = WorldMapLevelButton_OnClick
 
 -- Open before login to stop taint
 local SpellBookTaint = CreateFrame("Frame")
-SpellBookTaint:RegisterEvent("ADDON_LOADED")
+SpellBookTaint:RegisterEvent("ADDON_LOADED") -- We might need to fire PLAYER_LOGIN instead?
 SpellBookTaint:SetScript("OnEvent", function(event, addon)
 	if addon ~= "KkthnxUI" then return end
-	ToggleFrame(SpellBookFrame)
+	--Fix spellbook taint
+	ShowUIPanel(SpellBookFrame)
+	HideUIPanel(SpellBookFrame)
 end)
 
 -- Fix RemoveTalent() taint
@@ -32,7 +35,7 @@ FCF_StartAlertFlash = K.Noop
 local ScriptErrorsScale = CreateFrame("Frame")
 ScriptErrorsScale:RegisterEvent("ADDON_LOADED")
 ScriptErrorsScale:SetScript("OnEvent", function(self, addon)
-	if K.CheckAddOn("Blizzard_DebugTools") or addon == "Blizzard_DebugTools" then
+	if IsAddOnLoaded("Blizzard_DebugTools") or addon == "Blizzard_DebugTools" then
 		ScriptErrorsFrame:SetParent(UIParent)
 	end
 end)
@@ -69,7 +72,7 @@ do
 		if C_ArtifactUI.GetTotalPurchasedRanks() then
 			oldOnShow(self)
 		else
-			HideUIPanel(ArtifactFrame)
+			ArtifactFrame:Hide()
 		end
 	end
 
@@ -83,30 +86,60 @@ do
 end
 
 -- Fix World Map taints (by lightspark)
-do
-	local old_ResetZoom = _G.WorldMapScrollFrame_ResetZoom
-	_G.WorldMapScrollFrame_ResetZoom = function()
-		if _G.InCombatLockdown() then
-			_G.WorldMapFrame_Update()
-			_G.WorldMapScrollFrame_ReanchorQuestPOIs()
-			_G.WorldMapFrame_ResetPOIHitTranslations()
-			_G.WorldMapBlobFrame_DelayedUpdateBlobs()
-		else
-			old_ResetZoom()
-		end
-	end
+local old_ResetZoom = _G.WorldMapScrollFrame_ResetZoom
 
-	local old_QuestMapFrame_OpenToQuestDetails = _G.QuestMapFrame_OpenToQuestDetails
-	_G.QuestMapFrame_OpenToQuestDetails = function(questID)
-		if _G.InCombatLockdown() then
-			_G.ShowUIPanel(_G.WorldMapFrame);
-			_G.QuestMapFrame_ShowQuestDetails(questID)
-			_G.QuestMapFrame.DetailsFrame.mapID = nil
-		else
-			old_QuestMapFrame_OpenToQuestDetails(questID)
-		end
+_G.WorldMapScrollFrame_ResetZoom = function()
+	if _G.InCombatLockdown() then
+		_G.WorldMapFrame_Update()
+		_G.WorldMapScrollFrame_ReanchorQuestPOIs()
+		_G.WorldMapFrame_ResetPOIHitTranslations()
+		_G.WorldMapBlobFrame_DelayedUpdateBlobs()
+	else
+		old_ResetZoom()
 	end
-
-	_G.WorldMapFrame.questLogMode = true
-	_G.QuestMapFrame_Open(true)
 end
+
+local old_QuestMapFrame_OpenToQuestDetails = _G.QuestMapFrame_OpenToQuestDetails
+
+_G.QuestMapFrame_OpenToQuestDetails = function(questID)
+	if _G.InCombatLockdown() then
+		_G.ShowUIPanel(_G.WorldMapFrame);
+		_G.QuestMapFrame_ShowQuestDetails(questID)
+		_G.QuestMapFrame.DetailsFrame.mapID = nil
+	else
+		old_QuestMapFrame_OpenToQuestDetails(questID)
+	end
+end
+
+if _G.WorldMapFrame.UIElementsFrame.BountyBoard.GetDisplayLocation == _G.WorldMapBountyBoardMixin.GetDisplayLocation then
+	_G.WorldMapFrame.UIElementsFrame.BountyBoard.GetDisplayLocation = function(frame)
+		if _G.InCombatLockdown() then
+			return
+		end
+
+		return _G.WorldMapBountyBoardMixin.GetDisplayLocation(frame)
+	end
+end
+
+if _G.WorldMapFrame.UIElementsFrame.ActionButton.GetDisplayLocation == _G.WorldMapActionButtonMixin.GetDisplayLocation then
+	_G.WorldMapFrame.UIElementsFrame.ActionButton.GetDisplayLocation = function(frame, useAlternateLocation)
+		if _G.InCombatLockdown() then
+			return
+		end
+
+		return _G.WorldMapActionButtonMixin.GetDisplayLocation(frame, useAlternateLocation)
+	end
+end
+
+if _G.WorldMapFrame.UIElementsFrame.ActionButton.Refresh == _G.WorldMapActionButtonMixin.Refresh then
+	_G.WorldMapFrame.UIElementsFrame.ActionButton.Refresh = function(frame)
+		if _G.InCombatLockdown() then
+			return
+		end
+
+		_G.WorldMapActionButtonMixin.Refresh(frame)
+	end
+end
+
+_G.WorldMapFrame.questLogMode = true
+_G.QuestMapFrame_Open(true)

@@ -2,123 +2,73 @@ local K, C, L = unpack(select(2, ...))
 if C.Chat.SpamFilter ~= true then return end
 
 -- Lua API
-local pairs = pairs
-local print = print
+local gsub = string.gsub
+-- local print = print
+local strlower = string.lower
+local strmatch = string.match
+local strtrim = string.trim
+local type = type
 
 -- Wow API
-local ChatFrame_AddMessageEventFilter = ChatFrame_AddMessageEventFilter
-local UnitIsInMyGuild = UnitIsInMyGuild
-local UnitName = UnitName
+local TRADE = TRADE
 
--- Spam keywords
-local SpamList = {
-	-- real spam
-	"%.c0m%f[%A]",
-	"%d/%d cm gold",
-	"%d%s?eur%f[%A]",
-	"%d%s?usd%f[%A]",
-	"%S+#%d+", -- BattleTag
-	"account",
-	"boost",
-	"cs[:;]go%f[%A]", -- seems to be the new hype
-	"delivery",
-	"diablo",
-	"elite gear",
-	"g0ld",
-	"game ?time",
-	"name change",
-	"paypal",
-	"professional",
-	"qq", -- Chinese IM network, also catches junk as a bonus!
-	"ranking",
-	"realm",
-	"s%A*k%A*y%A*p%Ae", -- spammers love to obfuscate "skype"
-	"self ?play",
-	"share",
-	"transfer",
-	"wow gold",
-	-- pvp
-	"[235]v[235]",
-	"%f[%a]arena", -- arenacap, arenamate, arenapoints
-	"%f[%a]cap%f[%A]",
-	"%f[%a]carry%f[%A]",
-	"%f[%a]cr%f[%A]",
-	"%f[%d][235]s%f[%A]", -- 2s, 3s, 5s
-	"conqu?e?s?t? cap",
-	"conqu?e?s?t? points",
-	"for %ds",
-	"lf %ds",
-	"low mmr",
-	"partner",
-	"points cap",
-	"punktecap", -- DE
-	"pvp ?mate",
-	"rating",
-	"rbg",
-	"season",
-	"weekly cap",
-	-- junk
-	"%[dirge%]",
-	"%f[%a]ebay",
-	"a?m[eu]rican?", -- america, american, murica
-	"an[au][ls]e?r?%f[%L]", -- anal, anus, -e/er/es/en
-	"argument",
-	"aussie",
-	"australi",
-	"bacon",
-	"bewbs",
-	"bitch",
-	"boobs",
-	"christian",
-	"chuck ?norris",
-	"girl",
-	"kiss",
-	"mad ?bro",
-	"mudda",
-	"muslim",
-	"nigg[ae]r?",
-	"obama",
-	"pussy",
-	"sexy",
-	"shut ?up",
-	"tits",
-	"twitch%.tv",
-	"webcam",
-	"wts.+guild",
-	"xbox",
-	"y?o?ur? m[ao]mm?a",
-	"y?o?ur? m[ou]th[ae]r",
-	"youtu%.?be",
-	"youtube",
-	-- TCG codes
-	"hippogryph hatchling",
-	"mottled drake",
-	"rocket chicken",
-	-- Taken from Badboy
-	"%d+k.*giveaway.*guild.*selling.*karazhan.*mount.*mythic.*dungeon.*nightmare.*raid",
-	"^wtskarazhan.*,mythic.*mythicdungeons?boost$",
-	"^wtskarazhan[,.]mythic.*mythic+dungeon$",
-	"^wtsmythickarazhandungeons[,.]*whispme",
-	"dving[%.,]net",
-	"dving[%.,]ru.*уcлуги",
-	"selling.*professional.*team.*mount.*loot",
-	"wtsfast.*smooth.*karazhan.*mount.*valor.*nightmare.*wisp",
-	"цeн[ae].*lootkeeper[%.,]com",
-}
+-- Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS:
 
 -- Trade channel spam
-local function TradeFilter(self, event, text, sender)
-	if (SpamList and SpamList[1]) then
-		for _, value in pairs(SpamList) do
-			if sender == K.Name or UnitIsInMyGuild(sender) then return end
-			if (text:find(value)) or text:lower():match(value) then
-				-- print(text, value)
-				return true
+local reqLatin = not strmatch(GetLocale(), "^[rkz][uoh]")
+
+local prevID, result
+ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", function(_, _, message, sender, arg3, arg4, arg5, flag, channelID, arg8, channelName, arg10, lineID, senderGUID, ...)
+	if lineID == prevID then
+		if result == true then
+			return true
+		else
+			return false, result, sender, arg3, arg4, arg5, flag, channelID, arg8, channelName, arg10, lineID, senderGUID, ...
+		end
+	end
+	prevID, result = lineID, true
+
+	-- Don't filter custom channels
+	if channelID == 0 or type(channelID) ~= "number" then return end
+
+	local search = strlower(message)
+
+	-- Hide ASCII art crap
+	if reqLatin and not strmatch(search, "[a-z]") then
+		-- print("No letters")
+		return true
+	end
+
+	local blacklist = K.SpamFilterBlacklist
+	for i = 1, #blacklist do
+		if strmatch(search, blacklist[i]) then
+			-- print("Blacklisted:", blacklist[i])
+			-- print(" ", search)
+			return true
+		end
+	end
+
+	-- Remove extra spaces
+	message = strtrim(gsub(message, "%s%s+", " "))
+
+	local whitelist = K.SpamFilterWhitelist
+	local pass = #whitelist == 0 or not strmatch(channelName, TRADE)
+	if not pass then
+		for i = 1, #whitelist do
+			if strmatch(search, whitelist[i]) then
+				-- print("Whitelisted:", whitelist[i])
+				pass = true
+				break
 			end
 		end
 	end
-end
+	if pass then
+		-- print("Passed")
+		result = message
+		return false, message, sender, arg3, arg4, arg5, flag, channelID, arg8, channelName, arg10, lineID, senderGUID, ...
+	end
 
-ChatFrame_AddMessageEventFilter("CHAT_MSG_CHANNEL", TradeFilter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_SAY", TradeFilter)
-ChatFrame_AddMessageEventFilter("CHAT_MSG_YELL", TradeFilter)
+	-- print("Other:", channelID, search)
+	return true
+end)

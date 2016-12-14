@@ -160,15 +160,21 @@ end)
 
 -- Custom lag tolerance
 if C.General.CustomLagTolerance == true then
-	local CustomLagTolerance = CreateFrame("Frame")
-	CustomLagTolerance:SetScript("OnEvent", function(self, event)
-		local down, up, lagHome, lagWorld = GetNetStats()
-		SetCVar("ReducedLagTolerance", 1)
-		SetCVar("MaxSpellStartRecoveryOffset", lagWorld)
-	end)
-
-	CustomLagTolerance:RegisterEvent("ZONE_CHANGED")
-	CustomLagTolerance:RegisterEvent("ADDON_LOADED")
+	local customlag = CreateFrame("Frame")
+	local int = 5
+	local _, _, _, lag = GetNetStats()
+	local LatencyUpdate = function(self, elapsed)
+		int = int - elapsed
+		if int < 0 then
+			if GetCVar("reducedLagTolerance") ~= tostring(1) then SetCVar("reducedLagTolerance", tostring(1)) end
+			if lag ~= 0 and lag <= 400 then
+				SetCVar("maxSpellStartRecoveryOffset", tostring(lag))
+			end
+			int = 5
+		end
+	end
+	customlag:SetScript("OnUpdate", LatencyUpdate)
+	LatencyUpdate(customlag, 10)
 end
 
 -- Remove boss emote spam during bg(ArathiBasin SpamFix by Partha)
@@ -192,9 +198,30 @@ if C.Misc.BGSpam == true then
 end
 
 -- Boss Banner Hider
-if C.Automation.NoBanner == true then
+if C.Misc.NoBanner == true then
 	BossBanner.PlayBanner = function() end
 end
+
+--	Hide TalkingHeadFrame
+if C.Misc.HideTalkingHead == true then
+	local HideTalkingHead = CreateFrame("Frame")
+	HideTalkingHead:RegisterEvent("ADDON_LOADED")
+	HideTalkingHead:SetScript("OnEvent", function(self, event, addon)
+		if addon == "Blizzard_TalkingHeadUI" then
+			hooksecurefunc("TalkingHeadFrame_PlayCurrent", function()
+				TalkingHeadFrame:Hide()
+			end)
+			self:UnregisterEvent(event)
+		end
+	end)
+end
+
+-- Disable QuestTrackingTooltips while in raid and in combat
+local QuestTracking = CreateFrame("Frame")
+QuestTracking:RegisterEvent("GROUP_ROSTER_UPDATE")
+QuestTracking:SetScript("OnEvent", function(self, event)
+	SetCVar("showQuestTrackingTooltips", IsInRaid() and 0 or 1)
+end)
 
 -- Undress button in auction dress-up frame(by Nefarion)
 local strip = CreateFrame("Button", "DressUpFrameUndressButton", DressUpFrame, "UIPanelButtonTemplate")
@@ -318,5 +345,31 @@ f:SetScript ("OnEvent", function (self, event, ...)
 		f.Ticker = C_Timer.NewTicker (.3, AdjustCamera)
 		f:UnregisterEvent ("ADDON_LOADED")
 		once = nil
+	end
+end)
+
+-- Old achievements filter
+function AchievementFrame_GetCategoryNumAchievements_OldIncomplete(categoryID)
+	local numAchievements, numCompleted = GetCategoryNumAchievements(categoryID)
+	return numAchievements - numCompleted, 0, numCompleted
+end
+
+function old_nocomplete_filter_init()
+	AchievementFrameFilters = {
+		{text = ACHIEVEMENTFRAME_FILTER_ALL, func = AchievementFrame_GetCategoryNumAchievements_All},
+		{text = ACHIEVEMENTFRAME_FILTER_COMPLETED, func = AchievementFrame_GetCategoryNumAchievements_Complete},
+		{text = ACHIEVEMENTFRAME_FILTER_INCOMPLETE, func = AchievementFrame_GetCategoryNumAchievements_Incomplete},
+		{text = ACHIEVEMENTFRAME_FILTER_INCOMPLETE.." ("..ALL.." )", func = AchievementFrame_GetCategoryNumAchievements_OldIncomplete}
+	}
+end
+
+local OldAchievementFilter = CreateFrame("Frame")
+OldAchievementFilter:RegisterEvent("ADDON_LOADED")
+OldAchievementFilter:SetScript("OnEvent", function(self, event, addon, ...)
+	if addon == "Blizzard_AchievementUI" then
+		if AchievementFrame then
+			old_nocomplete_filter_init()
+			OldAchievementFilter:UnregisterEvent("ADDON_LOADED")
+		end
 	end
 end)

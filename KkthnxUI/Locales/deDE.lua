@@ -255,14 +255,15 @@ L.Invite = {
 L.Info = {
 	Disabnd = "Auflösung der Gruppe...",
 	Duel = "Duellaufforderung abgelehnt von ",
-	PetDuel = "Haustierkampfduell abgelehnt von ",
+	Errors = "Noch keine Fehler.",
 	Invite = "Akzeptiere Einladung von ",
+	NotInstalled = " ist nicht installiert.",
+	PetDuel = "Haustierkampfduell abgelehnt von ",
+	SettingsAbu = "Tippe /settings abu, um die Einstellungen für oUF_Abu zu übernehmen.",
+	SettingsAll = "Tippe /settings all, um die Einstellungen für alle Modifikationen zu übernehmen.",
 	SettingsDbm = "Tippe /settings dbm, um die Einstellungen für DBM zu übernehmen.",
 	SettingsMsbt = "Tippe /settings msbt, um die Einstellungen für MSBT zu übernehmen.",
 	SettingsSkada = "Tippe /settings skada, um die Einstellungen für Skada zu übernehmen.",
-	SettingsAbu = "Tippe /settings abu, um die Einstellungen für oUF_Abu zu übernehmen.",
-	SettingsAll = "Tippe /settings all, um die Einstellungen für alle Modifikationen zu übernehmen.",
-	NotInstalled = " ist nicht installiert.",
 	SkinDisabled1 = "Skin für ",
 	SkinDisabled2 = " ist deaktviert."
 }
@@ -305,6 +306,7 @@ L.Minimap = {
 
 -- Misc Localization
 L.Misc = {
+	BuyStack = "Alt-Klick um einen Stapel zu kaufen",
 	CopperShort = "|cffeda55fc|r",
 	GoldShort = "|cffffd700g|r",
 	SilverShort = "|cffc7c7cfs|r",
@@ -357,7 +359,7 @@ L.Welcome = {
 	Line2 = "",
 	Line3 = "Tippe /cfg in den Chat ein um Dein Interface einzurichten",
 	Line4 = "",
-	Line5 = "Einige Fragen werden Dir eventuell durch den Chatbefehl /uihelp beantwortet"
+	Line5 = "Einige Fragen werden Dir eventuell durch den Chatbefehl /uihelp"
 }
 
 L.SlashCommand = {
