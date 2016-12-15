@@ -1,9 +1,7 @@
 local K, C, L = unpack(select(2, ...))
+if (GetLocale() ~= "ruRU") then return end
 
 -- Localization For ruRU Clients
-if (GetLocale() ~= "ruRU") then
-	return
-end
 
 L.AFKScreen = {
 	NoGuild = "Нет гильдии"
@@ -15,8 +13,10 @@ L.Announce = {
 	PCAborted = "ОСТАНОВИТЬ АТАКУ!",
 	PCGo = "Вперед!",
 	PCMessage = "Атаковать %s через %s..",
+	Recieved = " получено от ",
 	Sapped = "Ошеломление!",
-	SappedBy = "Ошеломление от: "
+	SappedBy = "Ошеломление от: ",
+	SSThanks = "Спасибо за "
 }
 
 L.Auras = {
@@ -29,13 +29,6 @@ L.Merchant = {
 	NotEnoughMoney = "У вас недостаточно денег для ремонта!",
 	RepairCost = "Ваша экипировка была отремонтирована за ",
 	SoldTrash = "Серые вещи были проданы. Вы заработали "
-}
-
-L.Bags = {
-	RightClickClose = "ПКМ, чтобы открыть меню",
-	RightClickSearch = "ПКМ для поиска",
-	ShowBags = "Показать сумки",
-	StackMenu = "Сложить"
 }
 
 -- Bindings Localization
@@ -140,6 +133,7 @@ L.DataText = {
 	OrderHall = "OrderHall",
 	OrderHallReport = "Click: Open the OrderHall report",
 	System = "System Stats: ",
+	Time = "Время",
 	TotalBagSlots = "Total Bag Slots",
 	TotalFreeBagSlots = "Free Bag Slots",
 	TotalMemory = "Общее использование памяти:",

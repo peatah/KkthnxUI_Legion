@@ -488,8 +488,22 @@ local function CreateUnitLayout(self, unit)
 	-- Name Text
 	if data.nam then
 		self.Name = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
-		self.Name:SetShadowOffset(K.Mult,-K.Mult)
-		self:Tag(self.Name, "[KkthnxUI:Name]")
+		self.Name:SetShadowOffset(K.Mult, -K.Mult)
+		self:Tag(self.Name, "[KkthnxUI:GetNameColor][KkthnxUI:NameMedium]")
+	end
+
+	-- Name Text Party
+	if data.nam and self.IsPartyFrame and C.Unitframe.Party == true then
+		self.Name = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
+		self.Name:SetShadowOffset(K.Mult, -K.Mult)
+		self:Tag(self.Name, "[KkthnxUI:GetNameColor][KkthnxUI:NameShort]")
+	end
+
+	-- Name text targettarget
+	if data.nam and self.IsTargetFrame then
+		self.Name = K.SetFontString(self, C.Media.Font, 12, nil, "LEFT")
+		self.Name:SetShadowOffset(K.Mult, -K.Mult)
+		self:Tag(self.Name, "[KkthnxUI:GetNameColor][KkthnxUI:NameShort]")
 	end
 
 	-- Portrait
@@ -518,7 +532,7 @@ local function CreateUnitLayout(self, unit)
 		-- Level text
 		self.Level = self:CreateFontString(nil, "ARTWORK")
 		self.Level:SetFont(C.Media.Font, C.Media.Font_Size)
-		self.Level:SetShadowOffset(K.Mult,-K.Mult)
+		self.Level:SetShadowOffset(K.Mult, -K.Mult)
 		self.Level:SetPoint("CENTER", self.Texture, (self.cUnit == "player" and -63) or 63, -15.5)
 		self:Tag(self.Level, "[KkthnxUI:Level]")
 
@@ -905,40 +919,40 @@ local function CreateUnitLayout(self, unit)
 			local size, gap, columns, rows, initialAnchor, relAnchor, offX, offY = GetAuraData(uconfig.debuffPos)
 			self.Auras = K.AddAuras(self, initialAnchor, size, gap, columns, rows)
 			self.Auras:SetPoint(initialAnchor, self, relAnchor, offX, offY)
-			self.Auras.CustomFilter = ns.CustomAuraFilters.target
+			self.Auras.CustomFilter = K.CustomAuraFilters.target
 		else
 			if (uconfig.buffPos ~= "NONE") then
 				local size, gap, columns, rows, initialAnchor, relAnchor, offX, offY = GetAuraData(uconfig.buffPos)
 				self.Buffs = K.AddBuffs(self, initialAnchor, size, gap, columns, rows)
 				self.Buffs:SetPoint(initialAnchor, self, relAnchor, offX, offY)
-				self.Buffs.CustomFilter = ns.CustomAuraFilters.target
+				self.Buffs.CustomFilter = K.CustomAuraFilters.target
 			end
 			if (uconfig.debuffPos ~= "NONE") then
 				local size, gap, columns, rows, initialAnchor, relAnchor, offX, offY = GetAuraData(uconfig.debuffPos)
 				self.Debuffs = K.AddDebuffs(self, initialAnchor, size, gap, columns, rows)
 				self.Debuffs:SetPoint(initialAnchor, self, relAnchor, offX, offY)
-				self.Debuffs.CustomFilter = ns.CustomAuraFilters.target
+				self.Debuffs.CustomFilter = K.CustomAuraFilters.target
 			end
 		end
 
 	elseif (self.IsTargetFrame and uconfig.enableAura) then
 		self.Debuffs = K.AddDebuffs(self, "TOPLEFT", 20, 4, 3, 2)
 		self.Debuffs:SetPoint("TOPLEFT", self.Health, "TOPRIGHT", 7, 10)
-		self.Debuffs.CustomFilter = ns.CustomAuraFilters.target
+		self.Debuffs.CustomFilter = K.CustomAuraFilters.target
 
 	elseif (self.cUnit == "pet") then
 		self.Debuffs = K.AddDebuffs(self, "TOPLEFT", 20, 4, 6, 1)
 		self.Debuffs:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 1, -3)
-		self.Debuffs.CustomFilter = ns.CustomAuraFilters.pet
+		self.Debuffs.CustomFilter = K.CustomAuraFilters.pet
 
 	elseif (self.IsPartyFrame) then
 		self.Debuffs = K.AddDebuffs(self, "TOPLEFT", 20, 4, 4, 1)
 		self.Debuffs:SetPoint("TOPLEFT", self.Health, "TOPRIGHT", 5, 1)
-		self.Debuffs.CustomFilter = ns.CustomAuraFilters.party
+		self.Debuffs.CustomFilter = K.CustomAuraFilters.party
 
 		self.Buffs = K.AddBuffs(self, "TOPLEFT", 20, 4, 4, 1)
 		self.Buffs:SetPoint("TOPLEFT", self.Health, "BOTTOMLEFT", 2, -11)
-		self.Buffs.CustomFilter = ns.CustomAuraFilters.party
+		self.Buffs.CustomFilter = K.CustomAuraFilters.party
 
 	elseif (self.cUnit == "boss") then
 		self.Buffs = K.AddBuffs(self, "TOPLEFT", 30, 4.5, 5, 1)
@@ -946,7 +960,7 @@ local function CreateUnitLayout(self, unit)
 
 		self.Debuffs = K.AddDebuffs(self, "TOPRIGHT", 30, 4.5, 7, 1)
 		self.Debuffs:SetPoint("TOPRIGHT", self, "BOTTOMLEFT", -34, 18)
-		self.Debuffs.CustomFilter = ns.CustomAuraFilters.boss
+		self.Debuffs.CustomFilter = K.CustomAuraFilters.boss
 	end
 
 	-- Range Fader

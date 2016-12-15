@@ -118,17 +118,14 @@ end
 MiniMapInstanceDifficulty:ClearAllPoints()
 MiniMapInstanceDifficulty:SetParent(Minimap)
 MiniMapInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, -2)
-MiniMapInstanceDifficulty:SetScale(0.8)
 
 GuildInstanceDifficulty:ClearAllPoints()
 GuildInstanceDifficulty:SetParent(Minimap)
 GuildInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, -2)
-GuildInstanceDifficulty:SetScale(0.8)
 
 MiniMapChallengeMode:ClearAllPoints()
 MiniMapChallengeMode:SetParent(Minimap)
 MiniMapChallengeMode:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, -2)
-MiniMapChallengeMode:SetScale(0.6)
 
 -- Feedback icon
 if FeedbackUIButton then
@@ -279,7 +276,7 @@ local CoordUpdate = function(self, t)
 	Y = math.floor(100 * Y)
 
 	if (X == 0 and Y == 0) then
-		MinimapCoordText:SetText("?, ?")
+		MinimapCoordText:SetText(" ")
 	else
 		if (X < 10) then
 			XText = "0"..X

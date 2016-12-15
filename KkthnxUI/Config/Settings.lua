@@ -32,6 +32,7 @@ C["Announcements"] = {
 	["Interrupt"] = false,
 	["PullCountdown"] = true,
 	["SaySapped"] = false,
+	["SayThanks"] = false,
 	["Spells"] = false,
 	["SpellsFromAll"] = false,
 }
@@ -50,12 +51,12 @@ C["Automation"] = {
 
 -- Bag
 C["Bags"] = {
-	["BagColumns"] = 10,
-	["BankColumns"] = 17,
-	["ButtonSize"] = 38,
-	["ButtonSpace"] = 0,
+	["ButtonSize"] = 32,
 	["Enable"] = true,
-	["ItemLevel"] = false,
+	["InsertLeftToRight"] = true,
+	["ItemsPerRow"] = 11,
+	["SortRightToLeft"] = false,
+	["Spacing"] = 4,
 }
 
 -- Blizzard
@@ -135,11 +136,6 @@ C["DataBars"] = {
 	["ReputationWidth"] = 142,
 }
 
--- Plugins
-C["Plugins"] = {
-	["Example"] = true,
-}
-
 -- Datatext
 C["DataText"] = {
 	["Battleground"] = true,
@@ -147,7 +143,6 @@ C["DataText"] = {
 	["LocalTime"] = true,
 	["System"] = true,
 	["ThreatBar"] = false,
-	["Time"] = true,
 	["Time24Hr"] = false,
 }
 
@@ -307,7 +302,6 @@ C["Tooltip"] = {
 -- Unitframe
 C["Unitframe"] = {
 	["Castbars"] = true,
-	["CastbarSafeZoneColor"] = {.8, 0.4, 0},
 	["ClassColor"] = true,
 	["ClassPortraits"] = false,
 	["CombatText"] = true,
@@ -331,14 +325,8 @@ C["Unitframe"] = {
 	["SwingBar"] = false,
 	["TargetCastbarHeight"] = 18,
 	["TargetCastbarWidth"] = 200,
-	["TextHealthColor"] = {.9, .9, .9},
-	["TextNameColor"] = {1, 0.82, 0},
-	["TextPowerColor"] = {.9, .9, .9},
 	["ThreatGlow"] = true,
 	["ThreatValue"] = false,
-}
-
-C["Partyframe"] = { -- Could add this as its own in the future.
 }
 
 -- Raidframe

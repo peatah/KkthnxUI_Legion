@@ -1,9 +1,7 @@
 local K, C, L = unpack(select(2, ...))
+if (GetLocale() ~= "deDE") then return end
 
 -- Localization for deDE clients
-if (GetLocale() ~= "deDE") then
-	return
-end
 
 L.AFKScreen = {
 	NoGuild = "Keine Gilde",
@@ -15,8 +13,10 @@ L.Announce = {
 	PCAborted = "Pull ABGEBROCHEN!",
 	PCGo = "LOS GEHT'S!",
 	PCMessage = "Pulle %s in %s..",
+	Recieved = " erhalten von ",
 	Sapped = "Kopfnuss",
 	SappedBy = "Kopfnuss von: ",
+	SSThanks = "Danke für "
 }
 
 L.Auras = {
@@ -29,13 +29,6 @@ L.Merchant = {
 	NotEnoughMoney = "Du hast nicht genug Gold um Deine Ausrüstung zu reparieren!",
 	RepairCost = "Deine Ausrüstung wurde repariert. Die Kosten dafür betragen",
 	SoldTrash = "Dein Müll aus den Taschen wurde beim Händler verkauft und Du erhälst"
-}
-
-L.Bags = {
-	RightClickClose = "Rechtsklick öffnet Menü",
-	RightClickSearch = "Rechtsklick um zu suchen",
-	ShowBags = "Zeige Taschen",
-	StackMenu = "Stapeln"
 }
 
 -- Bindings Localization
@@ -140,6 +133,7 @@ L.DataText = {
 	OrderHall = "Ordenshalle",
 	OrderHallReport = "Klick: Öffnet den Ordenshallenbericht",
 	System = "System Stats: ",
+	Time = "Zeit",
 	TotalBagSlots = "Taschenplätze Gesamt:",
 	TotalFreeBagSlots = "Taschenplätze frei:",
 	TotalMemory = "Speichernutzung Übersicht:",

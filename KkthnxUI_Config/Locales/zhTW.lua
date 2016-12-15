@@ -1,8 +1,6 @@
+if (GetLocale() ~= "zhTW") then return end
+
 -- Localization for zhTW
-local Locale = GetLocale()
-if (Locale ~= "zhTW") then
-	return
-end
 
 local PerformanceSlight = "\n|cffFF0000Disabling this may slightly increase performance|r" -- For semi-high CPU options
 local ToggleOffReminder = "\n|cffFF0000Turn this off to manually input your bar numbers|r"
@@ -37,6 +35,7 @@ UIConfigLocal.AnnouncementsBadGear = "Check for bad gear in instances"
 UIConfigLocal.AnnouncementsInterrupt = "Announce in party/raid when you interrupt others"
 UIConfigLocal.AnnouncementsPullCountdown = "Simple script to aid in creating a pull countdown announce. /pc"
 UIConfigLocal.AnnouncementsSaySapped = "Instantly says Sapped to alert those around you whenever |cFFFFF569Rogues|r sap you."
+UIConfigLocal.AnnouncementsSayThanks = "Say thanks for some spells"
 UIConfigLocal.AnnouncementsSpells = "Announce in party/raid when you cast some spells"
 UIConfigLocal.AnnouncementsSpellsFromAll = "Check spells cast from all members"
 
@@ -53,12 +52,12 @@ UIConfigLocal.AutomationTabBinder = "Auto change tab key to only target enemy pl
 
 -- Bag
 UIConfigLocal.Bags = "Bags"
-UIConfigLocal.BagsBagColumns = "Number of columns in main bag"
-UIConfigLocal.BagsBankColumns = "Number of columns in bank"
-UIConfigLocal.BagsButtonSize = "Buttons size"
-UIConfigLocal.BagsButtonSpace = "Buttons space"
-UIConfigLocal.BagsEnable = "Enable bags"
-UIConfigLocal.BagsItemLevel = "Show item level for weapons and armor"
+UIConfigLocal.BagsButtonSize = "Set a size for bag slots"
+UIConfigLocal.BagsEnable = "Enable Bags"
+UIConfigLocal.BagsInsertLeftToRight = "Set the loot to the left most bag first"
+UIConfigLocal.BagsItemsPerRow = "Set how many slots are on each row of the bags"
+UIConfigLocal.BagsSortRightToLeft = "Sort bags right to left, bottom to top"
+UIConfigLocal.BagsSpacing = "Set the spacing between bag slots"
 
 -- Blizzard
 UIConfigLocal.Blizzard = "Blizzard"
@@ -290,7 +289,6 @@ UIConfigLocal.TooltipTalents = "Display target talents on tooltip"
 -- Unitframe
 UIConfigLocal.Unitframe = "Unit Frames"
 UIConfigLocal.UnitframeCastbars = "Enable uniframe castbars"
-UIConfigLocal.UnitframeCastbarSafeZoneColor = "Player castbar safezone color"
 UIConfigLocal.UnitframeClassColor = "Classcolor the uniframe healthbars."
 UIConfigLocal.UnitframeClassPortraits = "Enable class portraits"
 UIConfigLocal.UnitframeCombatText = "Show Combat Feedback"
@@ -314,9 +312,6 @@ UIConfigLocal.UnitframeStyle = "Style the uniframes look 'fat or normal'"
 UIConfigLocal.UnitframeSwingBar = "Enable swing bar"
 UIConfigLocal.UnitframeTargetCastbarHeight = "Target castbar height"
 UIConfigLocal.UnitframeTargetCastbarWidth = "Target castbar width"
-UIConfigLocal.UnitframeTextHealthColor = "Health text color"
-UIConfigLocal.UnitframeTextNameColor = "Name text color"
-UIConfigLocal.UnitframeTextPowerColor = "Power text color"
 UIConfigLocal.UnitframeThreatGlow = "Threat glow around unitframes"
 UIConfigLocal.UnitframeThreatValue = "Visual threat text on the player frame"
 

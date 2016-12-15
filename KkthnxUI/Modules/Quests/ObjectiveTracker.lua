@@ -19,7 +19,7 @@ local GetScreenWidth = GetScreenWidth
 local Movers = K.Movers
 local SetModifiedBackdrop = function(self)
 	if self:GetButtonState() == "DISABLED" then return end
-	self:SetBackdropColor(K.Color.r, K.Color.g, K.Color.b)
+	self:SetBackdropColor(K.Color.r * 0.3, K.Color.g * 0.3, K.Color.b * 0.3)
 	if self.overlay then
 		self.overlay:SetVertexColor(K.Color.r * 0.3, K.Color.g * 0.3, K.Color.b * 0.3, 1)
 	end
@@ -106,13 +106,12 @@ hooksecurefunc(WORLD_QUEST_TRACKER_MODULE, "AddObjective", function(_, block)
 
 		item.Count:ClearAllPoints()
 		item.Count:SetPoint("TOPLEFT", 1, -1)
-		item.Count:SetFont(C.font.action_bars_font, C.font.action_bars_font_size, C.font.action_bars_font_style)
-		item.Count:SetShadowOffset(C.font.action_bars_font_shadow and 1 or 0, C.font.action_bars_font_shadow and -1 or 0)
+		item.Count:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
+		item.Count:SetShadowOffset(0, 0)
 
 		item.skinned = true
 	end
 end)
-
 
 -- Difficulty color for ObjectiveTrackerFrame lines
 hooksecurefunc(QUEST_TRACKER_MODULE, "Update", function()
@@ -145,33 +144,34 @@ hooksecurefunc("ObjectiveTrackerBlockHeader_OnLeave", function(self)
 	end
 end)
 
+-- Skin ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
 local button = ObjectiveTrackerFrame.HeaderMenu.MinimizeButton
-	button:SetSize(17, 17)
-	button:StripTextures()
-	button:SetBackdrop(K.BorderBackdrop)
-	button:SetBackdropColor(unpack(C.Media.Backdrop_Color))
+button:SetSize(17, 17)
+button:StripTextures()
+button:SetBackdrop(K.BorderBackdrop)
+button:SetBackdropColor(unpack(C.Media.Backdrop_Color))
 
-	button.minus = button:CreateTexture(nil, "OVERLAY")
-	button.minus:SetSize(10, 2)
-	button.minus:SetPoint("CENTER")
-	button.minus:SetTexture(C.Media.Blank)
+button.minus = button:CreateTexture(nil, "OVERLAY")
+button.minus:SetSize(10, 2)
+button.minus:SetPoint("CENTER")
+button.minus:SetTexture(C.Media.Blank)
 
-	button.plus = button:CreateTexture(nil, "OVERLAY")
-	button.plus:SetSize(2, 10)
-	button.plus:SetPoint("CENTER")
-	button.plus:SetTexture(C.Media.Blank)
+button.plus = button:CreateTexture(nil, "OVERLAY")
+button.plus:SetSize(2, 10)
+button.plus:SetPoint("CENTER")
+button.plus:SetTexture(C.Media.Blank)
 
-	button:HookScript("OnEnter", SetModifiedBackdrop)
-	button:HookScript("OnLeave", SetOriginalBackdrop)
+button:HookScript("OnEnter", SetModifiedBackdrop)
+button:HookScript("OnLeave", SetOriginalBackdrop)
 
+button.plus:Hide()
+hooksecurefunc("ObjectiveTracker_Collapse", function()
+	button.plus:Show()
+end)
+
+hooksecurefunc("ObjectiveTracker_Expand", function()
 	button.plus:Hide()
-	hooksecurefunc("ObjectiveTracker_Collapse", function()
-		button.plus:Show()
-	end)
-
-	hooksecurefunc("ObjectiveTracker_Expand", function()
-		button.plus:Hide()
-	end)
+end)
 
 -- Set tooltip depending on position
 local function IsFramePositionedLeft(frame)

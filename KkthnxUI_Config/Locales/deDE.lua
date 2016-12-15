@@ -1,8 +1,6 @@
+if (GetLocale() ~= "deDE") then return end
+
 -- Localization for deDE
-local Locale = GetLocale()
-if (Locale ~= "deDE") then
-	return
-end
 
 local PerformanceSlight = "\n|cffFF0000Eine Deaktivierung könnte die Spielperformance leicht erhöhen|r" -- For semi-high CPU options
 local ToggleOffReminder = "\n|cffFF0000Schalte diesen Menüpunt aus, um Deine Aktionsleisten manuell zu steuern|r"
@@ -37,6 +35,7 @@ UIConfigLocal.AnnouncementsBadGear = "Überprüfe kaputte Ausrüstung in Instanz
 UIConfigLocal.AnnouncementsInterrupt = "Ankündigungen im Gruppen-/Schlachtzugchat wenn Du jemanden unterbrochen hast."
 UIConfigLocal.AnnouncementsPullCountdown = "Simples Script um einen Pulltimer zu starten. Tippe /pc in den Chat."
 UIConfigLocal.AnnouncementsSaySapped = "Kopfnussansage wenn die ein |cFFFFF569Schurke|r aus dem Kampf genommen hat."
+UIConfigLocal.AnnouncementsSayThanks = "Bedanke dich für einige Zauber"
 UIConfigLocal.AnnouncementsSpells = "Ankündigungen im Gruppen-/Schlachtzugchat wenn Du bestimmte Zauber benutzt hast."
 UIConfigLocal.AnnouncementsSpellsFromAll = "Überprüfe Zauber von allen Mitspielern."
 
@@ -53,12 +52,12 @@ UIConfigLocal.AutomationTabBinder = "Automatischer Wechsel der Tab-Taste um nur 
 
 -- Taschen
 UIConfigLocal.Bags = "Taschen"
-UIConfigLocal.BagsBagColumns = "Anzahl der Spalten in der Tasche"
-UIConfigLocal.BagsBankColumns = "Anzahl der Spalten in der Bank"
-UIConfigLocal.BagsButtonSize = "Buttongröße"
-UIConfigLocal.BagsButtonSpace = "Buttonabstand"
-UIConfigLocal.BagsEnable = "Taschen aktivieren"
-UIConfigLocal.BagsItemLevel = "Zeigt Itemlevel der Waffen & Rüstung"
+UIConfigLocal.BagsButtonSize = "Größe der Taschenplätze"
+UIConfigLocal.BagsEnable = "Aktiviere die 'Alles in einer Tasche' Ansicht"
+UIConfigLocal.BagsInsertLeftToRight = "Set the loot to the left most bag first"
+UIConfigLocal.BagsItemsPerRow = "aschenplatzanzahl pro Reihe"
+UIConfigLocal.BagsSortRightToLeft = "Sort bags right to left, bottom to top"
+UIConfigLocal.BagsSpacing = "Zwischenraum zwischen den Taschenslots"
 
 -- Blizzard
 UIConfigLocal.Blizzard = "Blizzard"
@@ -292,7 +291,6 @@ UIConfigLocal.TooltipItemLevel = "Display target Item level on tooltip"
 -- Einheitenfenster
 UIConfigLocal.Unitframe = "Einheitenfenster"
 UIConfigLocal.UnitframeCastbars = "Aktiviere die Zauberleiste"
-UIConfigLocal.UnitframeCastbarSafeZoneColor = "Farbe der Spielerzauberleiste Pufferzone"
 UIConfigLocal.UnitframeClassColor = "Lebensleisten in Klassenfarbe anzeigen."
 UIConfigLocal.UnitframeClassPortraits = "Aktiviere alten Klassenportraits"
 UIConfigLocal.UnitframeCombatText = "Zeige KampfFeedback auf den Einheitenfenstern an"
@@ -316,9 +314,6 @@ UIConfigLocal.UnitframeStyle = "Style den Look der Einheitenfenster 'fat oder no
 UIConfigLocal.UnitframeSwingBar = "Swingleiste"
 UIConfigLocal.UnitframeTargetCastbarHeight = "Höhe der Zauberleiste des Ziels"
 UIConfigLocal.UnitframeTargetCastbarWidth = "Breite der Zauberleiste des Ziels"
-UIConfigLocal.UnitframeTextHealthColor = "Farbe des Lebenstextes"
-UIConfigLocal.UnitframeTextNameColor = "Farbe des Namenstextes"
-UIConfigLocal.UnitframeTextPowerColor = "Farbe des Powertextes"
 UIConfigLocal.UnitframeThreatGlow = "Aktiviere das Bedrohungsleuchten um die Einheitenfenster"
 UIConfigLocal.UnitframeThreatValue = "Visueller Bedrohungstext auf dem Spielerfenster"
 

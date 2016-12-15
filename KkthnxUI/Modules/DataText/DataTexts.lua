@@ -9,7 +9,7 @@ local strlower = strlower
 local tinsert = table.insert
 local hooksecurefunc = hooksecurefunc
 
-DataTexts.NumAnchors = 7
+DataTexts.NumAnchors = 8
 DataTexts.Font = C.Media.Font
 DataTexts.Size = C.Media.Font_Size
 DataTexts.Flags = C.Media.Font_Style
@@ -105,6 +105,9 @@ function DataTexts:CreateAnchors()
 		elseif (i == 7) and C.ActionBar.SplitBars and C.DataText.BottomBar then
 			Frame:SetSize(KkthnxUIDataTextSplitBarRight:GetWidth() - 1, KkthnxUIDataTextSplitBarRight:GetHeight() - 2)
 			Frame:SetPoint("LEFT", KkthnxUIDataTextSplitBarRight, 1, 0)
+		elseif (i == 8) then
+			Frame:SetSize(KkthnxUIMinimapStat:GetWidth() - 1, KkthnxUIMinimapStat:GetHeight() - 2)
+			Frame:SetPoint("LEFT", KkthnxUIMinimapStat, 1, 0)
 		end
 	end
 end
@@ -146,6 +149,10 @@ local function GetTooltipAnchor(self)
 		Anchor = "ANCHOR_RIGHT"
 		From = KkthnxUIDataTextSplitBarRight
 		Y = K.Scale(0)
+	elseif (Position == 8) and C.Minimap.Enable then
+		Anchor = "ANCHOR_BOTTOMLEFT"
+		From = KkthnxUIMinimapStat
+		Y = K.Scale(-5)
 	end
 
 	return From, Anchor, X, Y
@@ -173,8 +180,12 @@ end
 function DataTexts:Register(name, enable, disable, update)
 	local Data = CreateFrame("Frame", nil, UIParent)
 	Data:EnableMouse(true)
-	Data:SetFrameStrata("BACKGROUND")
-	Data:SetFrameLevel(3)
+	Data:SetFrameStrata("MEDIUM")
+
+	Data.Text = Data:CreateFontString(nil, "OVERLAY")
+	-- Data.Text:SetFont(self.Font, self.Size, self.Flags)
+	Data.Text:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
+
 	Data.Enabled = false
 	Data.GetTooltipAnchor = GetTooltipAnchor
 	Data.Enable = enable or function() end
@@ -235,7 +246,9 @@ function DataTexts:AddDefaults()
 		KkthnxUIDataPerChar.Texts["Talents"] = {true, 6}
 		KkthnxUIDataPerChar.Texts[CURRENCY] = {true, 7}
 	end
-
+	if C.Minimap.Enable then
+		KkthnxUIDataPerChar.Texts[L.DataText.Time] = {true, 8}
+	end
 end
 
 function DataTexts:Reset()
