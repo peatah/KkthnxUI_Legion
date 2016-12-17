@@ -27,7 +27,7 @@ local UnitHasVehicleUI = UnitHasVehicleUI
 local UnitIsPlayer = UnitIsPlayer
 local UnitIsUnit = UnitIsUnit
 
--- Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- Global variables that we don"t cache, list them here for mikk"s FindGlobals script
 -- GLOBALS: ComboPointPlayerFrame, math, UnitVehicleSkin, ComboFrame_Update, securecall
 -- GLOBALS: TotemFrame, EclipseBarFrame, RuneFrame, PriestBarFrame, TotemFrame_Update
 -- GLOBALS: EclipseBar_UpdateShown, PriestBarFrame_CheckAndShow, _ENV, UnitPowerBarAlt_Initialize
@@ -508,7 +508,7 @@ local function CreateUnitLayout(self, unit)
 
 	-- Portrait
 	if data.por then
-		self.Portrait = self.Health:CreateTexture(nil, 'BACKGROUND')
+		self.Portrait = self.Health:CreateTexture(nil, "BACKGROUND")
 		self.Portrait.Override = function(self, event, unit)
 			if (not unit or not UnitIsUnit(self.unit, unit)) then return; end
 			local portrait = self.Portrait
@@ -533,8 +533,8 @@ local function CreateUnitLayout(self, unit)
 		self.Level = self:CreateFontString(nil, "ARTWORK")
 		self.Level:SetFont(C.Media.Font, C.Media.Font_Size)
 		self.Level:SetShadowOffset(K.Mult, -K.Mult)
-		self.Level:SetPoint("CENTER", self.Texture, (self.cUnit == "player" and -63) or 63, -15.5)
-		self:Tag(self.Level, "[KkthnxUI:Level]")
+		self.Level:SetPoint("CENTER", self.Texture, (self.cUnit == "player" and -62) or 62, -15.5)
+		self:Tag(self.Level, "[KkthnxUI:DifficultyColor][KkthnxUI:Level]")
 
 		-- PvP Icon
 		self.PvP = self:CreateTexture(nil, "OVERLAY")

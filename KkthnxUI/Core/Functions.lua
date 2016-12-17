@@ -43,6 +43,7 @@ K.PixelBorder = {edgeFile = C.Media.Blank, edgeSize = K.Mult, insets = {left = K
 K.TwoPixelBorder = {bgFile = C.Media.Blank, edgeFile = C.Media.Blank, tile = true, tileSize = 16, edgeSize = 2, insets = {left = 2, right = 2, top = 2, bottom = 2}}
 K.ShadowBackdrop = {edgeFile = C.Media.Glow, edgeSize = 3, insets = {left = 5, right = 5, top = 5, bottom = 5}}
 
+
 K.TexCoords = {0.08, 0.92, 0.08, 0.92}
 
 K.PriestColors = {
@@ -61,7 +62,7 @@ K.SetFontString = function(parent, fontName, fontHeight, fontStyle, justify)
 	fs:SetFont(fontName, fontHeight, fontStyle)
 	fs:SetJustifyH(justify or "CENTER")
 	fs:SetShadowColor(0, 0, 0, 1)
-	fs:SetShadowOffset(K.Mult, -K.Mult) -- Temp
+	fs:SetShadowOffset(K.Mult, -K.Mult)
 
 	return fs
 end

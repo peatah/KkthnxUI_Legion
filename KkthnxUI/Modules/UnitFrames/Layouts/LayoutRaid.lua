@@ -186,9 +186,8 @@ local function CreateRaidLayout(self, unit)
 	self.Name = self.Health:CreateFontString(nil, "OVERLAY")
 	self.Name:SetPoint("TOP", self.Health, "CENTER", 0, 5)
 	self.Name:SetFont(C.Media.Font, C.Media.Font_Size)
-	self.Name:SetShadowOffset(K.Mult,-K.Mult)
-	self.Name:SetTextColor(1, 0.82, 0, 1)
-	self:Tag(self.Name, "[KkthnxUI:GetNameColor][KkthnxUI:NameVeryShort]")
+	self.Name:SetShadowOffset(K.Mult, -K.Mult)
+	self:Tag(self.Name, "[KkthnxUI:NameColor][KkthnxUI:NameVeryShort]")
 
 	-- Power bar
 	if (C.Raidframe.ManabarShow) then
@@ -277,10 +276,9 @@ local function CreateRaidLayout(self, unit)
 	if (C.Raidframe.ShowNotHereTimer) then
 		self.NotHere = self.Health:CreateFontString(nil, "OVERLAY")
 		self.NotHere:SetPoint("CENTER", self, "BOTTOM")
-		self.NotHere:SetFont(C.Media.Font, 11, "THINOUTLINE")
+		self.NotHere:SetFont(C.Media.Font, 10, "THINOUTLINE")
 		self.NotHere:SetShadowOffset(0, 0)
 		self.NotHere:SetTextColor(0, 1, 0)
-		self.NotHere.frequentUpdates = 1
 		self:Tag(self.NotHere, "[KkthnxUI:StatusTimer]")
 	end
 
@@ -373,10 +371,9 @@ local function CreateRaidLayout(self, unit)
 	-- Role indicator
 	if (C.Raidframe.ShowRolePrefix) then
 		self.LFDRoleText = self.Health:CreateFontString(nil, "ARTWORK")
-		self.LFDRoleText:SetPoint("TOPLEFT", self.Health, 0, 4)
-		self.LFDRoleText:SetFont(C.Media.Font, 15)
-		self.LFDRoleText:SetShadowOffset(K.Mult,-K.Mult)
-		self.LFDRoleText:SetTextColor(1, 0, 1)
+		self.LFDRoleText:SetPoint("BOTTOMLEFT", self.Health, 2, 2)
+		self.LFDRoleText:SetFont(C.Media.Font, 10)
+		self.LFDRoleText:SetShadowOffset(K.Mult, -K.Mult)
 		self:Tag(self.LFDRoleText, "[KkthnxUI:RaidRole]")
 	end
 

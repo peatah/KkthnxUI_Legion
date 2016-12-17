@@ -26,6 +26,9 @@ local SetCVar = SetCVar
 
 local Movers = K.Movers
 
+-- Fix frame level for UIErrorsFrame
+UIErrorsFrame:SetFrameLevel(0)
+
 -- Move some frames (Shestak)
 local HeadFrame = CreateFrame("Frame")
 HeadFrame:RegisterEvent("ADDON_LOADED")
@@ -34,7 +37,6 @@ HeadFrame:SetScript("OnEvent", function(self, event, addon)
 		TalkingHeadFrame.ignoreFramePositionManager = true
 		TalkingHeadFrame:ClearAllPoints()
 		TalkingHeadFrame:SetPoint(unpack(C.Position.TalkingHead))
-		TalkingHeadFrame:SetScale(.80)
 	end
 end)
 
@@ -85,21 +87,6 @@ LevelUpBossBanner:SetScript("OnEvent", function(self, event)
 	BossBanner:SetPoint("TOP", LBBMover)
 	hooksecurefunc(BossBanner, "SetPoint", Reanchor)
 end)
-
--- Move and scale UIErrorsFrame
-UIErrorsFrame:ClearAllPoints()
-UIErrorsFrame:SetPoint(unpack(C.Position.UIError))
-UIErrorsFrame:SetFrameLevel(0)
-
--- Move and scale RaidBossEmoteFrame
-RaidBossEmoteFrame:ClearAllPoints()
-RaidBossEmoteFrame:SetPoint("TOP", UIParent, "TOP", 0, -200)
-RaidBossEmoteFrame:SetScale(0.9)
-
--- Move and scale RaidWarningFrame
-RaidWarningFrame:ClearAllPoints()
-RaidWarningFrame:SetPoint("TOP", UIParent, "TOP", 0, -260)
-RaidWarningFrame:SetScale(0.8)
 
 -- Force readycheck warning
 local ShowReadyCheckHook = function(self, initiator)
@@ -217,6 +204,7 @@ if C.Misc.HideTalkingHead == true then
 end
 
 -- Disable QuestTrackingTooltips while in raid and in combat
+-- This can become a spam fest when you have 20+ people on the same quest!
 local QuestTracking = CreateFrame("Frame")
 QuestTracking:RegisterEvent("GROUP_ROSTER_UPDATE")
 QuestTracking:SetScript("OnEvent", function(self, event)
@@ -372,4 +360,5 @@ OldAchievementFilter:SetScript("OnEvent", function(self, event, addon, ...)
 			OldAchievementFilter:UnregisterEvent("ADDON_LOADED")
 		end
 	end
+end)
 end)

@@ -4,18 +4,15 @@ if C.Unitframe.Enable ~= true then return end
 local _, ns = ...
 
 -- Default Aura Filter
-ns.defaultAuras = {
-	["general"] = {},
-	["boss"] = {},
-	["arena"] = {},
+K.DefaultAuras = {
+	Arena = {},
+	Boss = {},
+	General = {},
 }
 
-do
-	local l = K.AuraList
-	for _, list in pairs({l.Immunity, l.CCImmunity, l.Defensive, l.Offensive, l.Helpful, l.Misc}) do
-		for i = 1, #list do
-			ns.defaultAuras.arena[list[i]] = true
-		end
+for _, list in pairs({K.AuraList.Stun, K.AuraList.CC, K.AuraList.Silence, K.AuraList.Taunt}) do
+	for i = 1, #list do
+		K.DefaultAuras.Arena[list[i]] = true
 	end
 end
 
