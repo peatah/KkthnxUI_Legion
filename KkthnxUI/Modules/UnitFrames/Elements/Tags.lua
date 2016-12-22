@@ -163,7 +163,7 @@ end
 oUF.Tags.Events["KkthnxUI:NameVeryShort"] = "UNIT_NAME_UPDATE"
 oUF.Tags.Methods["KkthnxUI:NameVeryShort"] = function(unit)
 	local Name = UnitName(unit) or UNKNOWN
-	return K.UTF8Sub(Name, 6, true)
+	return K.UTF8Sub(Name, 3, false)
 end
 
 oUF.Tags.Events["KkthnxUI:NameShort"] = "UNIT_NAME_UPDATE"
