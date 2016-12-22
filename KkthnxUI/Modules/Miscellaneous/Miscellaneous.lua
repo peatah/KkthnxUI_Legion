@@ -29,6 +29,33 @@ local Movers = K.Movers
 -- Fix frame level for UIErrorsFrame
 UIErrorsFrame:SetFrameLevel(0)
 
+-- Skin return to graveyard button(Elvui)
+do
+	GhostFrame:StripTextures()
+	GhostFrame:SkinButton()
+	GhostFrame:SetBackdropColor(0, 0, 0, 0)
+	GhostFrame:SetBackdropBorderColor(0, 0, 0, 0)
+	local function forceBackdropColor(self, r, g, b, a)
+		if r ~= 0 or g ~= 0 or b ~= 0 or a ~= 0 then
+			GhostFrame:SetBackdropColor(0, 0, 0, 0)
+			GhostFrame:SetBackdropBorderColor(0, 0, 0, 0)
+		end
+	end
+	hooksecurefunc(GhostFrame, "SetBackdropColor", forceBackdropColor)
+	hooksecurefunc(GhostFrame, "SetBackdropBorderColor", forceBackdropColor)
+	GhostFrame:ClearAllPoints()
+	GhostFrame:SetPoint("TOP", UIParent, "TOP", 0, -270)
+	GhostFrameContentsFrameIcon:SetTexture(nil)
+	local x = CreateFrame("Frame", nil, GhostFrame)
+	x:SetFrameStrata("MEDIUM")
+	x:CreateBackdrop()
+	x:SetOutside(GhostFrameContentsFrameIcon)
+	local tex = x:CreateTexture(nil, "OVERLAY")
+	tex:SetTexture("Interface\\Icons\\spell_holy_guardianspirit")
+	tex:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	tex:SetInside()
+end
+
 -- Move some frames (Shestak)
 local HeadFrame = CreateFrame("Frame")
 HeadFrame:RegisterEvent("ADDON_LOADED")
@@ -37,6 +64,10 @@ HeadFrame:SetScript("OnEvent", function(self, event, addon)
 		TalkingHeadFrame.ignoreFramePositionManager = true
 		TalkingHeadFrame:ClearAllPoints()
 		TalkingHeadFrame:SetPoint(unpack(C.Position.TalkingHead))
+	end
+
+	if event == ("ADDON_LOADED") then
+		self:UnregisterEvent("ADDON_LOADED")
 	end
 end)
 
@@ -182,6 +213,10 @@ if C.Misc.BGSpam == true then
 	Fixer:RegisterEvent("PLAYER_ENTERING_WORLD")
 	Fixer:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	Fixer:SetScript("OnEvent", DisableSpam)
+
+	if event == ("PLAYER_ENTERING_WORLD") then
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	end
 end
 
 -- Boss Banner Hider
@@ -200,164 +235,22 @@ if C.Misc.HideTalkingHead == true then
 			end)
 			self:UnregisterEvent(event)
 		end
+
+		if event == ("ADDON_LOADED") then
+			self:UnregisterEvent("ADDON_LOADED")
+		end
 	end)
 end
 
 -- Disable QuestTrackingTooltips while in raid and in combat
 -- This can become a spam fest when you have 20+ people on the same quest!
 local QuestTracking = CreateFrame("Frame")
+QuestTracking:RegisterEvent("PLAYER_ENTERING_WORLD")
 QuestTracking:RegisterEvent("GROUP_ROSTER_UPDATE")
 QuestTracking:SetScript("OnEvent", function(self, event)
 	SetCVar("showQuestTrackingTooltips", IsInRaid() and 0 or 1)
-end)
 
--- Undress button in auction dress-up frame(by Nefarion)
-local strip = CreateFrame("Button", "DressUpFrameUndressButton", DressUpFrame, "UIPanelButtonTemplate")
-strip:SetText(L.Misc.Undress)
-strip:SetHeight(22)
-strip:SetWidth(strip:GetTextWidth() + 40)
-strip:SetPoint("RIGHT", DressUpFrameResetButton, "LEFT", -2, 0)
-strip:RegisterForClicks("AnyUp")
-strip:SetScript("OnClick", function(self, button)
-	if button == "RightButton" then
-		self.model:UndressSlot(19)
-	else
-		self.model:Undress()
-	end
-	PlaySound("gsTitleOptionOK")
-end)
-strip.model = DressUpModel
-
-strip:RegisterEvent("AUCTION_HOUSE_SHOW")
-strip:RegisterEvent("AUCTION_HOUSE_CLOSED")
-strip:SetScript("OnEvent", function(self)
-	if AuctionFrame:IsVisible() and self.model ~= SideDressUpModel then
-		self:SetParent(SideDressUpModel)
-		self:ClearAllPoints()
-		self:SetPoint("TOP", SideDressUpModelResetButton, "BOTTOM", 0, -3)
-		self.model = SideDressUpModel
-	elseif self.model ~= DressUpModel then
-		self:SetParent(DressUpModel)
-		self:ClearAllPoints()
-		self:SetPoint("RIGHT", DressUpFrameResetButton, "LEFT", -2, 0)
-		self.model = DressUpModel
-	end
-end)
-
--- Wardrobes
-
-local TestCode = CreateFrame("Frame")
-
-function TestCode:Blizzard_Collections(event, addon)
-    if event == "PLAYER_ENTERING_WORLD" and IsAddOnLoaded("Blizzard_Collections") or addon == "Blizzard_Collections" then
-        WardrobeFrame:SetWidth(1200)
-        WardrobeTransmogFrame:SetWidth(535)
-        WardrobeTransmogFrame.Model:ClearAllPoints()
-        WardrobeTransmogFrame.Model:SetPoint("TOP", WardrobeTransmogFrame, "TOP", 0, -4)
-        WardrobeTransmogFrame.Model:SetWidth(420)
-        WardrobeTransmogFrame.Model:SetHeight(420)
-        WardrobeTransmogFrame.Inset.BG:SetWidth(529)
-        WardrobeTransmogFrame.Model.HeadButton:ClearAllPoints()
-        WardrobeTransmogFrame.Model.HeadButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", -238, -41)
-        WardrobeTransmogFrame.Model.HandsButton:ClearAllPoints()
-        WardrobeTransmogFrame.Model.HandsButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", 235, -118);
-        WardrobeTransmogFrame.Model.MainHandButton:ClearAllPoints()
-        WardrobeTransmogFrame.Model.MainHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", -26, -5)
-        WardrobeTransmogFrame.Model.SecondaryHandButton:ClearAllPoints()
-        WardrobeTransmogFrame.Model.SecondaryHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", 27, -5)
-        WardrobeTransmogFrame.Model.MainHandEnchantButton:ClearAllPoints()
-        WardrobeTransmogFrame.Model.MainHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.MainHandButton, "BOTTOM", 0, -20)
-        WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:ClearAllPoints()
-        WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.SecondaryHandButton, "BOTTOM", 0, -20)
-    end
-end
-
-TestCode:RegisterEvent("PLAYER_LOGIN")
-TestCode:SetScript("OnEvent", TestCode.Blizzard_Collections)
-
--- local wdFrame = CreateFrame("Frame")
--- wdFrame:RegisterEvent("ADDON_LOADED")
--- wdFrame:SetScript("OnEvent", function(self, event)
---     WardrobeFrame:SetWidth(1200)
---     -- WardrobeFrame:SetScale(0.82)
---     WardrobeTransmogFrame:SetWidth(535) 
---     WardrobeTransmogFrame.Model:ClearAllPoints()
---     WardrobeTransmogFrame.Model:SetPoint("TOP", WardrobeTransmogFrame, "TOP", 0, -4)
---     WardrobeTransmogFrame.Model:SetWidth(420)
---     WardrobeTransmogFrame.Model:SetHeight(420)
---     WardrobeTransmogFrame.Inset.BG:SetWidth(529)
---     WardrobeTransmogFrame.Model.HeadButton:ClearAllPoints()
---     WardrobeTransmogFrame.Model.HeadButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", -238, -41)
---     WardrobeTransmogFrame.Model.HandsButton:ClearAllPoints()
---     WardrobeTransmogFrame.Model.HandsButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "TOP", 235, -118);
---     WardrobeTransmogFrame.Model.MainHandButton:ClearAllPoints()
---     WardrobeTransmogFrame.Model.MainHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", -26, -5)
---     WardrobeTransmogFrame.Model.SecondaryHandButton:ClearAllPoints()
---     WardrobeTransmogFrame.Model.SecondaryHandButton:SetPoint("TOP", WardrobeTransmogFrame.Model, "BOTTOM", 27, -5)
---     WardrobeTransmogFrame.Model.MainHandEnchantButton:ClearAllPoints()
---     WardrobeTransmogFrame.Model.MainHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.MainHandButton, "BOTTOM", 0, -20)
---     WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:ClearAllPoints()
---     WardrobeTransmogFrame.Model.SecondaryHandEnchantButton:SetPoint("BOTTOM", WardrobeTransmogFrame.Model.SecondaryHandButton, "BOTTOM", 0, -20)
--- end)
-
-
--- Hide blizzard combat text
-	SetCVar("floatingCombatTextCombatHealing", 0)
-	SetCVar("floatingCombatTextCombatDamage", 0)
-local frame = CreateFrame("Frame")
-frame:RegisterEvent("PLAYER_LOGOUT")
-frame:SetScript("OnEvent", function(self, event)
-	if event == "PLAYER_LOGOUT" then
-		SetCVar("floatingCombatTextCombatHealing", 0)
-		SetCVar("floatingCombatTextCombatDamage", 0)
-	end
-end)
-
--- Camera zoom
-
-local f = CreateFrame ("frame")
-local once = ...
-f:RegisterEvent ("ADDON_LOADED")
-
-local AdjustCamera = function()
-	if (not InCombatLockdown()) then
-		SetCVar ("cameraDistanceMaxZoomFactor", 2.6)
-		MoveViewOutStart (50000)
-		f.Ticker:Cancel()
-		f = nil
-	end
-end
-
-f:SetScript ("OnEvent", function (self, event, ...)
-	if (once == ...) then
-		f.Ticker = C_Timer.NewTicker (.3, AdjustCamera)
-		f:UnregisterEvent ("ADDON_LOADED")
-		once = nil
-	end
-end)
-
--- Old achievements filter
-function AchievementFrame_GetCategoryNumAchievements_OldIncomplete(categoryID)
-	local numAchievements, numCompleted = GetCategoryNumAchievements(categoryID)
-	return numAchievements - numCompleted, 0, numCompleted
-end
-
-function old_nocomplete_filter_init()
-	AchievementFrameFilters = {
-		{text = ACHIEVEMENTFRAME_FILTER_ALL, func = AchievementFrame_GetCategoryNumAchievements_All},
-		{text = ACHIEVEMENTFRAME_FILTER_COMPLETED, func = AchievementFrame_GetCategoryNumAchievements_Complete},
-		{text = ACHIEVEMENTFRAME_FILTER_INCOMPLETE, func = AchievementFrame_GetCategoryNumAchievements_Incomplete},
-		{text = ACHIEVEMENTFRAME_FILTER_INCOMPLETE.." ("..ALL.." )", func = AchievementFrame_GetCategoryNumAchievements_OldIncomplete}
-	}
-end
-
-local OldAchievementFilter = CreateFrame("Frame")
-OldAchievementFilter:RegisterEvent("ADDON_LOADED")
-OldAchievementFilter:SetScript("OnEvent", function(self, event, addon, ...)
-	if addon == "Blizzard_AchievementUI" then
-		if AchievementFrame then
-			old_nocomplete_filter_init()
-			OldAchievementFilter:UnregisterEvent("ADDON_LOADED")
-		end
+	if event == ("PLAYER_ENTERING_WORLD") then
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	end
 end)

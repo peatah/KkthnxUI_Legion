@@ -1,6 +1,6 @@
-if (GetLocale() ~= "zhCN") then return end
+if (GetLocale() ~= "frFR") then return end
 
--- Localization for zhCN
+-- Localization for frFR
 
 local PerformanceSlight = "\n|cffFF0000Disabling this may slightly increase performance|r" -- For semi-high CPU options
 local ToggleOffReminder = "\n|cffFF0000Turn this off to manually input your bar numbers|r"
@@ -196,6 +196,7 @@ UIConfigLocal.MiscEnhancedMail = "Adds a take all button to your mail frame."
 UIConfigLocal.MiscHideTalkingHead = "Hide Talking Head Frame"
 UIConfigLocal.MiscInviteKeyword = "Short keyword for invite (/ainv)"
 UIConfigLocal.MiscItemLevel = "Item level on character slot buttons"
+UIConfigLocal.MiscMerchantItemLevel = "Show item level for weapons and armor in merchant"
 UIConfigLocal.MiscMoveBlizzard = "Move some Blizzard frames"
 UIConfigLocal.MiscNoBanner = "Hide Boss Banner Loot Frame"
 UIConfigLocal.MiscSellMisc = "Automatically sells useless items that are not gray quality"
@@ -283,7 +284,6 @@ UIConfigLocal.TooltipHyperLink = "Display the hyperlink tooltip while hovering o
 UIConfigLocal.TooltipInstanceLock = "Your instance lock status in tooltip"
 UIConfigLocal.TooltipItemCount = "Item count"
 UIConfigLocal.TooltipItemIcon = "Item icon in tooltip"
-UIConfigLocal.TooltipItemLevel = "Display target Item level on tooltip"
 UIConfigLocal.TooltipSpellID = "Spell ID"
 UIConfigLocal.TooltipTalents = "Display target talents/itemlevel on tooltip"
 

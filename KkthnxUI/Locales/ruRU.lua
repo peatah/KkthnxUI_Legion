@@ -4,7 +4,27 @@ if (GetLocale() ~= "ruRU") then return end
 -- Localization For ruRU Clients
 
 L.AFKScreen = {
-	NoGuild = "Нет гильдии"
+	NoGuild = "Нет гильдии",
+	-- Needs translation
+	Sun = "Sunday",
+	Mon = "Monday",
+	Tue = "Tuesday",
+	Wed = "Wednesday",
+	Thu = "Thursday",
+	Fri = "Friday",
+	Sat = "Saturday",
+	Jan = "January",
+	Feb = "February",
+	Mar = "March",
+	Apr = "April",
+	May = "May",
+	Jun = "June",
+	Jul = "July",
+	Aug = "August",
+	Sep = "September",
+	Oct = "October",
+	Nov = "November",
+	Dec = "December"
 }
 
 L.Announce = {
@@ -63,18 +83,19 @@ L.Chat = {
 
 -- Configbutton Localization
 L.ConfigButton = {
+	Config = "Показать окно настроек KkthnxUI",
 	Functions = "Buttonfunctions:",
 	LeftClick = "Левый клик:",
-	RightClick = "Правый клик:",
 	MiddleClick = "Клик колесом:",
-	ShiftClick = "Shift + клик:",
 	MoveUI = "Режим перемещения элементов",
 	Recount = "Показать/скрыть окно Recount",
+	RightClick = "Правый клик:",
+	ShiftClick = "Shift + клик:",
+	ShiftPlusRightClick = "Shift + right-click:",
 	Skada = "Показать/скрыть окно Skada",
-	Config = "Показать окно настроек KkthnxUI",
 	Spec = "Показать меню выбора специализаций",
-	SpecMenu = "Выбор специализации",
-	SpecError = "Эта специализация уже активна!"
+	SpecError = "Эта специализация уже активна!",
+	SpecMenu = "Выбор специализации"
 }
 
 -- Cooldowns
@@ -336,11 +357,8 @@ L.Tooltip = {
 	AchievementComplete = "Ваш статус: Завершено на ",
 	AchievementIncomplete = "Ваш статус: Незавершено",
 	AchievementStatus = "Ваш статус:",
-	InspectOpen = "Открыто окно осмотра",
 	ItemCount = "Количество предметов:",
 	ItemID = "ID предмета:",
-	Loading = "Загрузка...",
-	NoTalents = "Нет талантов",
 	SpellID = "ID заклинания:"
 }
 

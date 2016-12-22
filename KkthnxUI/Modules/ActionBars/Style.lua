@@ -5,6 +5,7 @@ if C.ActionBar.Enable ~= true then return end
 local _G = _G
 local gsub = string.gsub
 local unpack = unpack
+local strfind = strfind
 
 -- Wow API
 local GetFlyoutID = GetFlyoutID
@@ -130,7 +131,7 @@ local function StyleSmallButton(normal, button, icon, name, pet)
 
 	if C.ActionBar.Hotkey == true then
 		hotkey:ClearAllPoints()
-		hotkey:SetPoint("TOPRIGHT", 0, 0)
+		hotkey:SetPoint("TOPRIGHT", 0, -2)
 		hotkey:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
 		hotkey:SetWidth(C.ActionBar.ButtonSize - 1)
 		hotkey.ClearAllPoints = K.Noop
@@ -195,7 +196,7 @@ function K.StylePet()
 	end
 end
 
-local function UpdateHotkey(self, actionButtonType)
+local function UpdateHotkey(self, btype)
 	local hotkey = _G[self:GetName() .. "HotKey"]
 	local text = hotkey:GetText()
 	local Indicator = _G["RANGE_INDICATOR"]
@@ -247,32 +248,31 @@ end
 local buttons = 0
 local function SetupFlyoutButton()
 	for i = 1, buttons do
-		if _G["SpellFlyoutButton"..i] then
-			StyleNormalButton(_G["SpellFlyoutButton"..i])
-			_G["SpellFlyoutButton"..i]:StyleButton()
+		local button = _G["SpellFlyoutButton"..i]
+		if button and not button.IsSkinned then
+			StyleNormalButton(button)
+			button:StyleButton()
+			if button:GetChecked() then button:SetChecked(nil) end
 
-			if _G["SpellFlyoutButton"..i]:GetChecked() then
-				_G["SpellFlyoutButton"..i]:SetChecked(false)
-			end
+			button.IsSkinned = true
 
 			if C.ActionBar.RightBarsMouseover == true then
 				SpellFlyout:HookScript("OnEnter", function(self) RightBarMouseOver(1) end)
 				SpellFlyout:HookScript("OnLeave", function(self) RightBarMouseOver(0) end)
-				_G["SpellFlyoutButton"..i]:HookScript("OnEnter", function(self) RightBarMouseOver(1) end)
-				_G["SpellFlyoutButton"..i]:HookScript("OnLeave", function(self) RightBarMouseOver(0) end)
+				button:HookScript("OnEnter", function(self) RightBarMouseOver(1) end)
+				button:HookScript("OnLeave", function(self) RightBarMouseOver(0) end)
 			end
 		end
 	end
 end
 SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
 
-local function StyleFlyoutButton(self)
-	if self.FlyoutBorder then
-		self.FlyoutBorder:SetAlpha(0)
-	end
-	if self.FlyoutBorderShadow then
-		self.FlyoutBorderShadow:SetAlpha(0)
-	end
+local function StyleFlyoutButton(button)
+	if(not button.FlyoutArrow or not button.FlyoutArrow:IsShown()) then return end
+
+	if not button.FlyoutBorder then return end
+	button.FlyoutBorder:SetAlpha(0)
+	button.FlyoutBorderShadow:SetAlpha(0)
 
 	SpellFlyoutHorizontalBackground:SetAlpha(0)
 	SpellFlyoutVerticalBackground:SetAlpha(0)
@@ -282,9 +282,27 @@ local function StyleFlyoutButton(self)
 		local x = GetFlyoutID(i)
 		local _, _, numSlots, isKnown = GetFlyoutInfo(x)
 		if isKnown then
-			if numSlots > buttons then
-				buttons = numSlots
-			end
+			buttons = numSlots
+			break
+		end
+	end
+
+	-- Change arrow direction depending on what bar the button is on
+	local arrowDistance
+	if ((SpellFlyout:IsShown() and SpellFlyout:GetParent() == button) or GetMouseFocus() == button) then arrowDistance = 5 else arrowDistance = 2 end
+	if button:GetParent() and button:GetParent():GetParent() and button:GetParent():GetParent():GetName() and button:GetParent():GetParent():GetName() == "SpellBookSpellIconsFrame" then return end
+	if button:GetParent() then
+		local point, _, _, _, _ = button:GetParent():GetParent():GetPoint()
+		if point == "UNKNOWN" then return end
+
+		if strfind == "BOTTOM" then
+			button.FlyoutArrow:ClearAllPoints()
+			button.FlyoutArrow:SetPoint("TOP", button, "TOP", 0, arrowDistance)
+			SetClampedTextureRotation(button.FlyoutArrow, 0)
+		elseif point == "RIGHT" then
+			button.FlyoutArrow:ClearAllPoints()
+			button.FlyoutArrow:SetPoint("LEFT", button, "LEFT", -arrowDistance, 0)
+			SetClampedTextureRotation(button.FlyoutArrow, 270)
 		end
 	end
 end
@@ -313,10 +331,16 @@ end
 
 hooksecurefunc("ActionButton_Update", StyleNormalButton)
 hooksecurefunc("ActionButton_UpdateFlyout", StyleFlyoutButton)
+
 if C.ActionBar.Hotkey == true then
-	hooksecurefunc("ActionButton_OnEvent", function(self, event, ...) if event == "PLAYER_ENTERING_WORLD" then ActionButton_UpdateHotkeys(self, self.buttonType) end end)
+	hooksecurefunc("ActionButton_OnEvent", function(self, event, ...)
+		if event == ("PLAYER_ENTERING_WORLD") then
+		ActionButton_UpdateHotkeys(self, self.buttonType) end
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	end)
 	hooksecurefunc("ActionButton_UpdateHotkeys", UpdateHotkey)
 end
+
 if C.ActionBar.HideHightlight == true then
 	hooksecurefunc("ActionButton_ShowOverlayGlow", HideHighlightButton)
 end

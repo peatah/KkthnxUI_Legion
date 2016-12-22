@@ -186,7 +186,7 @@ end
 
 -- BottomBar Datatext panel
 if C.DataText.BottomBar then
-	local DataTextBottomBar = CreateFrame("Frame", "KkthnxUIDataTextBottomBar", UIParent)
+	local DataTextBottomBar = CreateFrame("Frame", "KkthnxUIDataTextBottomBar", PetBattleFrameHider)
 	DataTextBottomBar:SetSize(ActionBarAnchor:GetWidth() + 6, 28)
 	DataTextBottomBar:SetPoint("TOP", ActionBarAnchor, "BOTTOM", 0, -1)
 	DataTextBottomBar:SetTemplate()
@@ -197,7 +197,7 @@ end
 
 -- BottomSplitBarLeft Datatext panel
 if C.ActionBar.SplitBars and C.DataText.BottomBar then
-	local DataTextSplitBarLeft = CreateFrame("Frame", "KkthnxUIDataTextSplitBarLeft", UIParent)
+	local DataTextSplitBarLeft = CreateFrame("Frame", "KkthnxUIDataTextSplitBarLeft", PetBattleFrameHider)
 	DataTextSplitBarLeft:SetSize(((C.ActionBar.ButtonSize * 3) + (C.ActionBar.ButtonSpace * 2) +3), 28)
 	DataTextSplitBarLeft:SetPoint("RIGHT", KkthnxUIDataTextBottomBar, "LEFT", 0, 0)
 	DataTextSplitBarLeft:SetTemplate()
@@ -208,7 +208,7 @@ end
 
 -- BottomSplitBarRight Datatext panel
 if C.ActionBar.SplitBars and C.DataText.BottomBar then
-	local DataTextSplitBarRight = CreateFrame("Frame", "KkthnxUIDataTextSplitBarRight", UIParent)
+	local DataTextSplitBarRight = CreateFrame("Frame", "KkthnxUIDataTextSplitBarRight", PetBattleFrameHider)
 	DataTextSplitBarRight:SetSize(((C.ActionBar.ButtonSize * 3) + (C.ActionBar.ButtonSpace * 2) +3), 28)
 	DataTextSplitBarRight:SetPoint("LEFT", KkthnxUIDataTextBottomBar, "RIGHT", 0, 0)
 	DataTextSplitBarRight:SetTemplate()
@@ -219,10 +219,11 @@ end
 
 -- Battleground stats frame
 if C.DataText.Battleground == true and C.DataText.BottomBar == true then
-	local BattleGroundFrame = CreateFrame("Frame", "KkthnxUIInfoBottomBattleGround", UIParent)
+	local BattleGroundFrame = CreateFrame("Frame", "KkthnxUIInfoBottomBattleGround", PetBattleFrameHider)
 	BattleGroundFrame:SetBackdrop(K.BorderBackdrop)
 	BattleGroundFrame:SetInside(KkthnxUIDataTextBottomBar, 4, 4)
-	BattleGroundFrame:SetFrameLevel(KkthnxUIDataTextBottomBar:GetFrameLevel() + 1)
+	BattleGroundFrame:SetFrameStrata("HIGH")
+	BattleGroundFrame:SetFrameLevel(2)
 	BattleGroundFrame:EnableMouse(true)
 	-- Just create a layer over this. No need for another border
 	BattleGroundFrame.Background = BattleGroundFrame:CreateTexture(nil, "BORDER")
@@ -232,7 +233,7 @@ end
 
 -- ToggleButton Special
 if C.General.ShowConfigButton == true then
-	local ToggleButtonSpecial = CreateFrame( "Frame", "KkthnxToggleSpecialButton", oUF_PetBattleFrameHider)
+	local ToggleButtonSpecial = CreateFrame( "Frame", "KkthnxToggleSpecialButton", UIParent)
 	ToggleButtonSpecial:SetPoint("LEFT", KkthnxUIMinimapStats, "RIGHT", 2, 0)
 	ToggleButtonSpecial:SetSize(20, 20)
 	ToggleButtonSpecial:SetFrameStrata("BACKGROUND")
@@ -303,7 +304,7 @@ if C.General.ShowConfigButton == true then
 		end
 		GameTooltip:AddDoubleLine(L.ConfigButton.MiddleClick, L.ConfigButton.Config, 1, 1, 1)
 		GameTooltip:AddDoubleLine(L.ConfigButton.ShiftClick, L.ConfigButton.Spec, 1, 1, 1)
-		GameTooltip:AddDoubleLine(L.ConfigButton.ShiftClick, "Toggle Datatext", 1, 1, 1)
+		GameTooltip:AddDoubleLine(L.ConfigButton.ShiftPlusRightClick, "Toggle Datatext", 1, 1, 1)
 		GameTooltip:Show()
 		GameTooltip:SetTemplate()
 	end)

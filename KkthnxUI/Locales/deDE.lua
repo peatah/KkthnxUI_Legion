@@ -5,6 +5,25 @@ if (GetLocale() ~= "deDE") then return end
 
 L.AFKScreen = {
 	NoGuild = "Keine Gilde",
+	Sun = "Sonntag",
+	Mon = "Montag",
+	Tue = "Dienstag",
+	Wed = "Mittwoch",
+	Thu = "Donnerstag",
+	Fri = "Freitag",
+	Sat = "Samstag",
+	Jan = "Jänner",
+	Feb = "Februar",
+	Mar = "März",
+	Apr = "April",
+	May = "Mai",
+	Jun = "Juni",
+	Jul = "Juli",
+	Aug = "August",
+	Sep = "September",
+	Oct = "Oktober",
+	Nov = "November",
+	Dec = "Dezember"
 }
 
 L.Announce = {
@@ -63,18 +82,19 @@ L.Chat = {
 
 -- Configbutton Localization
 L.ConfigButton = {
+	Config = "Öffnet das KkthnxUI Einstellungsmenü",
 	Functions = "Buttonfunktionen",
 	LeftClick = "Linksklick:",
-	RightClick = "Rechtsklick:",
 	MiddleClick = "Mittlere Maustaste:",
-	ShiftClick = "Shift + Linksklick:",
 	MoveUI = "UI Elemente bewegen",
 	Recount = "Zeigt/Versteckt das Recount Fenster",
+	RightClick = "Rechtsklick:",
+	ShiftClick = "Shift + Linksklick:",
+	ShiftPlusRightClick = "Shift + right-click:",
 	Skada = "Zeigt/Versteckt das Skada Fenster",
-	Config = "Öffnet das KkthnxUI Einstellungsmenü",
 	Spec = "Öffnet das KkthnxUI Spezialisierungsmenü",
-	SpecMenu = "Spezialisierungsauswahl",
-	SpecError = "Diese Spezialisierung ist bereits aktiv!"
+	SpecError = "Diese Spezialisierung ist bereits aktiv!",
+	SpecMenu = "Spezialisierungsauswahl"
 }
 
 -- Cooldowns
@@ -336,11 +356,8 @@ L.Tooltip = {
 	AchievementComplete = "Dein Status: Abgeschlossen am ",
 	AchievementIncomplete = "Dein Status: Unvollständig",
 	AchievementStatus = "Dein Status:",
-	InspectOpen = "Betrachtungsfenster offen",
 	ItemCount = "Gegenstandsanzahl:",
 	ItemID = "Gegenstands-ID:",
-	Loading = "Lade...",
-	NoTalents = "Keine Talente",
 	SpellID = "Zauber-ID:"
 }
 
@@ -358,37 +375,37 @@ L.Welcome = {
 
 L.SlashCommand = {
 	Help = {
-	"",
-	"|cff3c9bedVerfügbare Charbefehle:|r",
-	"--------------------------",
-	"/rl - Läd das Interface neu.",
-	"/rc - Aktivert den Readycheck.",
-	"/gm - Öffnet das GM Fenster.",
-	"/rd - Löst den Schlachtzug, oder die Party auf.",
-	"/toraid - Konvertiert die Gruppe in einen Schlachtzug.",
-	"/teleport - Teleportation aus einen zufälligen Dungeon.",
-	"/spec, /ss - Wechselt zwischen den Talentspezialisierungen.",
-	"/frame - Zeigt die Fenstereigeneschaften an.",
-	"/farmmode - Vergrössert den Minimapausschnitt.",
-	"/moveui - Erlaubt das Verschieben der Interface Elemente.",
-	"/resetui - Setzt die Einstellungen auf den Standartwert zurück.",
-	"/resetconfig - Setzt alle Einstellungen aus dem KkthnxUI_Config Menü auf den Standartwert zurück.",
-	"/settings ADDON_NAME - Übernimmt die Einstellungen für msbt, dbm, skada, oder allen Addons.",
-	"/pulsecd - Abklingzeit Pulsetest.",
-	"/tt - Ziel anflüstern.",
-	"/ainv - Aktiviert die automatischen Einladungen.",
-	"/cfg - Öffnet das Interface Einstellgsmenü.",
-	"/patch - Zeigt die Wow Patch Info.",
-	"",
-	"|cff3c9bedVerfügbare, versteckte Features:|r",
-	"--------------------------",
-	"Rechtsklick auf die Minimap zeigt das Mikromenü.",
-	"Mit der mittleren Maustaste auf die Minimap klicken zeigt das Aufspührmenü.",
-	"Linksklick auf die Erfahrungsleiste öffnet das Ruffenster.",
-	"Linksklick auf die Artefaktleiste öffnet die Artefaktübersicht.",
-	"Halte ALT und fahre mit der Maus über einen Spieler um sein ilvl und Spez im Tooltip zu sehen.",
-	"Halte Shift um mit der Maus schnell ans Ende oder Anfang im Chat zu scrollen.",
-	"Chatkopie aufrufen ->Rechtsunten im Chat auf das Symbol klicken.",
-	"Mit der mittleren Maustaste auf das Chatkopie Symbol klicken um zu würfeln -> /roll.",
+		"",
+		"|cff3c9bedVerfügbare Charbefehle:|r",
+		"--------------------------",
+		"/rl - Läd das Interface neu.",
+		"/rc - Aktivert den Readycheck.",
+		"/gm - Öffnet das GM Fenster.",
+		"/rd - Löst den Schlachtzug, oder die Party auf.",
+		"/toraid - Konvertiert die Gruppe in einen Schlachtzug.",
+		"/teleport - Teleportation aus einen zufälligen Dungeon.",
+		"/spec, /ss - Wechselt zwischen den Talentspezialisierungen.",
+		"/frame - Zeigt die Fenstereigeneschaften an.",
+		"/farmmode - Vergrössert den Minimapausschnitt.",
+		"/moveui - Erlaubt das Verschieben der Interface Elemente.",
+		"/resetui - Setzt die Einstellungen auf den Standartwert zurück.",
+		"/resetconfig - Setzt alle Einstellungen aus dem KkthnxUI_Config Menü auf den Standartwert zurück.",
+		"/settings ADDON_NAME - Übernimmt die Einstellungen für msbt, dbm, skada, oder allen Addons.",
+		"/pulsecd - Abklingzeit Pulsetest.",
+		"/tt - Ziel anflüstern.",
+		"/ainv - Aktiviert die automatischen Einladungen.",
+		"/cfg - Öffnet das Interface Einstellgsmenü.",
+		"/patch - Zeigt die Wow Patch Info.",
+		"",
+		"|cff3c9bedVerfügbare, versteckte Features:|r",
+		"--------------------------",
+		"Rechtsklick auf die Minimap zeigt das Mikromenü.",
+		"Mit der mittleren Maustaste auf die Minimap klicken zeigt das Aufspührmenü.",
+		"Linksklick auf die Erfahrungsleiste öffnet das Ruffenster.",
+		"Linksklick auf die Artefaktleiste öffnet die Artefaktübersicht.",
+		"Halte ALT und fahre mit der Maus über einen Spieler um sein ilvl und Spez im Tooltip zu sehen.",
+		"Halte Shift um mit der Maus schnell ans Ende oder Anfang im Chat zu scrollen.",
+		"Chatkopie aufrufen ->Rechtsunten im Chat auf das Symbol klicken.",
+		"Mit der mittleren Maustaste auf das Chatkopie Symbol klicken um zu würfeln -> /roll.",
 	}
 }

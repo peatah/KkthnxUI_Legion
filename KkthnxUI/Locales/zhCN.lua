@@ -4,7 +4,26 @@ if (GetLocale() ~= "zhCN") then return end
 -- Localization for zhCN clients
 
 L.AFKScreen = {
-	NoGuild = "No Guild"
+	NoGuild = "No Guild",
+	Sun = "Sunday",
+	Mon = "Monday",
+	Tue = "Tuesday",
+	Wed = "Wednesday",
+	Thu = "Thursday",
+	Fri = "Friday",
+	Sat = "Saturday",
+	Jan = "January",
+	Feb = "February",
+	Mar = "March",
+	Apr = "April",
+	May = "May",
+	Jun = "June",
+	Jul = "July",
+	Aug = "August",
+	Sep = "September",
+	Oct = "October",
+	Nov = "November",
+	Dec = "December"
 }
 
 L.Announce = {
@@ -63,18 +82,19 @@ L.Chat = {
 
 -- Configbutton Localization
 L.ConfigButton = {
+	Config = "Show config GUI",
 	Functions = "Button functions:",
 	LeftClick = "Left click:",
-	RightClick = "Right click:",
 	MiddleClick = "Middle click:",
-	ShiftClick = "Shift + click:",
 	MoveUI = "Move UI elements",
 	Recount = "Show/Hide Recount",
+	RightClick = "Right click:",
+	ShiftClick = "Shift + click:",
+	ShiftPlusRightClick = "Shift + right-click:",
 	Skada = "Show/Hide Skada",
-	Config = "Show config GUI",
 	Spec = "Show specialization menu",
-	SpecMenu = "Specialization selection",
-	SpecError = "You already have this specialization active!"
+	SpecError = "You already have this specialization active!",
+	SpecMenu = "Specialization selection"
 }
 
 -- Cooldowns
@@ -336,11 +356,8 @@ L.Tooltip = {
 	AchievementComplete = "Your Status: Completed on ",
 	AchievementIncomplete = "Your Status: Incomplete",
 	AchievementStatus = "Your Status:",
-	InspectOpen = "Inspect Frame is open",
 	ItemCount = "Item count:",
 	ItemID = "Item ID:",
-	Loading = "Loading...",
-	NoTalents = "No Talents",
 	SpellID = "Spell ID:"
 }
 

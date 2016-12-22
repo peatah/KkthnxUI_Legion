@@ -23,19 +23,13 @@ local function arenaPrep(self, event, ...)
 	self.Health:SetStatusBarColor(unpack(self.colors.class[class]))
 end
 
--- Idea from oUF_PVPSpecIcons ???
--- We might as well use the plugin at this point.
 local function updatePortrait(self, event, unit)
-	if event == "ARENA_OPPONENT_UPDATE" and unit ~= self.unit then return end
-	local _, instanceType = IsInInstance()
-	if instanceType == "arena" or instanceType == "pvp" then
-		local specID = GetArenaOpponentSpec(self.id)
-		if specID and specID > 0 then
-			local _, _, _, icon = GetSpecializationInfoByID(specID)
-			SetPortraitToTexture(self.Portrait, icon)
-		elseif unit and UnitIsUnit(self.unit, unit) then
-			SetPortraitTexture(self.Portrait, unit)
-		end
+	local specID = GetArenaOpponentSpec(self.id)
+	if specID then
+		local _, _, _, icon = GetSpecializationInfoByID(specID)
+		SetPortraitToTexture(self.Portrait, icon)
+	elseif unit and UnitIsUnit(self.unit, unit) then
+		SetPortraitTexture(self.Portrait, unit)
 	end
 end
 
@@ -64,12 +58,10 @@ function ns.createArenaLayout(self, unit)
 	self.Power:SetPoint("TOPRIGHT", self.Health, "BOTTOMRIGHT", 0, -3)
 	self.Power:SetHeight(self.Health:GetHeight())
 
-	self.Portrait = self:CreateTexture(nil, "BACKGROUND")
+	self.Portrait = self.Health:CreateTexture(nil, "BACKGROUND")
 	self.Portrait:SetSize(64, 64)
-	self.Portrait:SetPoint("TOPLEFT", self.Texture, 7, -6)
+	self.Portrait:SetPoint("TOPLEFT", self.Health, -64, 13)
 	self.Portrait.Override = updatePortrait
-	self:RegisterEvent("PLAYER_ENTERING_WORLD", updatePortrait)
-	self:RegisterEvent("ARENA_PREP_OPPONENT_SPECIALIZATIONS", updatePortrait)
 	self:RegisterEvent("ARENA_OPPONENT_UPDATE", updatePortrait)
 
 	self.Health.Value = K.SetFontString(self.Health, C.Media.Font, 13)
@@ -108,13 +100,13 @@ function ns.createArenaLayout(self, unit)
 	self.PvP:SetPoint("TOPLEFT", self.Texture, -14, -20)
 
 	-- Portrait Timer
-	if (C.Unitframe.PortraitTimer and self.Portrait) then
+	if (C.Unitframe.PortraitTimer == true and self.Portrait) then
 		self.PortraitTimer = CreateFrame("Frame", nil, self.Health)
 
 		self.PortraitTimer.Icon = self.PortraitTimer:CreateTexture(nil, "BACKGROUND")
 		self.PortraitTimer.Icon:SetAllPoints(self.Portrait)
 
-		self.PortraitTimer.Remaining = K.SetFontString(self.PortraitTimer, C.Media.Font, 64 / 3, C.Media.Font_Style, "CENTER")
+		self.PortraitTimer.Remaining = K.SetFontString(self.PortraitTimer, C.Media.Font, self.Portrait:GetWidth() / 3, C.Media.Font_Style, "CENTER")
 		self.PortraitTimer.Remaining:SetPoint("CENTER", self.PortraitTimer.Icon)
 		self.PortraitTimer.Remaining:SetTextColor(1, 1, 1)
 	end
@@ -123,11 +115,6 @@ function ns.createArenaLayout(self, unit)
 	self.Buffs = K.AddBuffs(self, "TOPLEFT", 28, 5, 6, 1)
 	self.Buffs:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 0, -7)
 	self.Buffs.CustomFilter = K.CustomAuraFilters.arena
-
-	-- Castbars
-	if C.Unitframe.Castbars then
-		ns.CreateCastbars(self)
-	end
 
 	-- oUF_Trinkets support
 	self.Trinket = CreateFrame("Frame", nil, self)
@@ -168,6 +155,7 @@ if C.Unitframe.ShowArena == true then
 		arenaprep[i].Health:SetStatusBarTexture(C.Media.Texture)
 
 		arenaprep[i].Spec = K.SetFontString(arenaprep[i].Health, C.Media.Font, C.Media.Font_Size, C.Media.Font_Style, "CENTER")
+		arenaprep[i].Spec:SetShadowOffset(0, 0)
 		arenaprep[i].Spec:SetPoint("CENTER")
 
 		arenaprep[i]:Hide()

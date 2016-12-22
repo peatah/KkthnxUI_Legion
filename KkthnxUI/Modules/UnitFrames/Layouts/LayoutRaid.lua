@@ -122,7 +122,7 @@ local function UpdateHealth(Health, unit, cur, max)
 		Health.Background:SetVertexColor(r * 0.1, g * 0.1, b * 0.1)
 	end
 
-	-- Health.Value:SetText(GetHealthText(unit, cur, max))
+	Health.Value:SetText(GetHealthText(unit, cur, max))
 end
 
 local function CreateRaidLayout(self, unit)
@@ -177,14 +177,13 @@ local function CreateRaidLayout(self, unit)
 
 	-- Health text
 	self.Health.Value = self.Health:CreateFontString(nil, "OVERLAY")
-	self.Health.Value:SetPoint("BOTTOM", self.Health, "CENTER", 0, 0)
-	-- self.Health.Value:SetPoint("TOP", self.Health, "CENTER", 0, 4)
+	self.Health.Value:SetPoint("TOP", self.Health, "CENTER", 0, 4)
 	self.Health.Value:SetFont(C.Media.Font, 11)
 	self.Health.Value:SetShadowOffset(K.Mult, -K.Mult)
 
 	-- Name text
 	self.Name = self.Health:CreateFontString(nil, "OVERLAY")
-	self.Name:SetPoint("TOP", self.Health, "CENTER", 0, 5)
+	self.Name:SetPoint("BOTTOM", self.Health, "CENTER", 0, 3)
 	self.Name:SetFont(C.Media.Font, C.Media.Font_Size)
 	self.Name:SetShadowOffset(K.Mult, -K.Mult)
 	self:Tag(self.Name, "[KkthnxUI:NameColor][KkthnxUI:NameVeryShort]")
@@ -340,8 +339,8 @@ local function CreateRaidLayout(self, unit)
 	if C.Raidframe.AuraWatch then
 		K.CreateAuraWatch(self)
 		local RaidDebuffs = CreateFrame("Frame", nil, self)
-		RaidDebuffs:SetHeight(C.Raidframe.IconSize)
-		RaidDebuffs:SetWidth(C.Raidframe.IconSize)
+		RaidDebuffs:SetHeight(22)
+		RaidDebuffs:SetWidth(22)
 		RaidDebuffs:SetPoint("CENTER", self.Health)
 		RaidDebuffs:SetFrameLevel(self.Health:GetFrameLevel() + 20)
 		RaidDebuffs:SetBackdrop(K.BorderBackdrop)
@@ -363,16 +362,15 @@ local function CreateRaidLayout(self, unit)
 		RaidDebuffs.count:SetTextColor(1, .9, 0)
 		RaidDebuffs.SetDebuffTypeColor = RaidDebuffs.SetBackdropColor
 		RaidDebuffs.Debuffs = K.RaidDebuffsTracking
-		-- RaidDebuffs:SetBorderTexture("white")
-		-- RaidDebuffs:SetBorderColor(0.38, 0.38, 0.38)
+
 		self.RaidDebuffs = RaidDebuffs
 	end
 
 	-- Role indicator
 	if (C.Raidframe.ShowRolePrefix) then
 		self.LFDRoleText = self.Health:CreateFontString(nil, "ARTWORK")
-		self.LFDRoleText:SetPoint("BOTTOMLEFT", self.Health, 1, 1)
-		self.LFDRoleText:SetFont(C.Media.Font, 8)
+		self.LFDRoleText:SetPoint("BOTTOMLEFT", self.Health, 2, 2)
+		self.LFDRoleText:SetFont(C.Media.Font, 10)
 		self.LFDRoleText:SetShadowOffset(K.Mult, -K.Mult)
 		self:Tag(self.LFDRoleText, "[KkthnxUI:RaidRole]")
 	end
@@ -406,14 +404,14 @@ local function CreateRaidLayout(self, unit)
 	end
 
 	-- Playertarget border
-	-- self:RegisterEvent("PLAYER_TARGET_CHANGED", function()
-	-- 	if (UnitIsUnit("target", self.unit)) then
-	-- 		self:SetBorderColor(1, 1, 1)
-	-- 	else
-	-- 		self:SetBorderTexture("white")
-	-- 		self:SetBorderColor(unpack(C.Media.Border_Color))
-	-- 	end
-	-- end)
+	self:RegisterEvent("PLAYER_TARGET_CHANGED", function()
+		if (UnitIsUnit("target", self.unit)) then
+			self:SetBorderColor(1, 1, 1)
+		else
+			self:SetBorderTexture("white")
+			self:SetBorderColor(unpack(C.Media.Border_Color))
+		end
+	end)
 
 	-- Range check
 	self.Range = {

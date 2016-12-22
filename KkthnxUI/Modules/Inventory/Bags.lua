@@ -110,7 +110,7 @@ function Bags:SkinBagButton()
 
 	self:SetNormalTexture("")
 	self:SetPushedTexture("")
-	self:CreateBackdrop()
+	self:CreateBackdrop(true)
 	self.backdrop:SetBackdropBorderColor(unpack(C.Media.Border_Color))
 	self:StyleButton()
 
@@ -284,8 +284,6 @@ function Bags:CreateReagentContainer()
 
 	UnlockButton:SkinButton()
 
-	-- Movers:RegisterFrame(Reagent)
-
 	self.Reagent = Reagent
 	-- Couldn't access these.
 	self.Reagent.SwitchBankButton = SwitchBankButton
@@ -320,7 +318,6 @@ function Bags:CreateContainer(storagetype, ...)
 		BagsContainer:SetHeight(10)
 		BagsContainer:SetPoint("BOTTOMRIGHT", Container, "TOPRIGHT", 0, 27)
 		BagsContainer:Hide()
-		--BagsContainer:SetTemplate()
 
 		Sort:SetSize(Container:GetWidth() - 8, 23)
 		Sort:ClearAllPoints()
@@ -357,7 +354,6 @@ function Bags:CreateContainer(storagetype, ...)
 					BagsContainer:Show()
 					BanksContainer:Show()
 					BanksContainer:ClearAllPoints()
-					--ToggleBagsContainer.Text:SetTextColor(1, 1, 1)
 
 					if Purchase:IsShown() then
 						BanksContainer:SetPoint("BOTTOMLEFT", Purchase, "TOPLEFT", 50, 2)
@@ -368,7 +364,6 @@ function Bags:CreateContainer(storagetype, ...)
 					ReplaceBags = 0
 					BagsContainer:Hide()
 					BanksContainer:Hide()
-					-- ToggleBagsContainer.Text:SetTextColor(.4, .4, .4)
 				end
 			else
 				CloseAllBags()
@@ -560,6 +555,11 @@ function Bags:SkinTokens()
 		Token:SetFrameStrata("HIGH")
 		Token:SetFrameLevel(5)
 		Token:SetScale(1)
+		Token:CreateBackdrop(nil)
+		Token.backdrop:SetOutside(Icon)
+		Token.backdrop:SetBackdropBorderColor(0, 0, 0, 0)
+		Token.backdrop:SetBackdrop(K.BorderBackdrop)
+		Token.backdrop:SetBackdropColor(unpack(C.Media.Backdrop_Color))
 
 		Icon:SetSize(12, 12)
 		Icon:SetTexCoord(unpack(K.TexCoords))
@@ -588,7 +588,6 @@ function Bags:SlotUpdate(id, button)
 	local IsQuestItem, QuestId, IsActive = GetContainerItemQuestInfo(id, button:GetID())
 	local IsBattlePayItem = IsBattlePayItem(id, button:GetID())
 	local NewItem = button.NewItemTexture
-	local IsProfBag = self:IsProfessionBag(id)
 	local IconQuestTexture = button.IconQuestTexture
 
 	if IconQuestTexture then
@@ -982,5 +981,18 @@ function Bags:Enable()
 	ToggleAllBags()
 end
 
-Bags:RegisterEvent("PLAYER_LOGIN")
-Bags:SetScript("OnEvent", Bags.Enable)
+local Loading = CreateFrame("Frame")
+
+function Loading:OnEvent(event, addon)
+	if (event == "PLAYER_LOGIN") then
+		Bags:Enable()
+	end
+end
+
+Loading:RegisterEvent("PLAYER_LOGIN")
+Loading:RegisterEvent("ADDON_LOADED")
+Loading:SetScript("OnEvent", Loading.OnEvent)
+
+if event == ("ADDON_LOADED") then
+	Loading:UnregisterEvent("ADDON_LOADED")
+end
