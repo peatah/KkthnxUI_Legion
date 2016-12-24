@@ -4,10 +4,11 @@ local K, C, L = unpack(select(2, ...))
 
 -- Lua API
 local _G = _G
-local floor = math.floor
+local math_floor = math.floor
 local getmetatable = getmetatable
-local match = string.match
+local string_match = string.match
 local unpack, select = unpack, select
+local type = type
 
 -- Wow API
 local CreateFrame = CreateFrame
@@ -17,9 +18,9 @@ local UnitClass = UnitClass
 -- Global variables that we don"t cache, list them here for mikk"s FindGlobals script
 -- GLOBALS: noHover, noPushed, noChecked, self, UIFrameFadeIn, UIFrameFadeOut, bordera
 
-local Mult = 768 / string.match(K.Resolution, "%d+x(%d+)") / C.General.UIScale
+local Mult = 768 / string_match(K.Resolution, "%d+x(%d+)") / C.General.UIScale
 local Scale = function(x)
-	return Mult * floor(x / Mult + 0.5)
+	return Mult * math_floor(x / Mult + 0.5)
 end
 
 K.Scale = function(x) return Scale(x) end
@@ -116,7 +117,7 @@ local function CreateShadow(f, size)
 	})
 
 	shadow:SetBackdropColor(C.Media.Backdrop_Color)
-	shadow:SetBackdropBorderColor(0, 0, 0, 0.8)
+	shadow:SetBackdropBorderColor(0, 0, 0, 0.9)
 
 	f.Shadow = shadow
 end
@@ -132,7 +133,7 @@ local function CreateBlizzShadow(f, size)
 	shadow:SetPoint("BOTTOMRIGHT", size, -size)
 
 	shadow:SetTexture(C.Media.Border_Shadow)
-	shadow:SetVertexColor(0, 0, 0, 0.8)
+	shadow:SetVertexColor(0, 0, 0, 0.9)
 
 	f.shadow = shadow
 end
@@ -337,11 +338,11 @@ end
 
 -- Fade in/out functions
 local function FadeIn(f)
-	UIFrameFadeIn(f, 0.4, f:GetAlpha(), 1)
+	K.UIFrameFadeIn(f, 0.4, f:GetAlpha(), 1)
 end
 
 local function FadeOut(f)
-	UIFrameFadeOut(f, 0.8, f:GetAlpha(), 0)
+	K.UIFrameFadeOut(f, 0.8, f:GetAlpha(), 0)
 end
 
 -- Merge KkthnxUI API with Wows API
@@ -379,3 +380,7 @@ while Object do
 
 	Object = EnumerateFrames(Object)
 end
+
+--Hacky fix for issue on 7.1 PTR where scroll frames no longer seem to inherit the methods from the "Frame" widget
+local scrollFrame = CreateFrame("ScrollFrame")
+AddAPI(scrollFrame)
