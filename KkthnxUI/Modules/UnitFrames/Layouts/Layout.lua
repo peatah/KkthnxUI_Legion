@@ -423,6 +423,7 @@ local function CreateUnitLayout(self, unit)
 	self.IsMainFrame = K.MultiCheck(self.cUnit, "player", "target", "focus")
 	self.IsTargetFrame = K.MultiCheck(self.cUnit, "targettarget", "focustarget")
 	self.IsPartyFrame = self.cUnit:match("party")
+	self.IsBossFrame = self.cUnit:match("boss")
 
 	if (self.IsTargetFrame) then
 		self:SetFrameLevel(4)
@@ -452,7 +453,7 @@ local function CreateUnitLayout(self, unit)
 		self.Castbar.bg:SetTexture(C.Media.Blank)
 
 		self.Castbar.Overlay = CreateFrame("Frame", nil, self.Castbar)
-		K.CreateBorder(self.Castbar.Overlay, 11)
+		K.CreateBorder(self.Castbar.Overlay, 1)
 		self.Castbar.Overlay:SetFrameStrata("BACKGROUND")
 		self.Castbar.Overlay:SetFrameLevel(3)
 		self.Castbar.Overlay:SetPoint("TOPLEFT", -2, 2)
@@ -523,7 +524,7 @@ local function CreateUnitLayout(self, unit)
 				self.Castbar.Button = CreateFrame("Frame", nil, self.Castbar)
 				self.Castbar.Button:SetHeight(22)
 				self.Castbar.Button:SetWidth(22)
-				K.CreateBorder(self.Castbar.Button, 11)
+				K.CreateBorder(self.Castbar.Button, 1)
 
 				self.Castbar.Icon = self.Castbar.Button:CreateTexture(nil, "ARTWORK")
 				self.Castbar.Icon:SetPoint("TOPLEFT", self.Castbar.Button, 2, -2)
@@ -541,7 +542,7 @@ local function CreateUnitLayout(self, unit)
 				self.Castbar.Button = CreateFrame("Frame", nil, self.Castbar)
 				self.Castbar.Button:SetHeight(18)
 				self.Castbar.Button:SetWidth(18)
-				K.CreateBorder(self.Castbar.Button, 11, 1)
+				K.CreateBorder(self.Castbar.Button, 1)
 				if self.cUnit == "boss" then
 					self.Castbar.Button:SetPoint("RIGHT", self.Castbar, "LEFT", -5, 0)
 				end
@@ -623,13 +624,15 @@ local function CreateUnitLayout(self, unit)
 		self.Name = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
 		self.Name:SetShadowOffset(K.Mult, -K.Mult)
 		self:Tag(self.Name, "[KkthnxUI:GetNameColor][KkthnxUI:NameShort]")
-	end
-
-	-- Name text targettarget
-	if data.nam and self.IsTargetFrame then
+		-- Name text targettarget
+	elseif data.nam and self.IsTargetFrame then
 		self.Name = K.SetFontString(self, C.Media.Font, 12, nil, "LEFT")
 		self.Name:SetShadowOffset(K.Mult, -K.Mult)
 		self:Tag(self.Name, "[KkthnxUI:GetNameColor][KkthnxUI:NameShort]")
+	elseif data.nam and self.IsBossFrame then
+		self.Name = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
+		self.Name:SetShadowOffset(K.Mult, -K.Mult)
+		self:Tag(self.Name, "[KkthnxUI:NameMedium]")
 	end
 
 	-- Portrait
@@ -1196,7 +1199,7 @@ for i = 1, MIRRORTIMER_NUMTIMERS do
 	bar:SetParent(UIParent)
 	bar:SetSize(220, 18)
 
-	K.CreateBorder(bar, 11, 3)
+	K.CreateBorder(bar, -1)
 
 	if (i > 1) then
 		local p1, p2, p3, p4, p5 = bar:GetPoint()

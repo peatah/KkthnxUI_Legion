@@ -96,8 +96,9 @@ end
 function Movers:CreateDragInfo()
 	self.DragInfo = CreateFrame("Button", nil, self)
 	self.DragInfo:SetAllPoints(self)
+	K.CreateBorder(self.DragInfo)
 	self.DragInfo:SetBackdrop(K.BorderBackdrop)
-	self.DragInfo:SetBackdropColor(60/255, 155/255, 237/255, 0.3)
+	self.DragInfo:SetBackdropColor(72/255, 133/255, 237/255, 0.6)
 	self.DragInfo:SetFrameLevel(100)
 	self.DragInfo:SetFrameStrata("HIGH")
 	self.DragInfo:SetMovable(true)
@@ -106,7 +107,7 @@ function Movers:CreateDragInfo()
 	self.DragInfo:Hide()
 	self.DragInfo:SetScript("OnMouseUp", Movers.RestoreDefaults)
 	self.DragInfo:SetScript("OnEnter", function(self) self:SetBackdropColor(K.Color.r, K.Color.g, K.Color.b, 0.9) end)
-	self.DragInfo:SetScript("OnLeave", function(self) self:SetBackdropColor(60/255, 155/255, 237/255, 0.6) end)
+	self.DragInfo:SetScript("OnLeave", function(self) self:SetBackdropColor(72/255, 133/255, 237/255, 0.6) end)
 
 	self.DragInfo.Name = self.DragInfo:CreateFontString(nil, "OVERLAY")
 	self.DragInfo.Name:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
@@ -218,9 +219,7 @@ Movers:SetScript("OnEvent", function(self, event)
 				Frame:SetPoint(Anchor1, _G[Parent], Anchor2, X, Y)
 			end
 		end
-		if (event == "PLAYER_ENTERING_WORLD") then
-			self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-		elseif (event == "PLAYER_REGEN_DISABLED") then
+		if (event == "PLAYER_REGEN_DISABLED") then
 			if self.IsEnabled then
 				self:StartOrStopMoving()
 			end

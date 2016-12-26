@@ -134,10 +134,10 @@ end
 -- </ Dungeon info > --
 if MiniMapInstanceDifficulty and GuildInstanceDifficulty then
 	MiniMapInstanceDifficulty:ClearAllPoints()
-	MiniMapInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0 or 0, 0 or 0)
+	MiniMapInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", -1 or -1, -1 or -1)
 	MiniMapInstanceDifficulty:SetScale(1 or 1)
 	GuildInstanceDifficulty:ClearAllPoints()
-	GuildInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0 or 0, 0 or 0)
+	GuildInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", -1 or -1, -1 or -1)
 	GuildInstanceDifficulty:SetScale(1 or 1)
 end
 MiniMapInstanceDifficulty:SetParent(Minimap)
@@ -167,6 +167,22 @@ if GameTimeFrame then
 		GameTimeFrame:Hide()
 	end
 end
+
+local AutoHide = CreateFrame("Frame")
+AutoHide:RegisterEvent("PLAYER_ENTERING_WORLD")
+AutoHide:SetScript("OnEvent", function(self, event)
+	if C.Minimap.Calendar ~= true and C.Minimap.Garrison ~= true then return end
+
+	if IsInInstance() and GameTimeFrame and GarrisonLandingPageMinimapButton then
+		GameTimeFrame:Hide()
+		GarrisonLandingPageMinimapButton:SetAlpha(0 or 0)
+		GarrisonLandingPageMinimapButton:SetScale(0.0001 or 0.0001)
+	elseif not IsInInstance() and GameTimeFrame and GarrisonLandingPageMinimapButton then
+		GameTimeFrame:Show()
+		GarrisonLandingPageMinimapButton:SetAlpha(1 or 1)
+		GarrisonLandingPageMinimapButton:SetScale(0.6 or 0.6)
+	end
+end)
 
 -- </ Enable mouse scrolling > --
 Minimap:EnableMouseWheel()

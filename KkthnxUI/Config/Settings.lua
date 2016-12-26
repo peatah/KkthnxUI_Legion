@@ -213,7 +213,7 @@ C["Misc"] = {
 	["EnhancedMail"] = true,
 	["HideTalkingHead"] = false,
 	["InviteKeyword"] = "inv",
-	["ItemLevel"] = true,
+	["ItemLevel"] = false,
 	["MerchantItemLevel"] = false,
 	["MoveBlizzard"] = false,
 	["NoBanner"] = false,
@@ -252,7 +252,7 @@ C["Nameplates"] = {
 -- PulseCD
 C["PulseCD"] = {
 	["Enable"] = false,
-	["Size"] = 75,
+	["Size"] = 76,
 	["Sound"] = false,
 	["AnimationScale"] = 1.5,
 	["HoldTime"] = 0,
@@ -296,6 +296,7 @@ C["Tooltip"] = {
 	["ItemCount"] = false,
 	["ItemIcon"] = false,
 	["SpellID"] = false,
+	["ItemLevel"] = true,
 	["Talents"] = false,
 }
 
