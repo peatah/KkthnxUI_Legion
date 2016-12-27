@@ -1,12 +1,12 @@
 -- Hide blizzard combat text
-	SetCVar("floatingCombatTextCombatHealing", 0)
-	SetCVar("floatingCombatTextCombatDamage", 0)
+	SetCVar("floatingCombatTextCombatHealing", 1)
+	SetCVar("floatingCombatTextCombatDamage", 1)
 local frame = CreateFrame("Frame")
 frame:RegisterEvent("PLAYER_LOGOUT")
 frame:SetScript("OnEvent", function(self, event)
 	if event == "PLAYER_LOGOUT" then
-		SetCVar("floatingCombatTextCombatHealing", 0)
-		SetCVar("floatingCombatTextCombatDamage", 0)
+		SetCVar("floatingCombatTextCombatHealing", 1)
+		SetCVar("floatingCombatTextCombatDamage", 1)
 	end
 end)
 
