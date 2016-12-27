@@ -210,12 +210,12 @@ local function UpdateThreat(self)
 	end
 end
 
-local function GetDBUnit(cUnit)
-	if cUnit == "focus" then
+local function GetDBUnit(MatchUnit)
+	if MatchUnit == "focus" then
 		return "target"
-	elseif cUnit == "focustarget" then
+	elseif MatchUnit == "focustarget" then
 		return "targettarget"
-	elseif cUnit == "player" then -- can player be vehicle? no it cant
+	elseif MatchUnit == "player" then -- can player be vehicle? no it cant
 		if UnitHasVehicleUI("player") then
 			if (UnitVehicleSkin("player") == "Natural") then
 				return "vehicleorganic"
@@ -226,21 +226,21 @@ local function GetDBUnit(cUnit)
 			return "player"
 		end
 	end
-	return cUnit
+	return MatchUnit
 end
 
-local function GetData(cUnit)
-	local dbUnit = GetDBUnit(cUnit)
+local function GetData(MatchUnit)
+	local dbUnit = GetDBUnit(MatchUnit)
 	if (C.Unitframe.Style == "fat") then
 		return DataFat[dbUnit]
 	end
 	return DataNormal[dbUnit]
 end
 
-local function GetTargetTexture(cUnit, type)
-	local dbUnit = GetDBUnit(cUnit)
+local function GetTargetTexture(MatchUnit, type)
+	local dbUnit = GetDBUnit(MatchUnit)
 	if dbUnit == "vehicle" or dbUnit == "vehicleorganic" then
-		return GetData(cUnit).tex.t
+		return GetData(MatchUnit).tex.t
 	end
 	if dbUnit == "player" then
 		if ns.config.playerStyle == "custom" then
@@ -259,8 +259,8 @@ local function GetTargetTexture(cUnit, type)
 end
 
 local function UpdatePlayerFrame(self, ...)
-	local data = GetData(self.cUnit)
-	local uconfig = ns.config[self.cUnit]
+	local data = GetData(self.MatchUnit)
+	local uconfig = ns.config[self.MatchUnit]
 
 	self.Texture:SetSize(data.tex.w, data.tex.h)
 	self.Texture:SetPoint("CENTER", self, data.tex.x, data.tex.y)
@@ -351,19 +351,19 @@ local function UpdatePlayerFrame(self, ...)
 end
 
 local function UpdateUnitFrameLayout(frame)
-	local cUnit = frame.cUnit
-	local data = GetData(cUnit)
-	local uconfig = ns.config[cUnit]
+	local MatchUnit = frame.MatchUnit
+	local data = GetData(MatchUnit)
+	local uconfig = ns.config[MatchUnit]
 
 	-- Player frame, its special
-	if cUnit == "player" then
+	if MatchUnit == "player" then
 		return UpdatePlayerFrame(frame)
 	elseif (not data) then
 		return
 	end
 
 	-- Frame Size
-	if not InCombatLockdown() then
+	if not InCombatLockdown() and MatchUnit ~= "party" then
 		frame:SetSize(data.siz.w, data.siz.h)
 		frame:SetScale(C.Unitframe.Scale or 1)
 	end
@@ -411,7 +411,7 @@ function oUFKkthnx:UpdateBaseFrames(optUnit)
 	end
 
 	for _, obj in pairs(oUF.objects) do
-		local unit = obj.cUnit
+		local unit = obj.MatchUnit
 		if obj.style == "oUF_Kkthnx" and unit and (not optUnit or optUnit == unit:match("^.%a+")) then
 			UpdateUnitFrameLayout(obj)
 		end
@@ -419,11 +419,11 @@ function oUFKkthnx:UpdateBaseFrames(optUnit)
 end
 
 local function CreateUnitLayout(self, unit)
-	self.cUnit = K.cUnit(unit)
-	self.IsMainFrame = K.MultiCheck(self.cUnit, "player", "target", "focus")
-	self.IsTargetFrame = K.MultiCheck(self.cUnit, "targettarget", "focustarget")
-	self.IsPartyFrame = self.cUnit:match("party")
-	self.IsBossFrame = self.cUnit:match("boss")
+	self.MatchUnit = K.MatchUnit(unit)
+	self.IsMainFrame = K.MultiCheck(self.MatchUnit, "player", "target", "focus")
+	self.IsTargetFrame = K.MultiCheck(self.MatchUnit, "targettarget", "focustarget")
+	self.IsPartyFrame = self.MatchUnit:match("party")
+	self.IsBossFrame = self.MatchUnit:match("boss")
 
 	if (self.IsTargetFrame) then
 		self:SetFrameLevel(4)
@@ -436,15 +436,15 @@ local function CreateUnitLayout(self, unit)
 	self:HookScript("OnLeave", K.UnitFrame_OnLeave)
 	self.mouseovers = {}
 
-	if self.cUnit == "arena" then
+	if self.MatchUnit == "arena" then
 		return ns.createArenaLayout(self, unit)
 	end
 
-	local uconfig = ns.config[self.cUnit]
-	local data = GetData(self.cUnit)
+	local uconfig = ns.config[self.MatchUnit]
+	local data = GetData(self.MatchUnit)
 
 	-- Load Castbars
-	if C.Unitframe.Castbars == true and self.cUnit ~= "arenatarget" and self.cUnit ~= "targettarget" and self.cUnit ~= "focustarget" and self.cUnit ~= "party" then
+	if C.Unitframe.Castbars == true and self.MatchUnit ~= "arenatarget" and self.MatchUnit ~= "targettarget" and self.MatchUnit ~= "focustarget" and self.MatchUnit ~= "party" then
 		self.Castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
 		self.Castbar:SetStatusBarTexture(C.Media.Texture, "ARTWORK")
 
@@ -462,7 +462,7 @@ local function CreateUnitLayout(self, unit)
 		self.Castbar.PostCastStart = K.PostCastStart
 		self.Castbar.PostChannelStart = K.PostChannelStart
 
-		if self.cUnit == "player" then
+		if self.MatchUnit == "player" then
 			Movers:RegisterFrame(self.Castbar)
 
 			if C.Unitframe.CastbarIcon == true then
@@ -473,7 +473,7 @@ local function CreateUnitLayout(self, unit)
 				self.Castbar:SetWidth(C.Unitframe.PlayerCastbarWidth)
 			end
 			self.Castbar:SetHeight(C.Unitframe.PlayerCastbarHeight)
-		elseif self.cUnit == "target" then
+		elseif self.MatchUnit == "target" then
 			Movers:RegisterFrame(self.Castbar)
 
 			if C.Unitframe.CastbarIcon == true then
@@ -484,13 +484,13 @@ local function CreateUnitLayout(self, unit)
 				self.Castbar:SetWidth(C.Unitframe.TargetCastbarWidth)
 			end
 			self.Castbar:SetHeight(C.Unitframe.TargetCastbarHeight)
-		elseif self.cUnit == "boss" or self.cUnit == "arena" then
+		elseif self.MatchUnit == "boss" or self.MatchUnit == "arena" then
 			self.Castbar:SetPoint("RIGHT", self, "LEFT", -8, 7)
 			self.Castbar:SetWidth(114)
 			self.Castbar:SetHeight(14)
 		end
 
-		if self.cUnit == "focus" then
+		if self.MatchUnit == "focus" then
 			Movers:RegisterFrame(self.Castbar)
 
 			if C.Unitframe.CastbarIcon == true then
@@ -503,7 +503,7 @@ local function CreateUnitLayout(self, unit)
 			self.Castbar:SetHeight(C.Unitframe.PlayerCastbarHeight)
 		end
 
-		if self.cUnit == "player" or self.cUnit == "target" or self.cUnit == "arena" or self.cUnit == "boss" or self.cUnit == "focus" then
+		if self.MatchUnit == "player" or self.MatchUnit == "target" or self.MatchUnit == "arena" or self.MatchUnit == "boss" or self.MatchUnit == "focus" then
 			self.Castbar.Time = K.SetFontString(self.Castbar, C.Media.Font, C.Media.Font_Size)
 			self.Castbar.Time:SetPoint("RIGHT", self.Castbar, "RIGHT", 0, 0)
 			self.Castbar.Time:SetTextColor(1, 1, 1)
@@ -520,7 +520,7 @@ local function CreateUnitLayout(self, unit)
 			self.Castbar.Text:SetJustifyH("LEFT")
 			self.Castbar.Text:SetHeight(C.Media.Font_Size)
 
-			if C.Unitframe.CastbarIcon == true and self.cUnit ~= "arena" then
+			if C.Unitframe.CastbarIcon == true and self.MatchUnit ~= "arena" then
 				self.Castbar.Button = CreateFrame("Frame", nil, self.Castbar)
 				self.Castbar.Button:SetHeight(22)
 				self.Castbar.Button:SetWidth(22)
@@ -531,19 +531,19 @@ local function CreateUnitLayout(self, unit)
 				self.Castbar.Icon:SetPoint("BOTTOMRIGHT", self.Castbar.Button, -2, 2)
 				self.Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
-				if self.cUnit == "player" then
+				if self.MatchUnit == "player" then
 					self.Castbar.Button:SetPoint("RIGHT", self.Castbar, "LEFT", -5, 0)
-				elseif self.cUnit == "target" or self.cUnit == "focus" then
+				elseif self.MatchUnit == "target" or self.MatchUnit == "focus" then
 					self.Castbar.Button:SetPoint("LEFT", self.Castbar, "RIGHT", 5, 0)
 				end
 			end
 
-			if self.cUnit == "arena" or self.cUnit == "boss" then
+			if self.MatchUnit == "arena" or self.MatchUnit == "boss" then
 				self.Castbar.Button = CreateFrame("Frame", nil, self.Castbar)
 				self.Castbar.Button:SetHeight(18)
 				self.Castbar.Button:SetWidth(18)
 				K.CreateBorder(self.Castbar.Button, 1)
-				if self.cUnit == "boss" then
+				if self.MatchUnit == "boss" then
 					self.Castbar.Button:SetPoint("RIGHT", self.Castbar, "LEFT", -5, 0)
 				end
 
@@ -553,7 +553,7 @@ local function CreateUnitLayout(self, unit)
 				self.Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 			end
 
-			if self.cUnit == "player" and C.Unitframe.CastbarLatency == true then
+			if self.MatchUnit == "player" and C.Unitframe.CastbarLatency == true then
 				self.Castbar.SafeZone = self.Castbar:CreateTexture(nil, "BORDER", nil, 1)
 				self.Castbar.SafeZone:SetTexture(C.Media.Texture)
 				self.Castbar.SafeZone:SetVertexColor(0.69, 0.31, 0.31, 0.85)
@@ -602,7 +602,7 @@ local function CreateUnitLayout(self, unit)
 	self.Power = K.CreateStatusBar(self, nil, nil, true)
 	self.Power:SetFrameLevel(self:GetFrameLevel()-1)
 	tinsert(self.mouseovers, self.Power)
-	self.Power.frequentUpdates = self.cUnit == "player" or self.cUnit == "boss"
+	self.Power.frequentUpdates = self.MatchUnit == "player" or self.MatchUnit == "boss"
 	self.Power.PostUpdate = K.PostUpdatePower
 	self.Power.Smooth = true
 	self.Power.colorPower = true
@@ -639,7 +639,7 @@ local function CreateUnitLayout(self, unit)
 	if data.por then
 		self.Portrait = self.Health:CreateTexture(nil, "BACKGROUND")
 		self.Portrait.Override = function(self, event, unit)
-			if (not unit or not UnitIsUnit(self.unit, unit)) then return; end
+			if (not unit or not UnitIsUnit(self.unit, unit)) then return end
 			local portrait = self.Portrait
 			local _, class = UnitClass(self.unit)
 			if C.Unitframe.ClassPortraits and UnitIsPlayer(unit) and class then
@@ -662,7 +662,7 @@ local function CreateUnitLayout(self, unit)
 		self.Level = self:CreateFontString(nil, "ARTWORK")
 		self.Level:SetFont(C.Media.Font, C.Media.Font_Size)
 		self.Level:SetShadowOffset(K.Mult, -K.Mult)
-		self.Level:SetPoint("CENTER", self.Texture, (self.cUnit == "player" and -63) or 63, -15.5)
+		self.Level:SetPoint("CENTER", self.Texture, (self.MatchUnit == "player" and -63) or 63, -15.5)
 		self:Tag(self.Level, "[KkthnxUI:DifficultyColor][KkthnxUI:Level]")
 
 		-- PvP Icon
@@ -760,7 +760,7 @@ local function CreateUnitLayout(self, unit)
 	self.RaidIcon = self:CreateTexture(nil, "OVERLAY", self)
 	self.RaidIcon:SetTexture("Interface\\TargetingFrame\\UI-RaidTargetingIcons")
 
-	if self.cUnit == "boss" then
+	if self.MatchUnit == "boss" then
 		self.RaidIcon:SetPoint("CENTER", self, "TOPRIGHT", -9, -10)
 		self.RaidIcon:SetSize(26, 26)
 
@@ -784,7 +784,7 @@ local function CreateUnitLayout(self, unit)
 
 		self.MasterLooter = self:CreateTexture(nil, "OVERLAY", self)
 		self.MasterLooter:SetSize(16, 16)
-		if (self.cUnit == "target" or self.cUnit == "focus") then
+		if (self.MatchUnit == "target" or self.MatchUnit == "focus") then
 			self.MasterLooter:SetPoint("TOPLEFT", self.Portrait, 3, 3)
 		elseif (self.IsTargetFrame) then
 			self.MasterLooter:SetPoint("CENTER", self.Portrait, "TOPLEFT", 3, -3)
@@ -795,7 +795,7 @@ local function CreateUnitLayout(self, unit)
 
 		self.Leader = self:CreateTexture(nil, "OVERLAY", self)
 		self.Leader:SetSize(16, 16)
-		if (self.cUnit == "target" or self.cUnit == "focus") then
+		if (self.MatchUnit == "target" or self.MatchUnit == "focus") then
 			self.Leader:SetPoint("TOPRIGHT", self.Portrait, -3, 2)
 		elseif self.IsTargetFrame then
 			self.Leader:SetPoint("TOPLEFT", self.Portrait, -3, 4)
@@ -818,7 +818,7 @@ local function CreateUnitLayout(self, unit)
 		self.OfflineIcon:SetPoint("TOPRIGHT", self.Portrait, 7, 7)
 		self.OfflineIcon:SetPoint("BOTTOMLEFT", self.Portrait, -7, -7)
 
-		if (self.cUnit == "player" or self.IsPartyFrame) then
+		if (self.MatchUnit == "player" or self.IsPartyFrame) then
 			self.ReadyCheck = self:CreateTexture(nil, "OVERLAY")
 			self.ReadyCheck:SetPoint("TOPRIGHT", self.Portrait, -7, -7)
 			self.ReadyCheck:SetPoint("TOPRIGHT", self.Portrait, -7, -7)
@@ -827,11 +827,11 @@ local function CreateUnitLayout(self, unit)
 			self.ReadyCheck.fadeTime = 0.7
 		end
 
-		if (self.IsPartyFrame or self.cUnit == "player" or self.cUnit == "target") then
+		if (self.IsPartyFrame or self.MatchUnit == "player" or self.MatchUnit == "target") then
 			self.LFDRole = self:CreateTexture(nil, "OVERLAY")
 			self.LFDRole:SetSize(20, 20)
 
-			if self.cUnit == "player" then
+			if self.MatchUnit == "player" then
 				self.LFDRole:SetPoint("BOTTOMRIGHT", self.Portrait, -2, -3)
 			elseif unit == "target" then
 				self.LFDRole:SetPoint("TOPLEFT", self.Portrait, -10, -2)
@@ -845,7 +845,7 @@ local function CreateUnitLayout(self, unit)
 	UpdateUnitFrameLayout(self)
 
 	-- Player Frame
-	if self.cUnit == "player" then
+	if self.MatchUnit == "player" then
 		self:SetSize(data.siz.w, data.siz.h)
 		self:SetScale(C.Unitframe.Scale or 1)
 
@@ -916,7 +916,7 @@ local function CreateUnitLayout(self, unit)
 		end
 
 		-- GCD spark
-		if C.Unitframe.GCDBar == true and self.cUnit == "player" then
+		if C.Unitframe.GCDBar == true and self.MatchUnit == "player" then
 			self.GCD = CreateFrame("Frame", self:GetName().."_GCD", self)
 			self.GCD:SetWidth(116)
 			self.GCD:SetHeight(3)
@@ -929,7 +929,7 @@ local function CreateUnitLayout(self, unit)
 		end
 
 		-- Swing bar
-		if C.Unitframe.SwingBar == true and self.cUnit == "player" then
+		if C.Unitframe.SwingBar == true and self.MatchUnit == "player" then
 			self.Swing = CreateFrame("StatusBar", self:GetName().."_Swing", self)
 			self.Swing:CreateShadow()
 			self.Swing:SetPoint("TOPRIGHT", "oUF_KkthnxPlayer_Castbar", "BOTTOMRIGHT", 0, -4)
@@ -969,18 +969,18 @@ local function CreateUnitLayout(self, unit)
 	end
 
 	-- </ Focus & Target Frame > --
-	if (self.cUnit == "target" or self.cUnit == "focus") then
+	if (self.MatchUnit == "target" or self.MatchUnit == "focus") then
 		-- Questmob Icon
 		self.QuestIcon = self:CreateTexture(nil, "OVERLAY")
 		self.QuestIcon:SetSize(22, 22)
 		self.QuestIcon:SetPoint("CENTER", self.Health, "TOPRIGHT", 2, 0)
 
 		tinsert(self.__elements, function(self, _, unit)
-			self.Texture:SetTexture(GetTargetTexture(self.cUnit, UnitClassification(unit)))
+			self.Texture:SetTexture(GetTargetTexture(self.MatchUnit, UnitClassification(unit)))
 		end)
 	end
 
-	if (self.cUnit == "player") then
+	if (self.MatchUnit == "player") then
 		if C.Unitframe.ThreatValue then
 			self.NumericalThreat = CreateFrame("Frame", nil, self)
 			self.NumericalThreat:SetSize(49, 18)
@@ -1012,8 +1012,8 @@ local function CreateUnitLayout(self, unit)
 	end
 
 	-- Auras
-	if (self.cUnit == "focus") or (self.cUnit == "target") then
-		local isFocus = self.cUnit == "focus"
+	if (self.MatchUnit == "focus") or (self.MatchUnit == "target") then
+		local isFocus = self.MatchUnit == "focus"
 
 		local function GetAuraData(mode)
 			local size, gap, columns, rows, initialAnchor, relAnchor, offX, offY
@@ -1069,7 +1069,7 @@ local function CreateUnitLayout(self, unit)
 		self.Debuffs:SetPoint("TOPLEFT", self.Health, "TOPRIGHT", 7, 10)
 		self.Debuffs.CustomFilter = K.CustomAuraFilters.target
 
-	elseif (self.cUnit == "pet") then
+	elseif (self.MatchUnit == "pet") then
 		self.Debuffs = K.AddDebuffs(self, "TOPLEFT", 20, 4, 6, 1)
 		self.Debuffs:SetPoint("TOPLEFT", self.Power, "BOTTOMLEFT", 1, -3)
 		self.Debuffs.CustomFilter = K.CustomAuraFilters.pet
@@ -1083,7 +1083,7 @@ local function CreateUnitLayout(self, unit)
 		self.Buffs:SetPoint("TOPLEFT", self.Health, "BOTTOMLEFT", 2, -11)
 		self.Buffs.CustomFilter = K.CustomAuraFilters.party
 
-	elseif (self.cUnit == "boss") then
+	elseif (self.MatchUnit == "boss") then
 		self.Buffs = K.AddBuffs(self, "TOPLEFT", 30, 4.5, 5, 1)
 		self.Buffs:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 3, -6)
 
@@ -1093,7 +1093,7 @@ local function CreateUnitLayout(self, unit)
 	end
 
 	-- Range Fader
-	if (self.cUnit == "pet" or self.IsPartyFrame) then
+	if (self.MatchUnit == "pet" or self.IsPartyFrame) then
 		self.Range = {
 			insideAlpha = 1,
 			outsideAlpha = 0.8,
@@ -1161,7 +1161,6 @@ if (C.Unitframe.Party) then
 	)
 
 	party:SetPoint(unpack(C.Position.UnitFrames.Party))
-	party:SetScale(1)
 	Movers:RegisterFrame(party)
 end
 
@@ -1193,38 +1192,57 @@ if C.Unitframe.ShowArena then
 	end
 end
 
--- MirrorTimers
-for i = 1, MIRRORTIMER_NUMTIMERS do
-	local bar = _G["MirrorTimer" .. i]
-	bar:SetParent(UIParent)
-	bar:SetSize(220, 18)
+local function MirrorTimer_OnUpdate(frame, elapsed)
+		if (frame.paused) then
+			return
+		end
 
-	K.CreateBorder(bar, -1)
+		if frame.timeSinceUpdate >= 0.3 then
+			local minutes = frame.value / 60
+			local seconds = frame.value % 60
+			local text = frame.label:GetText()
 
-	if (i > 1) then
-		local p1, p2, p3, p4, p5 = bar:GetPoint()
-		bar:SetPoint(p1, p2, p3, p4, p5 - 10)
+			if frame.value > 0 then
+				frame.TimerText:SetText(format("%s (%d:%02d)", text, minutes, seconds))
+			else
+				frame.TimerText:SetText(format("%s (0:00)", text))
+			end
+			frame.timeSinceUpdate = 0
+		else
+			frame.timeSinceUpdate = frame.timeSinceUpdate + elapsed
+		end
 	end
 
-	local statusbar = _G["MirrorTimer" .. i .. "StatusBar"]
-	statusbar:SetStatusBarTexture(C.Media.Texture)
-	statusbar:SetAllPoints(bar)
+-- Mirror Timers (Underwater Breath etc.)
+--Mirror Timers (Underwater Breath etc.), credit to Azilroka
+	for i = 1, MIRRORTIMER_NUMTIMERS do
+		local mirrorTimer = _G["MirrorTimer"..i]
+		local statusBar = _G["MirrorTimer"..i.."StatusBar"]
+		local text = _G["MirrorTimer"..i.."Text"]
 
-	local backdrop = select(1, bar:GetRegions())
-	backdrop:SetTexture(C.Media.Blank)
-	backdrop:SetVertexColor(unpack(C.Media.Backdrop_Color))
-	backdrop:SetAllPoints(bar)
+		mirrorTimer:StripTextures()
+		mirrorTimer:SetSize(222, 18)
+		mirrorTimer.label = text
+		statusBar:SetStatusBarTexture(C.Media.Texture)
+		K.CreateBorder(statusBar, -1)
+		statusBar:SetSize(222, 18)
+		text:Hide()
 
-	local border = _G["MirrorTimer" .. i .. "Border"]
-	border:Hide()
+		local Backdrop = select(1, mirrorTimer:GetRegions())
+		Backdrop:SetTexture(C.Media.Blank)
+		Backdrop:SetVertexColor(unpack(C.Media.Backdrop_Color))
+		Backdrop:SetAllPoints(statusBar)
 
-	local text = _G["MirrorTimer" .. i .. "Text"]
-	text:SetFont(C.Media.Font, 13, C.Media.Font_Style)
-	text:SetShadowOffset(0, 0)
-	text:ClearAllPoints()
-	text:SetPoint("CENTER", bar)
-	bar.text = text
-end
+		local TimerText = mirrorTimer:CreateFontString(nil, "OVERLAY")
+		TimerText:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
+		TimerText:SetPoint("CENTER", statusBar, "CENTER", 0, 0)
+		mirrorTimer.TimerText = TimerText
+
+		mirrorTimer.timeSinceUpdate = 0.3 -- Make sure timer value updates right away on first show
+		mirrorTimer:HookScript("OnUpdate", MirrorTimer_OnUpdate)
+
+		Movers:RegisterFrame(mirrorTimer)
+	end
 
 -- Test the unitframes :D
 local moving = false
