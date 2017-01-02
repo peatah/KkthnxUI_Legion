@@ -8,6 +8,7 @@ local pairs = pairs
 -- Wow API
 local MAX_CHANNEL_BUTTONS = MAX_CHANNEL_BUTTONS
 local UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT = UIDROPDOWNMENU_DEFAULT_TEXT_HEIGHT
+local SetCVar = SetCVar
 
 -- Global variables that we don't cache, list them here for mikk's FindGlobals script
 -- GLOBALS: AchievementFont_Small, CoreAbilityFont, GameTooltipTextSmall, InvoiceFont_Med
@@ -55,8 +56,24 @@ KkthnxUIFonts:SetScript("OnEvent", function(self, event)
 	CHAT_FONT_HEIGHTS = {12, 13, 14, 15, 16, 17, 18, 19, 20}
 
 	UNIT_NAME_FONT = NORMAL
+	NAMEPLATE_FONT = NORMAL
 	DAMAGE_TEXT_FONT = COMBAT
 	STANDARD_TEXT_FONT = NORMAL
+
+	if (K.ScreenWidth > 3840) then
+		K.KillMenuOption(true, "InterfaceOptionsCombatTextPanelHealing")
+		K.KillMenuOption(true, "InterfaceOptionsCombatTextPanelPeriodicDamage")
+		K.KillMenuOption(true, "InterfaceOptionsCombatTextPanelPetDamage")
+		K.KillMenuOption(true, "InterfaceOptionsCombatTextPanelTargetDamage")
+		SetCVar("CombatDamage", 0)
+		SetCVar("CombatHealing", 0)
+		SetCVar("CombatLogPeriodicSpells", 0)
+		SetCVar("PetMeleeDamage", 0)
+
+		local INVISIBLE = [=[Interface\Addons\KkthnxUI\Media\Fonts\Invisible.ttf]=]
+		COMBAT = INVISIBLE
+		DAMAGE_TEXT_FONT = INVISIBLE
+	end
 
 	-- Base fonts
 	SetFont(AchievementFont_Small, NORMAL, 12, nil, nil, nil, nil, 0, 0, 0, 1, -1)
@@ -138,6 +155,8 @@ KkthnxUIFonts:SetScript("OnEvent", function(self, event)
 	SetFont(WorldMapTextFont, NORMAL, 31, "OUTLINE", 40, nil, nil, 0, 0, 0, 1, -1)
 	SetFont(ZoneTextString, NORMAL, 32, "OUTLINE")
 
+	-- I have no idea why the channel list is getting fucked up
+	-- but re-setting the font obj seems to fix it
 	for i = 1, MAX_CHANNEL_BUTTONS do
 		_G["ChannelButton"..i.."Text"]:SetFontObject(GameFontNormalSmallLeft)
 	end

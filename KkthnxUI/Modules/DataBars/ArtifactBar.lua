@@ -129,4 +129,8 @@ ArtifactBar:RegisterEvent("PLAYER_ENTERING_WORLD")
 ArtifactBar:RegisterEvent("ARTIFACT_XP_UPDATE")
 ArtifactBar:RegisterEvent("UNIT_INVENTORY_CHANGED")
 
+if event == "PLAYER_ENTERING_WORLD" then
+	ArtifactBar:UnregisterEvent("PLAYER_ENTERING_WORLD")
+end
+
 ArtifactBar:SetScript("OnEvent", UpdateArtifactBar)
