@@ -275,7 +275,6 @@ L.Info = {
 	Invite = "Akzeptiere Einladung von ",
 	NotInstalled = " ist nicht installiert.",
 	PetDuel = "Haustierkampfduell abgelehnt von ",
-	SettingsAbu = "Tippe /settings abu, um die Einstellungen für oUF_Abu zu übernehmen.",
 	SettingsAll = "Tippe /settings all, um die Einstellungen für alle Modifikationen zu übernehmen.",
 	SettingsDbm = "Tippe /settings dbm, um die Einstellungen für DBM zu übernehmen.",
 	SettingsMsbt = "Tippe /settings msbt, um die Einstellungen für MSBT zu übernehmen.",
@@ -323,6 +322,7 @@ L.Minimap = {
 -- Misc Localization
 L.Misc = {
 	BuyStack = "Alt-Klick um einen Stapel zu kaufen",
+	Collapse = "The Collapse",
 	CopperShort = "|cffeda55fc|r",
 	GoldShort = "|cffffd700g|r",
 	SilverShort = "|cffc7c7cfs|r",

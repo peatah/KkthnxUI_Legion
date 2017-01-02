@@ -63,9 +63,11 @@ C["Bags"] = {
 C["Blizzard"] = {
 	["ClassColor"] = true,
 	["ColorTextures"] = false,
+	["HideTalkingHead"] = false,
 	["RaidTools"] = true,
 	["ReplaceBlizzardFonts"] = true,
 	["ReputationGain"] = false,
+	["TalkingHeadScale"] = 1,
 	["TexturesColor"] = {K.Color.r, K.Color.g, K.Color.b},
 	["VehicleMouseover"] = false,
 }
@@ -213,7 +215,6 @@ C["Misc"] = {
 	["BGSpam"] = false,
 	["ColorPicker"] = false,
 	["EnhancedMail"] = true,
-	["HideTalkingHead"] = false,
 	["InviteKeyword"] = "inv",
 	["ItemLevel"] = false,
 	["MerchantItemLevel"] = false,
@@ -307,13 +308,10 @@ C["Unitframe"] = {
 	["CastbarIcon"] = false,
 	["CastbarLatency"] = true,
 	["Castbars"] = true,
-	["CastbarTicks"] = true,
 	["ClassColor"] = true,
 	["ClassPortraits"] = false,
 	["CombatText"] = true,
 	["Enable"] = true,
-	["FocusCastbarHeight"] = 20,
-	["FocusCastbarWidth"] = 180,
 	["GCDBar"] = false,
 	["Party"] = true,
 	["CastbarHeight"] = 18,
@@ -329,6 +327,19 @@ C["Unitframe"] = {
 	["SwingBar"] = false,
 	["ThreatGlow"] = true,
 	["ThreatValue"] = false,
+}
+
+C["UnitframePlugins"] = {
+	["AdditionalPower"] = true,
+	["ArcaneCharges"] = true,
+	["HarmonyBar"] = true,
+	["HolyPowerBar"] = true,
+	["InsanityBar"] = true,
+	["RuneFrame"] = true,
+	["ShardsBar"] = true,
+	["StaggerBar"] = true,
+	["TotemsFrame"] = true,
+	["OORAlpha"] = 0.60,
 }
 
 C["Partyframe"] = {

@@ -1,6 +1,7 @@
 local K, C, L = unpack(select(2, ...))
 
-local tinsert = tinsert
+-- Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: SLASH_DTSLASH1, Lib_EasyMenu
 
 local DataTexts = K.DataTexts
 
@@ -51,6 +52,22 @@ end
 tinsert(Menu, {text = "|cffFF0000"..REMOVE.."|r", notCheckable = true, func = DataTexts.Remove})
 tinsert(Menu, {text = "", notCheckable = true})
 
--- Datatext toggle
-SlashCmdList.DTSLASH = function() K.DataTexts:ToggleDataPositions() end
-SLASH_DTSLASH1 = "/dt"
+-- Command to toggle, resetgold and reset all DT.
+-- We need to check for details here because it uses '/dt' for all of its commands.
+-- We format out slash command like so '/datatext reset' or '/datatext toggole' and so on.
+SlashCmdList.DATATEXT = function(msg)
+	local DataText = K.DataTexts
+
+	if msg == "reset" then
+		DataText:Reset() ReloadUI()
+	elseif msg == "resetgold" then
+		DataText:ResetGold() ReloadUI()
+	elseif msg == "toggle" then
+		DataText:ToggleDataPositions()
+	end
+end
+
+if not K.CheckAddOn("Details") then
+	SLASH_DATATEXT1 = "/dt"
+end
+SLASH_DATATEXT2 = "/datatext"

@@ -1,13 +1,27 @@
 local K, C, L = unpack(select(2, ...))
 
-local DataTexts = CreateFrame("Frame")
-
+-- Lua API
 local pairs = pairs
+local table_insert = table.insert
 local unpack = unpack
-local CreateFrame = CreateFrame
-local strlower = strlower
-local tinsert = table.insert
+
+-- Wow API
+local GetMoney = GetMoney
+local GetRealmName = GetRealmName
 local hooksecurefunc = hooksecurefunc
+local UnitName = UnitName
+
+local KkthnxUIDataTextBottomBar = KkthnxUIDataTextBottomBar
+local KkthnxUIDataTextSplitBarLeft = KkthnxUIDataTextSplitBarLeft
+local KkthnxUIDataTextSplitBarRight = KkthnxUIDataTextSplitBarRight
+local KkthnxUIMinimapStat = KkthnxUIMinimapStat
+local KkthnxUIMinimapStats = KkthnxUIMinimapStats
+
+-- Global variables that we don't cache, list them here for mikk's FindGlobals script
+-- GLOBALS: KkthnxUIDataPerChar, UIParent, CreateFrame, PetBattleFrameHider. KkthnxUIData
+-- GLOBALS: GUILD, FRIENDS, DURABILITY, CURRENCY, Name, Minimap
+
+local DataTexts = CreateFrame("Frame")
 
 DataTexts.NumAnchors = 8
 DataTexts.Font = C.Media.Font
@@ -37,7 +51,7 @@ function DataTexts:AddToMenu(name, data)
 	end
 
 	self.Texts[name] = data
-	tinsert(self.Menu, {text = name, notCheckable = true, func = self.Toggle, arg1 = data})
+	table_insert(self.Menu, {text = name, notCheckable = true, func = self.Toggle, arg1 = data})
 end
 
 local function RemoveData(self)
@@ -66,11 +80,6 @@ end
 
 -- Here we def the ancors for all dts
 function DataTexts:CreateAnchors()
-
-	local KkthnxUIDataTextBottomBar = KkthnxUIDataTextBottomBar
-	local KkthnxUIDataTextSplitBarLeft = KkthnxUIDataTextSplitBarLeft
-	local KkthnxUIDataTextSplitBarRight = KkthnxUIDataTextSplitBarRight
-
 	self.NumAnchors = self.NumAnchors
 
 	for i = 1, self.NumAnchors do
@@ -149,7 +158,7 @@ local function GetTooltipAnchor(self)
 		Anchor = "ANCHOR_RIGHT"
 		From = KkthnxUIDataTextSplitBarRight
 		Y = K.Scale(0)
-	elseif (Position == 8) and C.Minimap.Enable then
+	elseif (Position == 8) and C.Minimap.Enable and Minimap then
 		Anchor = "ANCHOR_BOTTOMLEFT"
 		From = KkthnxUIMinimapStat
 		Y = K.Scale(-5)
@@ -183,7 +192,6 @@ function DataTexts:Register(name, enable, disable, update)
 	Data:SetFrameStrata("MEDIUM")
 
 	Data.Text = Data:CreateFontString(nil, "OVERLAY")
-	-- Data.Text:SetFont(self.Font, self.Size, self.Flags)
 	Data.Text:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
 
 	Data.Enabled = false
@@ -241,12 +249,12 @@ function DataTexts:AddDefaults()
 	KkthnxUIDataPerChar.Texts[FRIENDS] = {true, 2}
 	KkthnxUIDataPerChar.Texts[DURABILITY] = {true, 3}
 	KkthnxUIDataPerChar.Texts["Gold"] = {true, 4}
-	KkthnxUIDataPerChar.Texts["FPS&MS"] = {true, 5}
+	KkthnxUIDataPerChar.Texts["System"] = {true, 5}
 	if C.ActionBar.SplitBars then
 		KkthnxUIDataPerChar.Texts["Talents"] = {true, 6}
 		KkthnxUIDataPerChar.Texts[CURRENCY] = {true, 7}
 	end
-	if C.Minimap.Enable then
+	if C.Minimap.Enable and Minimap then
 		KkthnxUIDataPerChar.Texts[L.DataText.Time] = {true, 8}
 	end
 end
@@ -277,7 +285,7 @@ function DataTexts:Reset()
 					Object:Enable()
 					self.Anchors[Num]:SetData(Object)
 				else
-					K.Print("Red", "DataText " .. name .. " not found. Removing from cache.")
+					K.Print("DataText '" .. Name .. "' not found. Removing from cache.")
 					KkthnxUIDataPerChar.Texts[name] = {false, 0}
 				end
 			end
@@ -307,7 +315,7 @@ function DataTexts:Load()
 					Object:Enable()
 					self.Anchors[Num]:SetData(Object)
 				else
-					K.Print("Red", "DataText " .. name .. " not found. Removing from cache.")
+					K.Print("DataText '" .. Name .. "' not found. Removing from cache.")
 					KkthnxUIDataPerChar.Texts[name] = {false, 0}
 				end
 			end

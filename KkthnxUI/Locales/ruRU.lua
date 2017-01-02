@@ -276,7 +276,6 @@ L.Info = {
 	Invite = "Приглашение принято от ",
 	NotInstalled = " не установлено.",
 	PetDuel = "Дуэль петомцев отклонена от ",
-	SettingsAbu = "Введите /settings abu, для применения настроек oUF_Abu.",
 	SettingsAll = "Введите /settings all, для применения настроек ко всем модификациям.",
 	SettingsDbm = "Введите /settings dbm, для применения настроек DBM.",
 	SettingsMsbt = "Введите /settings msbt, для применения настроек MSBT.",
@@ -324,6 +323,7 @@ L.Minimap = {
 -- Misc Localization
 L.Misc = {
 	BuyStack = "Зажмите Alt и щелкните мышью, чтобы купить связку",
+	Collapse = "Обрушение",
 	CopperShort = "|cffeda55fм|r",
 	GoldShort = "|cffffd700з|r",
 	SilverShort = "|cffc7c7cfс|r",

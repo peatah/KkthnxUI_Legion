@@ -274,7 +274,6 @@ L.Info = {
 	Invite = "Accepted invite from ",
 	NotInstalled = " is not installed.",
 	PetDuel = "Declined pet duel request from ",
-	SettingsAbu = "Type /settings abu, to apply the settings oUF_Abu.",
 	SettingsALL = "Type /settings all, to apply the settings for all modifications.",
 	SettingsDBM = "Type /settings dbm, to apply the settings DBM.",
 	SettingsMSBT = "Type /settings msbt, to apply the settings MSBT.",
@@ -322,6 +321,7 @@ L.Minimap = {
 -- Misc Localization
 L.Misc = {
 	BuyStack = "Alt-Click to buy a stack",
+	Collapse = "The Collapse",
 	CopperShort = "|cffeda55fc|r",
 	GoldShort = "|cffffd700g|r",
 	SilverShort = "|cffc7c7cfs|r",

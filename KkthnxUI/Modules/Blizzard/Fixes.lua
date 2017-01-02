@@ -22,25 +22,10 @@ SpellBookTaint:SetScript("OnEvent", function(self, event, addon)
 	if addon ~= "KkthnxUI" then return end
 	ShowUIPanel(SpellBookFrame)
 	HideUIPanel(SpellBookFrame)
-	if event == ("ADDON_LOADED") then
-		self:UnregisterEvent("ADDON_LOADED")
-	end
 end)
 
 -- </ Fix RemoveTalent() taint > --
 FCF_StartAlertFlash = K.Noop
-
--- </ Fix the scale on ScriptErrorsFrame > --
-local ScriptErrorsScale = CreateFrame("Frame")
-ScriptErrorsScale:RegisterEvent("ADDON_LOADED")
-ScriptErrorsScale:SetScript("OnEvent", function(self, addon)
-	if IsAddOnLoaded("Blizzard_DebugTools") or addon == "Blizzard_DebugTools" then
-		ScriptErrorsFrame:SetParent(UIParent)
-	end
-	if event == ("ADDON_LOADED") then
-		self:UnregisterEvent("ADDON_LOADED")
-	end
-end)
 
 -- </ Fix SearchLFGLeave() taint > --
 local LFRBrowseTaint = CreateFrame("Frame")

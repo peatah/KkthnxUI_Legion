@@ -32,7 +32,7 @@ local UnitIsUnit = UnitIsUnit
 -- GLOBALS: ComboPointPlayerFrame, math, UnitVehicleSkin, ComboFrame_Update, securecall
 -- GLOBALS: TotemFrame, EclipseBarFrame, RuneFrame, PriestBarFrame, TotemFrame_Update
 -- GLOBALS: EclipseBar_UpdateShown, PriestBarFrame_CheckAndShow, _ENV, UnitPowerBarAlt_Initialize
--- GLOBALS: SetPortraitTexture, oUF_KkthnxPet,
+-- GLOBALS: SetPortraitTexture, oUF_KkthnxPet
 
 local textPath = "Interface\\AddOns\\KkthnxUI\\Media\\Unitframes\\"
 local pathFat = textPath.."Fat\\"
@@ -242,12 +242,6 @@ local function GetTargetTexture(MatchUnit, type)
 	if dbUnit == "vehicle" or dbUnit == "vehicleorganic" then
 		return GetData(MatchUnit).tex.t
 	end
-	if dbUnit == "player" then
-		if ns.config.playerStyle == "custom" then
-			return ns.config.customPlayerTexture
-		end
-		type = ns.config.playerStyle
-	end
 
 	-- only "target", "focus" & "player" gets this far
 	local data = C.Unitframe.Style == "normal" and DataNormal.targetTexture or DataFat.targetTexture
@@ -443,143 +437,241 @@ local function CreateUnitLayout(self, unit)
 	local uconfig = ns.config[self.MatchUnit]
 	local data = GetData(self.MatchUnit)
 
-	-- Load Castbars
-	if C.Unitframe.Castbars == true and self.MatchUnit ~= "arenatarget" and self.MatchUnit ~= "targettarget" and self.MatchUnit ~= "focustarget" and self.MatchUnit ~= "party" then
-		self.Castbar = CreateFrame("StatusBar", self:GetName().."_Castbar", self)
-		self.Castbar:SetStatusBarTexture(C.Media.Texture, "ARTWORK")
-
-		self.Castbar.bg = self.Castbar:CreateTexture(nil, "BORDER")
-		self.Castbar.bg:SetAllPoints()
-		self.Castbar.bg:SetTexture(C.Media.Blank)
-
-		self.Castbar.Overlay = CreateFrame("Frame", nil, self.Castbar)
-		K.CreateBorder(self.Castbar.Overlay, 1)
-		self.Castbar.Overlay:SetFrameStrata("BACKGROUND")
-		self.Castbar.Overlay:SetFrameLevel(3)
-		self.Castbar.Overlay:SetPoint("TOPLEFT", -2, 2)
-		self.Castbar.Overlay:SetPoint("BOTTOMRIGHT", 2, -2)
-
-		self.Castbar.PostCastStart = K.PostCastStart
-		self.Castbar.PostChannelStart = K.PostChannelStart
-
+	-- Castbars
+	if C.Unitframe.Castbars then
 		if self.MatchUnit == "player" then
-			Movers:RegisterFrame(self.Castbar)
+			local CastBar = CreateFrame("StatusBar", "oUF_KkthnxPlayer_Castbar", self)
+			CastBar:SetFrameStrata(self:GetFrameStrata())
+			CastBar:SetStatusBarTexture(C.Media.Texture)
+			CastBar:SetFrameLevel(6)
+			CastBar:SetSize(C.Unitframe.CastbarWidth, C.Unitframe.CastbarHeight)
+			CastBar:SetPoint(unpack(C.Position.UnitFrames.PlayerCastbar))
 
-			if C.Unitframe.CastbarIcon == true then
-				self.Castbar:SetPoint(C.Position.UnitFrames.PlayerCastbar[1], C.Position.UnitFrames.PlayerCastbar[2], C.Position.UnitFrames.PlayerCastbar[3], C.Position.UnitFrames.PlayerCastbar[4] + 11, C.Position.UnitFrames.PlayerCastbar[5])
-				self.Castbar:SetWidth(C.Unitframe.CastbarWidth + 10)
-			else
-				self.Castbar:SetPoint(unpack(C.Position.UnitFrames.PlayerCastbar))
-				self.Castbar:SetWidth(C.Unitframe.CastbarWidth)
+			K.CreateBorder(CastBar, -1)
+
+			CastBar.Background = CastBar:CreateTexture(nil, "BORDER")
+			CastBar.Background:SetAllPoints(CastBar)
+			CastBar.Background:SetTexture(C.Media.Blank)
+			CastBar.Background:SetVertexColor(unpack(C.Media.Backdrop_Color))
+
+			CastBar.Spark = CastBar:CreateTexture(nil, "OVERLAY")
+			CastBar.Spark:SetSize(C.Unitframe.CastbarHeight, C.Unitframe.CastbarHeight * 2)
+			CastBar.Spark:SetAlpha(0.6)
+			CastBar.Spark:SetBlendMode("ADD")
+
+			CastBar.Time = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Time:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Time:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Time:SetPoint("RIGHT", CastBar, "RIGHT", -4, 0)
+			CastBar.Time:SetHeight(C.Media.Font_Size)
+			CastBar.Time:SetTextColor(1, 1, 1)
+			CastBar.Time:SetJustifyH("RIGHT")
+
+			CastBar.Text = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Text:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Text:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Text:SetPoint("LEFT", CastBar, "LEFT", 2, 0)
+			CastBar.Text:SetPoint("RIGHT", CastBar.Time, "LEFT", -1, 0)
+			CastBar.Text:SetHeight(C.Media.Font_Size)
+			CastBar.Text:SetTextColor(1, 1, 1)
+			CastBar.Text:SetJustifyH("LEFT")
+
+			if (C.Unitframe.CastbarIcon) then
+				CastBar.Button = CreateFrame("Frame", nil, CastBar)
+				CastBar.Button:SetSize(26, 26)
+
+				K.CreateBorder(CastBar.Button, -1)
+
+				CastBar.Icon = CastBar.Button:CreateTexture(nil, "ARTWORK")
+				CastBar.Icon:SetPoint("RIGHT", CastBar, "LEFT", -8, 0)
+				CastBar.Icon:SetSize(CastBar:GetHeight(), CastBar:GetHeight())
+				CastBar.Icon:SetTexCoord(unpack(K.TexCoords))
+
+				CastBar.Button:SetAllPoints(CastBar.Icon)
 			end
-			self.Castbar:SetHeight(C.Unitframe.CastbarHeight)
+
+			if (C.Unitframe.CastbarLatency) then
+				CastBar.SafeZone = CastBar:CreateTexture(nil, "ARTWORK")
+				CastBar.SafeZone:SetTexture(C.Media.Texture)
+				CastBar.SafeZone:SetVertexColor(1, 0.5, 0, 0.75)
+			end
+
+			CastBar.CustomTimeText = K.CustomCastTimeText
+			CastBar.CustomDelayText = K.CustomCastDelayText
+			CastBar.PostCastStart = K.CheckCast
+			CastBar.PostChannelStart = K.CheckChannel
+
+			Movers:RegisterFrame(CastBar)
+
+			self.Castbar = CastBar
+
 		elseif self.MatchUnit == "target" then
-			Movers:RegisterFrame(self.Castbar)
+			local CastBar = CreateFrame("StatusBar", "oUF_KkthnxTarget_Castbar", self)
+			CastBar:SetFrameStrata(self:GetFrameStrata())
+			CastBar:SetStatusBarTexture(C.Media.Texture)
+			CastBar:SetFrameLevel(6)
+			CastBar:SetSize(C.Unitframe.CastbarWidth, C.Unitframe.CastbarHeight)
+			CastBar:SetPoint(unpack(C.Position.UnitFrames.TargetCastbar))
 
-			if C.Unitframe.CastbarIcon == true then
-				self.Castbar:SetPoint(C.Position.UnitFrames.TargetCastbar[1], C.Position.UnitFrames.TargetCastbar[2], C.Position.UnitFrames.TargetCastbar[3], C.Position.UnitFrames.TargetCastbar[4] - 23, C.Position.UnitFrames.TargetCastbar[5])
-				self.Castbar:SetWidth(C.Unitframe.CastbarWidth + 10)
-			else
-				self.Castbar:SetPoint(unpack(C.Position.UnitFrames.TargetCastbar))
-				self.Castbar:SetWidth(C.Unitframe.CastbarWidth)
-			end
-			self.Castbar:SetHeight(C.Unitframe.CastbarHeight)
-		elseif self.MatchUnit == "arena" or self.MatchUnit == "boss" then
-			self.Castbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -7)
-			self.Castbar:SetWidth(150)
-			self.Castbar:SetHeight(16)
-		elseif self.MatchUnit ~= "focus" then
-			self.Castbar:SetPoint("TOPLEFT", self, "BOTTOMLEFT", 0, -7)
-			self.Castbar:SetWidth(105)
-			self.Castbar:SetHeight(5)
-		end
+			K.CreateBorder(CastBar, -1)
 
-		if self.MatchUnit == "focus" then
-			Movers:RegisterFrame(self.Castbar)
+			local Spark = CastBar:CreateTexture(nil, "OVERLAY")
+			Spark:SetSize(C.Unitframe.CastbarHeight, C.Unitframe.CastbarHeight * 2)
+			Spark:SetAlpha(0.6)
+			Spark:SetBlendMode("ADD")
+			CastBar.Spark = Spark
 
-			if C.Unitframe.CastbarIcon == true then
-				self.Castbar:SetPoint(C.Position.UnitFrames.FocusCastbar[1], C.Position.UnitFrames.FocusCastbar[2], C.Position.UnitFrames.FocusCastbar[3], C.Position.UnitFrames.FocusCastbar[4] - 23, C.Position.UnitFrames.FocusCastbar[5])
-				self.Castbar:SetWidth(C.Unitframe.FocusCastbarWidth + 10)
-			else
-				self.Castbar:SetPoint(unpack(C.Position.UnitFrames.FocusCastbar))
-				self.Castbar:SetWidth(C.Unitframe.FocusCastbarWidth)
-			end
-			self.Castbar:SetHeight(C.Unitframe.FocusCastbarHeight)
-		end
+			CastBar.Background = CastBar:CreateTexture(nil, "BORDER")
+			CastBar.Background:SetAllPoints(CastBar)
+			CastBar.Background:SetTexture(C.Media.Blank)
+			CastBar.Background:SetVertexColor(unpack(C.Media.Backdrop_Color))
 
-		if self.MatchUnit == "player" or self.MatchUnit == "target" or self.MatchUnit == "arena" or self.MatchUnit == "boss" or self.MatchUnit == "focus" then
-			self.Castbar.Time = K.SetFontString(self.Castbar, C.Media.Font, C.Media.Font_Size)
-			self.Castbar.Time:SetPoint("RIGHT", self.Castbar, "RIGHT", 0, 0)
-			self.Castbar.Time:SetTextColor(1, 1, 1)
-			self.Castbar.Time:SetShadowOffset(K.Mult, -K.Mult)
-			self.Castbar.Time:SetJustifyH("RIGHT")
-			self.Castbar.CustomTimeText = K.CustomCastTimeText
-			self.Castbar.CustomDelayText = K.CustomCastDelayText
+			CastBar.Time = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Time:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Time:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Time:SetPoint("RIGHT", CastBar, "RIGHT", -4, 0)
+			CastBar.Time:SetHeight(C.Media.Font_Size)
+			CastBar.Time:SetTextColor(1, 1, 1)
+			CastBar.Time:SetJustifyH("RIGHT")
 
-			self.Castbar.Text = K.SetFontString(self.Castbar, C.Media.Font, C.Media.Font_Size)
-			self.Castbar.Text:SetPoint("LEFT", self.Castbar, "LEFT", 2, 0)
-			self.Castbar.Text:SetPoint("RIGHT", self.Castbar.Time, "LEFT", -1, 0)
-			self.Castbar.Text:SetTextColor(1, 1, 1)
-			self.Castbar.Text:SetShadowOffset(K.Mult, -K.Mult)
-			self.Castbar.Text:SetJustifyH("LEFT")
-			self.Castbar.Text:SetHeight(C.Media.Font_Size)
+			CastBar.Text = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Text:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Text:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Text:SetPoint("LEFT", CastBar, "LEFT", 2, 0)
+			CastBar.Text:SetPoint("RIGHT", CastBar.Time, "LEFT", -1, 0)
+			CastBar.Text:SetHeight(C.Media.Font_Size)
+			CastBar.Text:SetTextColor(1, 1, 1)
+			CastBar.Text:SetJustifyH("LEFT")
 
-			if C.Unitframe.CastbarIcon == true and self.MatchUnit ~= "arena" then
-				self.Castbar.Button = CreateFrame("Frame", nil, self.Castbar)
-				self.Castbar.Button:SetHeight(20)
-				self.Castbar.Button:SetWidth(20)
-				K.CreateBorder(self.Castbar.Button, 1)
+			if (C.Unitframe.CastbarIcon) then
+				CastBar.Button = CreateFrame("Frame", nil, CastBar)
+				CastBar.Button:SetSize(26, 26)
+				K.CreateBorder(CastBar.Button, -1)
 
-				self.Castbar.Icon = self.Castbar.Button:CreateTexture(nil, "ARTWORK")
-				self.Castbar.Icon:SetPoint("TOPLEFT", self.Castbar.Button, 2, -2)
-				self.Castbar.Icon:SetPoint("BOTTOMRIGHT", self.Castbar.Button, -2, 2)
-				self.Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+				CastBar.Icon = CastBar.Button:CreateTexture(nil, "ARTWORK")
+				CastBar.Icon:SetPoint("RIGHT", CastBar, "LEFT", -8, 0)
+				CastBar.Icon:SetSize(CastBar:GetHeight(), CastBar:GetHeight())
+				CastBar.Icon:SetTexCoord(unpack(K.TexCoords))
 
-				if self.MatchUnit == "player" then
-					self.Castbar.Button:SetPoint("RIGHT", self.Castbar, "LEFT", -5, 0)
-				elseif self.MatchUnit == "target" or self.MatchUnit == "focus" then
-					self.Castbar.Button:SetPoint("LEFT", self.Castbar, "RIGHT", 5, 0)
-				end
+				CastBar.Button:SetAllPoints(CastBar.Icon)
 			end
 
-			if self.MatchUnit == "arena" or self.MatchUnit == "boss" then
-				self.Castbar.Button = CreateFrame("Frame", nil, self.Castbar)
-				self.Castbar.Button:SetHeight(18)
-				self.Castbar.Button:SetWidth(18)
-				K.CreateBorder(self.Castbar.Button, 1)
-				if self.MatchUnit == "boss" then
-					self.Castbar.Button:SetPoint("RIGHT", self.Castbar, "LEFT", -5, 0)
-				else
-					self.Castbar.Button:SetPoint("RIGHT", self.Castbar, "LEFT", -5, 0)
-				end
+			CastBar.CustomTimeText = K.CustomCastTimeText
+			CastBar.CustomDelayText = K.CustomCastDelayText
+			CastBar.PostCastStart = K.CheckCast
+			CastBar.PostChannelStart = K.CheckChannel
 
-				self.Castbar.Icon = self.Castbar.Button:CreateTexture(nil, "ARTWORK")
-				self.Castbar.Icon:SetPoint("TOPLEFT", self.Castbar.Button, 2, -2)
-				self.Castbar.Icon:SetPoint("BOTTOMRIGHT", self.Castbar.Button, -2, 2)
-				self.Castbar.Icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
-			end
+			Movers:RegisterFrame(CastBar)
 
-			if self.MatchUnit == "player" and C.Unitframe.CastbarLatency == true then
-				self.Castbar.SafeZone = self.Castbar:CreateTexture(nil, "BORDER", nil, 1)
-				self.Castbar.SafeZone:SetTexture(C.Media.Texture)
-				self.Castbar.SafeZone:SetVertexColor(0.69, 0.31, 0.31, 0.85)
+			self.Castbar = CastBar
 
-				self.Castbar.Latency = K.SetFontString(self.Castbar, C.Media.Font, C.Media.Font_Size)
-				self.Castbar.Latency:SetShadowOffset(K.Mult, -K.Mult)
-				self.Castbar.Latency:SetTextColor(1, 1, 1)
-				self.Castbar.Latency:SetPoint("TOPRIGHT", self.Castbar.Time, "BOTTOMRIGHT", 0, 0)
-				self.Castbar.Latency:SetJustifyH("RIGHT")
+		elseif self.MatchUnit == "focus" then
+			local CastBar = CreateFrame("StatusBar", "oUF_KkthnxFocus_Castbar", self)
 
-				self:RegisterEvent("CURRENT_SPELL_CAST_CHANGED", function(self, event, caster) -- BETA Event check
-					if (caster == "player" or caster == "vehicle") then
-						self.Castbar.castSent = GetTime()
-					end
-				end)
-			end
+			CastBar:SetPoint("LEFT", 0, 0)
+			CastBar:SetPoint("RIGHT", -20, 0)
+			CastBar:SetPoint("TOP", 0, 60)
+			CastBar:SetHeight(18)
+			CastBar:SetStatusBarTexture(C.Media.Texture)
+			CastBar:SetFrameLevel(6)
+
+			K.CreateBorder(CastBar, -1)
+
+			CastBar.Background = CastBar:CreateTexture(nil, "BORDER")
+			CastBar.Background:SetAllPoints(CastBar)
+			CastBar.Background:SetTexture(C.Media.Blank)
+			CastBar.Background:SetVertexColor(unpack(C.Media.Backdrop_Color))
+
+			CastBar.Time = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Time:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Time:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Time:SetPoint("RIGHT", CastBar, "RIGHT", -4, 0)
+			CastBar.Time:SetHeight(C.Media.Font_Size)
+			CastBar.Time:SetTextColor(1, 1, 1)
+			CastBar.Time:SetJustifyH("RIGHT")
+
+			CastBar.Text = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Text:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Text:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Text:SetPoint("LEFT", CastBar, "LEFT", 2, 0)
+			CastBar.Text:SetPoint("RIGHT", CastBar.Time, "LEFT", -1, 0)
+			CastBar.Text:SetHeight(C.Media.Font_Size)
+			CastBar.Text:SetTextColor(1, 1, 1)
+			CastBar.Text:SetJustifyH("LEFT")
+
+			CastBar.Button = CreateFrame("Frame", nil, CastBar)
+			CastBar.Button:SetSize(CastBar:GetHeight(), CastBar:GetHeight())
+			CastBar.Button:SetPoint("LEFT", CastBar, "RIGHT", 8, 0)
+
+			K.CreateBorder(CastBar.Button, -1)
+
+			CastBar.Icon = CastBar.Button:CreateTexture(nil, "ARTWORK")
+			CastBar.Icon:SetAllPoints()
+			CastBar.Icon:SetTexCoord(unpack(K.TexCoords))
+
+			CastBar.CustomTimeText = K.CustomCastTimeText
+			CastBar.CustomDelayText = K.CustomCastDelayText
+			CastBar.PostCastStart = K.CheckCast
+			CastBar.PostChannelStart = K.CheckChannel
+
+			self.Castbar = CastBar
+			self.Castbar.Icon = CastBar.Icon
+
+		elseif self.IsBossFrame then
+			local CastBar = CreateFrame("StatusBar", "oUF_KkthnxBoss_Castbar", self)
+
+			CastBar:SetPoint("RIGHT", -138, 0)
+			CastBar:SetPoint("LEFT", 0, 10)
+			CastBar:SetPoint("LEFT", -138, 8)
+			CastBar:SetHeight(16)
+			CastBar:SetStatusBarTexture(C.Media.Texture)
+			CastBar:SetFrameLevel(6)
+
+			K.CreateBorder(CastBar, -1)
+
+			CastBar.Background = CastBar:CreateTexture(nil, "BORDER")
+			CastBar.Background:SetAllPoints(CastBar)
+			CastBar.Background:SetTexture(C.Media.Blank)
+			CastBar.Background:SetVertexColor(unpack(C.Media.Backdrop_Color))
+
+			CastBar.Time = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Time:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Time:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Time:SetPoint("RIGHT", CastBar, "RIGHT", -4, 0)
+			CastBar.Time:SetHeight(C.Media.Font_Size)
+			CastBar.Time:SetTextColor(1, 1, 1)
+			CastBar.Time:SetJustifyH("RIGHT")
+
+			CastBar.Text = CastBar:CreateFontString(nil, "OVERLAY")
+			CastBar.Text:SetFont(C.Media.Font, C.Media.Font_Size)
+			CastBar.Text:SetShadowOffset(K.Mult, -K.Mult)
+			CastBar.Text:SetPoint("LEFT", CastBar, "LEFT", 2, 0)
+			CastBar.Text:SetPoint("RIGHT", CastBar.Time, "LEFT", -1, 0)
+			CastBar.Text:SetHeight(C.Media.Font_Size)
+			CastBar.Text:SetTextColor(1, 1, 1)
+			CastBar.Text:SetJustifyH("LEFT")
+
+			CastBar.Button = CreateFrame("Frame", nil, CastBar)
+			CastBar.Button:SetSize(CastBar:GetHeight(), CastBar:GetHeight())
+			CastBar.Button:SetPoint("RIGHT", CastBar, "LEFT", -8, 0)
+
+			K.CreateBorder(CastBar.Button, -1)
+
+			CastBar.Icon = CastBar.Button:CreateTexture(nil, "ARTWORK")
+			CastBar.Icon:SetAllPoints()
+			CastBar.Icon:SetTexCoord(unpack(K.TexCoords))
+
+			CastBar.CustomTimeText = K.CustomCastTimeText
+			CastBar.CustomDelayText = K.CustomCastDelayText
+			CastBar.PostCastStart = K.CheckCast
+			CastBar.PostChannelStart = K.CheckChannel
+
+			self.Castbar = CastBar
+			self.Castbar.Icon = CastBar.Icon
 		end
 	end
 
-	--Textures
+	-- Textures
 	self.Texture = self:CreateTexture(nil, "BORDER")
 	if C.Blizzard.ColorTextures == true then
 		self.Texture:SetVertexColor(unpack(C.Blizzard.TexturesColor))
@@ -588,7 +680,7 @@ local function CreateUnitLayout(self, unit)
 
 	-- Healthbar
 	self.Health = K.CreateStatusBar(self, nil, nil, true)
-	self.Health:SetFrameLevel(self:GetFrameLevel()-1)
+	self.Health:SetFrameLevel(self:GetFrameLevel() - 1)
 	tinsert(self.mouseovers, self.Health)
 	self.Health.PostUpdate = K.PostUpdateHealth
 	self.Health.Smooth = true
@@ -602,7 +694,11 @@ local function CreateUnitLayout(self, unit)
 	self.Health.colorReaction = true
 
 	-- Health text
-	self.Health.Value = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
+	if self.IsPartyFrame or self.IsTargetFrame then
+		self.Health.Value = K.SetFontString(self, C.Media.Font, 11, nil, "CENTER")
+	else
+		self.Health.Value = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
+	end
 
 	-- Power bar
 	self.Power = K.CreateStatusBar(self, nil, nil, true)
@@ -615,7 +711,11 @@ local function CreateUnitLayout(self, unit)
 
 	-- Power Text
 	if (data.mpt) then
-		self.Power.Value = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
+		if self.IsPartyFrame or self.IsTargetFrame then
+			self.Power.Value = K.SetFontString(self, C.Media.Font, 11, nil, "CENTER")
+		else
+			self.Power.Value = K.SetFontString(self, C.Media.Font, 13, nil, "CENTER")
+		end
 	end
 
 	-- Name Text
@@ -810,14 +910,10 @@ local function CreateUnitLayout(self, unit)
 			self.Leader:SetPoint("CENTER", self.Portrait, "TOPLEFT", 1, -1)
 		end
 
-		if not self.IsTargetFrame then
+		if self.IsMainFrame then
 			self.PhaseIcon = self:CreateTexture(nil, "OVERLAY")
 			self.PhaseIcon:SetPoint("CENTER", self.Portrait, "BOTTOM")
-			if self.IsMainFrame then
-				self.PhaseIcon:SetSize(26, 26)
-			else
-				self.PhaseIcon:SetSize(18, 18)
-			end
+			self.PhaseIcon:SetSize(26, 26)
 		end
 
 		self.OfflineIcon = self:CreateTexture(nil, "OVERLAY")
@@ -866,18 +962,36 @@ local function CreateUnitLayout(self, unit)
 		end
 
 		-- Totems
-		if config[K.Class].showTotems then
-			ns.classModule.Totems(self, config, uconfig)
+		if C.UnitframePlugins.TotemsFrame == true and K.Class ~= "DEMONHUNTER" or K.Class ~= "PRIEST" or K.Class ~= "ROGUE" then
+			K.ClassModule:Totems(self)
 		end
-
 		-- Alternate Mana Bar
-		if config[K.Class].showAdditionalPower then
-			ns.classModule.alternatePowerBar(self, config, uconfig)
+		if C.UnitframePlugins.AdditionalPower and K.Class == "DRUID" or K.Class == "MONK" or K.Class == "PALADIN" or K.Class == "PRIEST" or K.Class == "SHAMAN" then
+			K.ClassModule:AlternatePowerBar(self)
 		end
-
-		-- Load Class Modules
-		if ns.classModule[K.Class] then
-			self.classPowerBar = ns.classModule[K.Class](self, config, uconfig)
+		-- Deathknight
+		if C.UnitframePlugins.RuneFrame and K.Class == "DEATHKNIGHT" then
+			K.ClassModule:RuneFrame(self)
+		end
+		-- Mage
+		if C.UnitframePlugins.ArcaneCharges and K.Class == "MAGE" then
+			K.ClassModule:ArcaneCharges(self)
+		end
+		-- Monk
+		if (C.UnitframePlugins.HarmonyBar or C.UnitframePlugins.StaggerBar) and K.Class == "MONK" then
+			K.ClassModule:StaggerBar(self)
+		end
+		-- Paladin
+		if C.UnitframePlugins.HolyPowerBar and K.Class == "PALADIN" then
+			K.ClassModule:HolyPowerBar(self)
+		end
+		-- Priest
+		if C.UnitframePlugins.InsanityBar and K.Class == "PRIEST" then
+			K.ClassModule:InsanityBar(self)
+		end
+		-- Warlock
+		if C.UnitframePlugins.ShardsBar and K.Class == "WARLOCK" then
+			K.ClassModule:ShardsBar(self)
 		end
 
 		-- Power Prediction Bar (Display estimated cost of spells when casting)
@@ -975,7 +1089,7 @@ local function CreateUnitLayout(self, unit)
 	end
 
 	-- </ Focus & Target Frame > --
-	if (self.MatchUnit == "target" or self.MatchUnit == "focus") then
+	if (self.MatchUnit == "target") then
 		-- Questmob Icon
 		self.QuestIcon = self:CreateTexture(nil, "OVERLAY")
 		self.QuestIcon:SetSize(22, 22)
@@ -1099,24 +1213,22 @@ local function CreateUnitLayout(self, unit)
 	end
 
 	-- Range Fader
-	if (self.MatchUnit == "pet" or self.IsPartyFrame) then
-		self.Range = {
-			insideAlpha = 1,
-			outsideAlpha = 0.8,
-		}
+	local RangeFader
+	if K.CheckAddOn("KkthnxUI") then
+		RangeFader = "SpellRange"
+	elseif self.MatchUnit == "pet" or self.MatchUnit == "party" then
+		RangeFader = "Range"
+	end
+	if RangeFader then
+		self[RangeFader] = {insideAlpha = 1, outsideAlpha = C.UnitframePlugins.OORAlpha}
 	end
 
-	self.CFade = {
-		FadeInMin = .2,
-		FadeInMax = 1,
-		FadeTime = 0.5,
-	}
 	return self
 end
 
-local function FixPetUpdate(self, event, ...) -- Petframe doesnt always update correctly
-	oUF_KkthnxPet:GetScript("OnAttributeChanged")(oUF_KkthnxPet, "unit", "pet")
-end
+-- local function FixPetUpdate(self, event, ...) -- Petframe doesnt always update correctly
+-- 	oUF_KkthnxPet:GetScript("OnAttributeChanged")(oUF_KkthnxPet, "unit", "pet")
+-- end
 
 -- Spawn our frames.
 oUF:RegisterStyle("oUF_Kkthnx", CreateUnitLayout)
@@ -1129,7 +1241,7 @@ Movers:RegisterFrame(player)
 local pet = oUF:Spawn("pet", "oUF_KkthnxPet")
 pet:SetPoint(unpack(C.Position.UnitFrames.Pet))
 Movers:RegisterFrame(pet)
-player:RegisterEvent("UNIT_PET", FixPetUpdate)
+-- player:RegisterEvent("UNIT_PET", FixPetUpdate)
 
 local target = oUF:Spawn("target", "oUF_KkthnxTarget")
 target:SetPoint(unpack(C.Position.UnitFrames.Target))
@@ -1196,58 +1308,6 @@ if C.Unitframe.ShowArena then
 
 		Movers:RegisterFrame(arena[i])
 	end
-end
-
-local function MirrorTimer_OnUpdate(frame, elapsed)
-	if (frame.paused) then
-		return
-	end
-
-	if frame.timeSinceUpdate >= 0.3 then
-		local minutes = frame.value / 60
-		local seconds = frame.value % 60
-		local text = frame.label:GetText()
-
-		if frame.value > 0 then
-			frame.TimerText:SetText(format("%s (%d:%02d)", text, minutes, seconds))
-		else
-			frame.TimerText:SetText(format("%s (0:00)", text))
-		end
-		frame.timeSinceUpdate = 0
-	else
-		frame.timeSinceUpdate = frame.timeSinceUpdate + elapsed
-	end
-end
-
--- Mirror Timers (Underwater Breath etc.)
---Mirror Timers (Underwater Breath etc.), credit to Azilroka
-for i = 1, MIRRORTIMER_NUMTIMERS do
-	local mirrorTimer = _G["MirrorTimer"..i]
-	local statusBar = _G["MirrorTimer"..i.."StatusBar"]
-	local text = _G["MirrorTimer"..i.."Text"]
-
-	mirrorTimer:StripTextures()
-	mirrorTimer:SetSize(222, 18)
-	mirrorTimer.label = text
-	statusBar:SetStatusBarTexture(C.Media.Texture)
-	K.CreateBorder(statusBar, -1)
-	statusBar:SetSize(222, 18)
-	text:Hide()
-
-	local Backdrop = select(1, mirrorTimer:GetRegions())
-	Backdrop:SetTexture(C.Media.Blank)
-	Backdrop:SetVertexColor(unpack(C.Media.Backdrop_Color))
-	Backdrop:SetAllPoints(statusBar)
-
-	local TimerText = mirrorTimer:CreateFontString(nil, "OVERLAY")
-	TimerText:SetFont(C.Media.Font, C.Media.Font_Size, C.Media.Font_Style)
-	TimerText:SetPoint("CENTER", statusBar, "CENTER", 0, 0)
-	mirrorTimer.TimerText = TimerText
-
-	mirrorTimer.timeSinceUpdate = 0.3 -- Make sure timer value updates right away on first show
-	mirrorTimer:HookScript("OnUpdate", MirrorTimer_OnUpdate)
-
-	Movers:RegisterFrame(mirrorTimer)
 end
 
 -- Test the unitframes :D
