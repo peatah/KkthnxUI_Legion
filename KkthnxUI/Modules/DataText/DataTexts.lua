@@ -315,7 +315,7 @@ function DataTexts:Load()
 					Object:Enable()
 					self.Anchors[Num]:SetData(Object)
 				else
-					K.Print("DataText '" .. Name .. "' not found. Removing from cache.")
+					-- K.Print("DataText '" .. Name .. "' not found. Removing from cache.")
 					KkthnxUIDataPerChar.Texts[name] = {false, 0}
 				end
 			end
